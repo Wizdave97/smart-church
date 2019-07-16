@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid, Paper, Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
 import {toggleTheme } from '../../store/actions/themeActions';

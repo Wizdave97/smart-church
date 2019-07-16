@@ -117,9 +117,9 @@ const styles= theme =>(
   search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius*10,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: fade(theme.palette.common.white, 0.6),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: fade(theme.palette.common.white, 0.45),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
