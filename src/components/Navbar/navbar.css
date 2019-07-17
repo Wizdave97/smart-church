@@ -1,0 +1,8 @@
+.navbar-appear {
+  opacity: 0.01;
+}
+
+.navbar-appear.navbar-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}

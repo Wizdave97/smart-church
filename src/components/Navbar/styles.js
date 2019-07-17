@@ -1,4 +1,15 @@
-import { fade } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles';
+import { purple } from '@material-ui/core/colors';
+const query1={
+  '@media screen and (max-width:489px)':{
+    display:'none'
+  }
+}
+const hover={
+  '&:hover':{
+    color:fade(purple.A200, 0.5)
+  }
+}
 const styles= theme =>(
   {
   navbar:{
@@ -22,7 +33,11 @@ const styles= theme =>(
     marginLeft:theme.spacing(2),
     marginRight:theme.spacing(2),
     boxSizing:'border-box',
-    cursor:'pointer'
+    cursor:'pointer',
+    [theme.breakpoints.up('md')]:{
+      display:'none'
+    },
+    ...hover
   },
   churchName:{
     width:'30%',
@@ -30,9 +45,12 @@ const styles= theme =>(
     marginLeft:theme.spacing(2),
     marginRight:theme.spacing(2),
     boxSizing:'border-box',
+    cursor:'pointer',
     [theme.breakpoints.down('sm')]:{
       width:'45%'
-    }
+    },
+    ...query1,
+    ...hover
   },
   navText:{
     fontSize:'0.8rem',
@@ -63,7 +81,8 @@ const styles= theme =>(
     boxSizing:'border-box'
   },
   logoContainer:{
-    alignSelf:'center'
+    alignSelf:'center',
+    ...query1
   },
   three:{
     width:'33.33%',
@@ -92,9 +111,11 @@ const styles= theme =>(
     padding:'10px',
     alignSelf:'center',
     boxSizing:'border-box',
+    cursor:'pointer',
     [theme.breakpoints.down('xs')]:{
       flex:0
-    }
+    },
+    ...hover
   },
   hide:{
     [theme.breakpoints.down('xs')]:{
@@ -117,9 +138,9 @@ const styles= theme =>(
   search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius*10,
-      backgroundColor: fade(theme.palette.common.white, 0.6),
+      backgroundColor: fade(theme.palette.common.black, 0.6),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.45),
+        backgroundColor: fade(theme.palette.common.black, 0.45),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -137,6 +158,7 @@ const styles= theme =>(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      ...hover
   },
   inputRoot: {
       color: 'inherit',
@@ -164,12 +186,16 @@ const styles= theme =>(
     boxSizing:'border-box',
     alignSelf:'center',
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.black, 0.25),
+      '& svg':{
+        color:fade(purple.A200, 0.5)
+      }
     },
     transition:'2s all ease',
     [theme.breakpoints.up('md')]:{
       display:'none'
-    }
+    },
+
   },
   iconSearch:{
     alignSelf:'center'

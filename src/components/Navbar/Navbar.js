@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styles from './styles';
 import { withStyles} from '@material-ui/core/styles';
 import { AppBar, Toolbar , Typography, InputBase, Switch} from '@material-ui/core';
 import { Menu, Search as SearchIcon, AccountCircle,Notifications}  from '@material-ui/icons';
+import  CSSTransitionGroup  from 'react-transition-group/CSSTransitionGroup';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
+import './navbar.css'
 
 
 const Navbar = props =>{
@@ -11,10 +13,17 @@ const Navbar = props =>{
 
   return (
     <AppBar position="fixed" color="default">
+      <CSSTransitionGroup
+        transitionName="navbar"
+        transitionAppear={true}
+        transitionAppearTimeout={500}
+        transitionEnter={false}
+        transitionLeave={false}
+        >
         <Toolbar variant="dense">
             <div className={classes.navbar}>
                 <div className={classes.one}>
-                    <div className={classes.menuIcon} tabIndex="0"><Menu/></div>
+                    <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><Menu/></div>
                     <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h5"> Smart Church</Typography></div>
                       <div className={classes.searchButton} tabIndex="0">
                         <SearchIcon className={classes.iconSearch} />
@@ -54,6 +63,7 @@ const Navbar = props =>{
                 </div>
             </div>
         </Toolbar>
+      </CSSTransitionGroup>
     </AppBar>
   )
 }

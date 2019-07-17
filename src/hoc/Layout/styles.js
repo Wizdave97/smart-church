@@ -1,19 +1,26 @@
 
 const styles = theme =>({
     root:{
+      minHeight:'calc(100% - 90px)',
       width:'100%',
-      minHeight:"100%",
-      display:'flex'
+      display:'flex',
+      flexWrap:'wrap',
+      marginTop:'90px',
+      position:'absolute',
+      left:0,
+      [theme.breakpoints.up('md')]:{
+        width:'80%',
+        left:'20%'
+      }
     },
     rootElement:{
       padding:'0'
     },
     main:{
-        minHeight:'calc(100% - 64px)',
         width:'100%',
+        minHeight:'100%',
         display:'flex',
-        flexWrap:'wrap',
-        marginTop:'64px'
+        flexWrap:'wrap'
     },
 
 })
