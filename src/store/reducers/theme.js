@@ -4,25 +4,32 @@ const initialState={
   overrides:{
       MuiTypography:{
           'body1':{
-              fontFamily:'"PT Sans", "Roboto", sans-serif'
+              fontFamily:'"Open Sans",  sans-serif',
+              fontSize:'11.5px'
           } ,
           'h1':{
-            fontFamily:'"Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'22px'
           },
           'h2':{
-            fontFamily:'"Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'20px'
           },
           'h3':{
-            fontFamily:'"Sofia", "Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'18px'
           },
           'h4':{
-            fontFamily:'"Sofia", "Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'16px'
           },
           'h5':{
-            fontFamily:'"Sofia", "Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'14px'
           },
           'h6':{
-            fontFamily:'"Sofia", "Roboto", sans-serif'
+            fontFamily:'"Roboto", sans-serif',
+            fontSize:'12px'
           }
       }
   },

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid } from '@material-ui/core';
+import { Grid,Typography } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
 import '../../components/Sidebar/sidebar.css';
@@ -57,6 +57,10 @@ class Layout extends Component {
                     container
                     spacing={8}
                     >
+                    <div className={classes.pageInfo}>
+                      <div className={classes.title}><Typography  variant="h2">Dashboard</Typography></div>
+                      <div className={classes.breadcrumb}><Typography variant="body1">Breadcrumbs</Typography></div>
+                    </div>
                         {this.props.children}
                     </Grid>
                 </main>

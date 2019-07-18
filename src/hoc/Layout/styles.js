@@ -22,6 +22,27 @@ const styles = theme =>({
         display:'flex',
         flexWrap:'wrap'
     },
+    pageInfo:{
+      display:'inline-block',
+      width:'100%',
+    },
+    title:{
+      width:'100%',
+      display:'block',
+      padding:'2px 8px',
+      boxSizing:'border-box',
+    },
+    titleText:{
+      fontSize:'1rem',
+      [theme.breakpoints.down('sm')]:{
+        fontSize:'0.8rem'
+      }
+    },
+    breadcrumb:{
+      width:'100%',
+      padding:'2px 8px',
+      boxSizing:'border-box'
+    }
 
 })
 

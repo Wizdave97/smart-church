@@ -10,7 +10,7 @@ const sideBar = (props) =>{
   const { classes } = props
   return (
     <aside className={classes.aside}>
-        <Paper square={true} className={classes.sideBar}>
+        <Paper square={true} elevation={0} className={classes.sideBar}>
             <List className={classes.list}>
                 <Link><ListItem><Dashboard color="secondary"/><ListItemText className={classes.links} primary='Dashboard'/></ListItem></Link>
                 <Divider className={classes.divider}/>

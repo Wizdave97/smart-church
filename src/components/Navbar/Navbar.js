@@ -51,7 +51,7 @@ const Navbar = props =>{
             <div className={classes.navbar}>
                 <div className={classes.one}>
                     <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><Menu/></div>
-                    <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h5"> Smart Church</Typography></div>
+                    <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h1"> Smart Church</Typography></div>
                       <div onClick={()=>setState(state=>({searchBar:!state.searchBar }))} className={classes.searchButton} tabIndex="0">
                         <SearchIcon className={classes.iconSearch} />
                       </div>
@@ -73,7 +73,7 @@ const Navbar = props =>{
                 </div>
                 <div className={classes.two}>
                     <div className={classes.logoContainer}>
-                        <Typography variant="h5">Smart Church</Typography>
+                        <Typography variant="h1">Smart Church</Typography>
                     </div>
                 </div>
                 <div className={classes.three}>
