@@ -1,0 +1,24 @@
+.searchbar-appear {
+  opacity: 0.01;
+}
+
+.searchbar-appear.searchbar-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.searchbar-enter {
+  opacity:0
+}
+
+.searchbar-enter.searchbar-enter-active{
+  opacity:1;
+  transition: opacity  .5s ease-in;
+}
+.searchbar-leave{
+  opacity:1;
+}
+.searchbar-leave.searchbar-leave-active{
+  opacity: 0;
+  transition:opacity .5s ease-out;
+}

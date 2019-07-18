@@ -1,18 +1,45 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState,useEffect } from 'react';
 import styles from './styles';
-import { withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar , Typography, InputBase, Switch} from '@material-ui/core';
 import { Menu, Search as SearchIcon, AccountCircle,Notifications}  from '@material-ui/icons';
 import  CSSTransitionGroup  from 'react-transition-group/CSSTransitionGroup';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
+import SearchBar from '../Searchbar/Searchbar';
 import './navbar.css'
 
 
 const Navbar = props =>{
   const  { classes }= props
-
+  const  [ state,setState ]= useState({searchBar:false})
+  const x = window.matchMedia("(min-width:960px)");
+  const removeMobileSearch = (x)=>{
+    if(x.matches){
+        setState({
+          searchBar:false
+        })
+      }
+  }
+  const closeSearchBar=()=>{
+    setState({
+      searchBar:false
+    })
+  }
+  useEffect(()=>{
+    x.addListener(removeMobileSearch)
+  },[])
   return (
     <AppBar position="fixed" color="default">
+      <CSSTransitionGroup
+          transitionName='searchbar'
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+          transitionEnter={true}
+          transitionLeave={true}>
+          {state.searchBar?<SearchBar closeSearchBar={closeSearchBar}/>:null}
+      </CSSTransitionGroup>
       <CSSTransitionGroup
         transitionName="navbar"
         transitionAppear={true}
@@ -25,7 +52,7 @@ const Navbar = props =>{
                 <div className={classes.one}>
                     <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><Menu/></div>
                     <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h5"> Smart Church</Typography></div>
-                      <div className={classes.searchButton} tabIndex="0">
+                      <div onClick={()=>setState(state=>({searchBar:!state.searchBar }))} className={classes.searchButton} tabIndex="0">
                         <SearchIcon className={classes.iconSearch} />
                       </div>
                     <div className={classes.searchBar}>
@@ -51,7 +78,7 @@ const Navbar = props =>{
                 </div>
                 <div className={classes.three}>
                    <div className={classes.iconContainer}>
-                        <div className={[classes.icons,classes.hide].join(' ')}>
+                        <div className={[classes.icons].join(' ')}>
                             <ArrowTooltip title="Toggle light/dark theme">
                                 <Switch  onChange={(event)=>props.toggleTheme(event.target.checked)} color="secondary" />
                             </ArrowTooltip>
