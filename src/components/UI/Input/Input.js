@@ -52,6 +52,32 @@ const Input = props =>{
               }):null}
             </select>)
             break;
+        case 'checkbox':
+            inputType=(<input
+                noValidate={true}
+                required={props.required}
+                name={props.name}
+                aria-describedby="helperText"
+                value={props.value}
+                placeholder={props.placeholder}
+                className={classes.checkbox}
+                type="checkbox"
+                id={props.id}
+                onChange={props.handleChange(props.name)}/>)
+                break;
+         case 'radio':
+             inputType=(<input
+                 noValidate={true}
+                 required={props.required}
+                 name={props.name}
+                 aria-describedby="helperText"
+                 value={props.value}
+                 placeholder={props.placeholder}
+                 className={classes.checkbox}
+                 type="radio"
+                 id={props.id}
+                 onChange={props.handleChange(props.name)}/>)
+                 break;
         }
 
   return (

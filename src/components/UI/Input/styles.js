@@ -7,6 +7,25 @@ const styles = theme =>({
     padding:'10px',
     boxSizing:'border-box',
   },
+  checkbox:{
+    maxWidth:'48px',
+    order:1,
+    borderRadius:' 4px',
+    margin:' 8px 0',
+    display:' inline-block',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box',
+    padding:' 12px 20px',
+    '&:hover':{
+      backgroundColor:'#f1f1f1',
+      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+    },
+    '&:focus':{
+      outline:'none',
+      backgroundColor:'#3CBC8D',
+      color:'white'
+    }
+  },
   formInput:{
     width:'100%',
     marginTop:theme.spacing(0.5),
@@ -31,7 +50,7 @@ const styles = theme =>({
     }
   },
   label:{
-    width:'100%',
+    width:'95%',
     marginBottom:theme.spacing(0.5),
     fontSize:'12px',
     top:0,

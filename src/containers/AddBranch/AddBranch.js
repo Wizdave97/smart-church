@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
-
+import { CSSTransitionGroup } from 'react-transition-group';
 class AddBranch extends Component {
   state={
     states:null,

@@ -1,0 +1,17 @@
+.routes-appear {
+  opacity: 0.01;
+}
+
+.routes-appear.routes-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.routes-leave.routes-leave-active {
+  opacity: 1;
+}
+
+.routes-leave {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}

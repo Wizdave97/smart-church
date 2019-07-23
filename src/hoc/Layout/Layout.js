@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid,Typography } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
+import './routes.css'
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'

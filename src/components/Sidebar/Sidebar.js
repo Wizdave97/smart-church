@@ -67,7 +67,7 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='New Staff'/></ListItem></Link>
+                  <Link to="/addstaff"><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='New Staff'/></ListItem></Link>
                   <Divider className={classes.divider}/>
                   <Link><ListItem><People className={classes.icons}/><ListItemText className={classes.links} primary='All Staff'/></ListItem></Link>
                   <Divider className={classes.divider}/>

@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import AddBranch from './containers/AddBranch/AddBranch';
+import AddStaff from './containers/AddStaff/AddStaff';
 
 class App  extends Component{
   render(){
@@ -15,6 +16,7 @@ class App  extends Component{
                 <Switch>
                     <Route exact path='/' component={Dashboard}/>
                     <Route path='/addbranch' component={AddBranch}/>
+                    <Route path='/addstaff' component={AddStaff}/>
                 </Switch>
             </Layout>
         </MuiThemeProvider>
