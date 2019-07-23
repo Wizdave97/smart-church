@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid,Typography } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
-import '../../components/Sidebar/sidebar.css';
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
@@ -39,6 +38,7 @@ class Layout extends Component {
   }
   render(){
     const { classes } = this.props
+    const path=window.location.pathname
     return (
       <React.Fragment>
           <CssBaseline/>
@@ -51,11 +51,12 @@ class Layout extends Component {
                 transitionLeaveTimeout={500}>
                 { this.state.showSideBar?<SideBar key={"sidebar"}/>:null }
               </CSSTransitionGroup>}
-              <div className={classes.root}>
+              <div className={[classes.root,path=='/addbranch'?classes.branchBackground:' ',].join(' ')} >
                 <main className={classes.main}  style={{padding:32}}>
                     <Grid
                     container
                     spacing={8}
+                    justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
                       <div className={classes.title}><Typography  variant="h2">Dashboard</Typography></div>

@@ -3,7 +3,8 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
-import Dashboard from './containers/Dashboard/Dashboard'
+import Dashboard from './containers/Dashboard/Dashboard';
+import AddBranch from './containers/AddBranch/AddBranch';
 
 class App  extends Component{
   render(){
@@ -12,7 +13,8 @@ class App  extends Component{
         <MuiThemeProvider theme={theme}>
             <Layout>
                 <Switch>
-                    <Route path='/' component={Dashboard}/>
+                    <Route exact path='/' component={Dashboard}/>
+                    <Route path='/addbranch' component={AddBranch}/>
                 </Switch>
             </Layout>
         </MuiThemeProvider>

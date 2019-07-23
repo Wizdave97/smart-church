@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Chart from 'react-google-charts';
-import { Grid,Paper,Typography, Button} from '@material-ui/core';
+import { Grid,Paper,Typography, Fab,Divider} from '@material-ui/core';
+import { ShowChart, Money, Payment} from '@material-ui/icons';
 import styles from './styles';
 
 class Dashboard extends Component{
@@ -11,14 +12,54 @@ class Dashboard extends Component{
     return (
       <Fragment>
           <Grid
+           item
+           xs={12}>
+              <Paper square={true} elevation={4} className={classes.cards}>
+                  <Typography className={classes.chartTitle}  variant="h3" gutterBottom>Recents</Typography>
+                  <Grid item
+                        xs={12}
+                        sm={3}>
+                        <Paper square={true} elevation={4} className={classes.card}>
+                          <div className={[classes.imageContainer,classes.card1].join(' ')}>
+                            <ShowChart color="primary" />
+                          </div>
+                          <Divider className={classes.divider}/>
+                          <Typography className={classes.text} variant="body1">Attendance</Typography>
+                        </Paper>
+                  </Grid>
+                  <Grid item
+                        xs={12}
+                        sm={3}>
+                        <Paper square={true} elevation={4} className={classes.card}>
+                          <div className={[classes.imageContainer,classes.card2].join(' ')}>
+                            <Money color="primary" />
+                          </div>
+                          <Divider className={classes.divider}/>
+                          <Typography className={classes.text} variant="body1">Income</Typography>
+                        </Paper>
+                  </Grid>
+                  <Grid item
+                        xs={12}
+                        sm={3}>
+                        <Paper square={true} elevation={4} className={classes.card}>
+                          <div className={[classes.imageContainer,classes.card3].join(' ')}>
+                            <Payment color="primary"/>
+                          </div>
+                          <Divider className={classes.divider}/>
+                          <Typography className={classes.text} variant="body1">Expenditure</Typography>
+                        </Paper>
+                  </Grid>
+              </Paper>
+           </Grid>
+          <Grid
           item
           xs={12}
           md={6}
           xl={4}>
-            <Paper elevation={3} className={classes.chart}>
+            <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Attendance</Typography>
-                    <Button variant="outlined" size="medium" color="secondary"><Typography variant="body1">View in details</Typography></Button>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart
@@ -63,10 +104,10 @@ class Dashboard extends Component{
           xs={12}
           md={6}
           xl={4}>
-            <Paper elevation={3} className={classes.chart}>
+            <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
-                    <Button variant="outlined" size="medium" color="secondary"><Typography variant="body1">View in details</Typography></Button>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart
@@ -107,10 +148,10 @@ class Dashboard extends Component{
           xs={12}
           md={6}
           xl={4}>
-            <Paper elevation={3} className={classes.chart}>
+            <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
-                    <Button variant="outlined" size="medium" color="secondary"><Typography variant="body1">View in details</Typography></Button>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart

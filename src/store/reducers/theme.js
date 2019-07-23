@@ -1,5 +1,5 @@
 import { updateObject } from '../utility';
-import { red } from '@material-ui/core/colors'
+import { red,purple } from '@material-ui/core/colors'
 const initialState={
   overrides:{
       MuiTypography:{
@@ -37,24 +37,27 @@ const initialState={
   palette:{
       type:'light',
       primary:{
-          main:'#fafafa'
+          main:'#1565c0'
       },
       secondary:{
-          main:'#1565c0'
+          main:purple[500]
       },
       error:{
         main:red[500],
       },
       contrastThreshold: 3,
-      tonalOffset: 0.2
-
+      tonalOffset: 0.2,
+      background:{
+        paper:'#fff',
+        default:'#f1f1f1'
+      }
   }
 }
 
 const reducer = (state=initialState,action) =>{
   switch(action.type){
-    case 'DARK_MODE': return updateObject(state,{palette:{...state.palette,type:'dark'}})
-    case 'LIGHT_MODE': return updateObject(state,{palette:{...state.palette,type:'light'}})
+    case 'DARK_MODE': return updateObject(state,{palette:{...state.palette,type:'dark',background:{...state.palette.background,paper:"#424242",default:"#303030"}}})
+    case 'LIGHT_MODE': return updateObject(state,{palette:{...state.palette,type:'light',background:{...state.palette.background,paper:'#fff',default:'#f1f1f1'}}})
     default: return state
   }
 }

@@ -7,7 +7,7 @@ const query1={
 }
 const hover={
   '&:hover':{
-    color:fade(purple.A200, 0.5)
+    color:'#ff7c5f'
   }
 }
 const styles= theme =>(
@@ -18,7 +18,8 @@ const styles= theme =>(
     width:'100%',
     padding:0,
     margin:0,
-    boxSizing:'border-box'
+    boxSizing:'border-box',
+    background:'transparent'
   },
   one:{
     width:'33.33%',

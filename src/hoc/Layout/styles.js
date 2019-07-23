@@ -8,10 +8,14 @@ const styles = theme =>({
       marginTop:'90px',
       position:'absolute',
       left:0,
+      backgroundSize:'cover',
       [theme.breakpoints.up('md')]:{
         width:'80%',
         left:'20%'
       }
+    },
+    branchBackground:{
+      backgroundColor:''
     },
     rootElement:{
       padding:'0'
