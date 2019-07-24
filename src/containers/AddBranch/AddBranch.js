@@ -3,7 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { handleChange,submitHandler} from '../../utils/Utility';
+const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddBranch extends Component {
   state={
     states:null,
@@ -44,6 +45,12 @@ class AddBranch extends Component {
       })
     }).catch(err=> console.log(err))
   }
+  hardSetState=this.setState.bind(this)
+  setRef= element =>{
+    if(element){
+      this[element.name]=element;
+    }
+  }
   componentDidUpdate(prevProps,prevState){
     if(prevState.state!=this.state.state){
       let index=this.state.states.indexOf(this.state.state)
@@ -54,10 +61,10 @@ class AddBranch extends Component {
     }
   }
 
-  handleChange= input => e=>{
-    this.setState({[input]:e.target.value})
-  }
+
+
   render(){
+    const references=[this.branchName,this.branchPastor,this.established,this.lga,this.province,this.area,this.address,this.email]
     const { lga, state, state_index,errorLga,errorArea,errorEmail,
            errorState,errorAddress,errorProvince,errorBranchName,errorBranchPastor,errorEstablished}=this.state
     const { classes }=this.props
@@ -85,9 +92,9 @@ class AddBranch extends Component {
             xs={12}
             sm={8}>
                 <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true}>
+                    <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
                         <div className={classes.title} color="secondary">
-                            <Typography variant="h2" color="secondary"  gutterBottom>Add Branch</Typography>
+                            <Typography variant="h2" color="secondary"  gutterBottom>Register a New Branch</Typography>
                         </div>
                         <Divider className={classes.divider}/>
                         <div className={classes.general}>
@@ -98,40 +105,61 @@ class AddBranch extends Component {
                                       inputType="input"
                                       required={true}
                                       error={errorBranchName}
+                                      reference={this.setRef}
                                       type={"text"}
                                       id={"branch-name"}
                                       label="Branch Name"
                                       placeholder="Branch Name"
                                       name={"branchName"}
-                                      handleChange={this.handleChange}
+                                      errorMessage="Please this filled is required"
+                                      value={this.state.branchName}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       />
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
                                       required={true}
+                                      id="email"
+                                      name="email"
+                                      reference={this.setRef}
+                                      pattern={emailPattern}
+                                      value={this.state.email}
                                       error={errorEmail}
                                       type={"email"}
+                                      errorMessage="Please use a valid email"
                                       label="Branch Email"
                                       placeholder="Branch Email"
-                                      handleChange={this.handleChange}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       />
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
-                                    error={errorBranchPastor}
-                                    handleChange={this.handleChange}
-                                    label="Branch Pastor"
-                                    placeholder="Branch Pastor"/>
+                                      type="text"
+                                      required={true}
+                                      reference={this.setRef}
+                                      value={this.state.branchPastor}
+                                      name="branchPastor"
+                                      id="branch-pastor"
+                                      error={errorBranchPastor}
+                                      errorMessage="Please this filled is required"
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Branch Pastor"
+                                      placeholder="Branch Pastor"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
-                                      required
+                                      required={true}
                                       inputType="input"
+                                      id="established-date"
+                                      reference={this.setRef}
                                       error={errorEstablished}
+                                      value={this.state.established}
+                                      name="established"
                                       type={"date"}
-                                      handleChange={this.handleChange}
+                                      errorMessage="Please this filled is required"
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       label="Establishment date"
                                       helperText="fill in the date this branch was established"
                                       />
@@ -146,13 +174,16 @@ class AddBranch extends Component {
                               <Input
                                     id="state-helper"
                                     inputType={'select'}
+                                    type="text"
                                     label="State"
+                                    reference={this.setRef}
                                     name="state"
                                     required={true}
                                     error={errorState}
                                     value={state}
+                                    errorMessage="Please this filled is required"
                                     options={states_list}
-                                    handleChange={this.handleChange}
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     helperText="Please select the desired state"/>
                                 </div>
                                 <div className={classes.entry}>
@@ -161,11 +192,14 @@ class AddBranch extends Component {
                                         inputType={'select'}
                                         label="LGA"
                                         name="lga"
+                                        reference={this.setRef}
                                         required={true}
                                         error={errorLga}
                                         value={lga}
                                         options={lg_list}
-                                        handleChange={this.handleChange}
+                                        type="text"
+                                        errorMessage="Please this filled is required"
+                                        handleChange={(event)=>handleChange(event,this.hardSetState)}
                                         helperText="Please select Local Government"
                                       />
                                 </div>
@@ -174,24 +208,44 @@ class AddBranch extends Component {
                                       inputType="input"
                                     required={true}
                                     error={errorAddress}
+                                    value={this.state.address}
+                                    id="address"
+                                    reference={this.setRef}
+                                    name="address"
+                                    type="text"
+                                    errorMessage="Please this filled is required"
                                     placeholder="Address"
-                                    handleChange={this.handleChange}
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     label="Address"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
+                                      required={false}
+                                      name="province"
+                                      value={this.state.province}
+                                      id="province"
+                                      reference={this.setRef}
+                                      type="text"
+                                      errorMessage="Please this filled is required"
                                       placeholder="Province"
-                                    error={errorProvince}
-                                    handleChange={this.handleChange}
-                                    label="Province"/>
+                                      error={errorProvince}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
+                                    required={false}
+                                    id="area"
+                                    name="area"
+                                    value={this.state.area}
                                     inputType="input"
+                                    reference={this.setRef}
                                     error={errorArea}
                                     placeholder="Area"
-                                    handleChange={this.handleChange}
+                                    type="text"
+                                    errorMessage="Please this filled is required"
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     label="Area"/>
                                 </div>
                             </div>

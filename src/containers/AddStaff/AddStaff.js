@@ -2,39 +2,46 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Input from '../../components/UI/Input/Input';
+import { handleChange,submitHandler} from '../../utils/Utility';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
-import { CSSTransitionGroup } from 'react-transition-group';
 class AddStaff extends Component {
   state={
     firstName:'',
     lastName:'',
     sex:'',
-    province:'',
-    area:'',
     address:'',
     email:'',
+    telephone:'',
+    staffType:'',
+    areaHead:'',
+    provinceHead:'',
     errorFirstName:false,
     errorLastName:false,
     errorEmail:false,
-    errorProvince:false,
     errorTelephone:false,
     errorSex:false,
-    errorArea:false,
-    errorType:false,
-    errorAddress:false
+    errorStaffType:false,
+    errorAreaHead:false,
+    errorProvinceHead:false,
+    errorAddress:false,
+    fixValidityBug:null
   }
-  componentDidMount(){
 
+  componentDidMount(){
+    this.setState({fixValidityBug:''})
+  }
+  hardSetState=this.setState.bind(this)
+  setRef= element =>{
+    if(element){
+      this[element.name]=element;
+    }
   }
   componentDidUpdate(prevProps,prevState){
 
   }
-
-  handleChange= input => e=>{
-    this.setState({[input]:e.target.value})
-  }
   render(){
-    const { errorTelephone,errorType,errorArea,errorEmail,errorAddress,errorProvince,errorFirstName,errorLastName,errorSex}=this.state
+    const { errorTelephone,errorStaffType,errorAreaHead,errorEmail,errorAddress,errorProvinceHead,errorFirstName,errorLastName,errorSex}=this.state
+    const references=[this.firstName,this.lastName,this.sex,this.address,this.email,this.telephone,this.staffType,this.areaHead,this.provinceHead]
     const { classes }=this.props
     return(
       <Grid
@@ -50,9 +57,9 @@ class AddStaff extends Component {
             xs={12}
             sm={8}>
                 <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true}>
+                    <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
                         <div className={classes.title} color="secondary">
-                            <Typography variant="h2" color="secondary"  gutterBottom>Add Staff</Typography>
+                            <Typography variant="h2" color="secondary"  gutterBottom>Register a New Staff</Typography>
                         </div>
                         <Divider className={classes.divider}/>
                         <div className={classes.general}>
@@ -62,42 +69,63 @@ class AddStaff extends Component {
                                     <Input
                                       inputType="input"
                                       required={true}
+                                      reference={this.setRef}
                                       error={errorFirstName}
-                                      type={"text"}
-                                      id={"first-name"}
+                                      type="text"
+                                      id="first-name"
                                       label="First Name"
+                                      value={this.state.firstName}
                                       placeholder="First Name"
-                                      name={"fname"}
-                                      handleChange={this.handleChange}
+                                      errorMessage="Please this filled is required"
+                                      name="firstName"
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       />
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
+                                      required={true}
+                                      reference={this.setRef}
+                                      type="text"
+                                      id="last-name"
+                                      name="lastName"
                                     error={errorLastName}
-                                    handleChange={this.handleChange}
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     label="Last Name"
+                                    errorMessage="Please this filled is required"
+                                    value={this.state.lastName}
                                     placeholder="Last Name"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
                                       required={true}
+                                      reference={this.setRef}
                                       error={errorEmail}
-                                      type={"email"}
+                                      name="email"
+                                      type="email"
                                       label="Email"
+                                      errorMessage="Please enter a valid email"
+                                      value={this.state.email}
+                                      id="email"
                                       placeholder="Email"
-                                      handleChange={this.handleChange}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       />
                                 </div>
 
                                 <div className={classes.entry}>
                                     <Input
-                                      required
+                                      required={true}
                                       inputType="input"
+                                      reference={this.setRef}
+                                      name="telephone"
+                                      id="telephone"
+                                      placeholder="Telephone No"
                                       error={errorTelephone}
-                                      type={"tel"}
-                                      handleChange={this.handleChange}
+                                      type="tel"
+                                      errorMessage="Please this filled is required"
+                                      value={this.state.telephone}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       label="Telephone Number"
                                       />
                                 </div>
@@ -105,30 +133,44 @@ class AddStaff extends Component {
                                     <Input
                                       inputType='radio'
                                       required={true}
+                                      reference={this.setRef}
                                       name="sex"
-                                      
+                                      id="male"
+                                      type="radio"
+                                      errorMessage="Please this filled is required"
                                       error={errorSex}
-                                      handleChange={this.handleChange}
+                                      value={this.state.sex}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       label="Male"
                                       />
                                       <Input
                                         inputType='radio'
                                         required={true}
-
+                                        reference={this.setRef}
+                                        value={this.state.sex}
                                         name="sex"
+                                        id="female"
+                                        errorMessage="Please this filled is required"
+                                        type="radio"
                                         error={errorSex}
-                                        handleChange={this.handleChange}
+                                        handleChange={(event)=>handleChange(event,this.hardSetState)}
                                         label="Female"
                                         />
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="input"
-                                    required={true}
-                                    error={errorAddress}
-                                    placeholder="Address"
-                                    handleChange={this.handleChange}
-                                    label="Address"/>
+                                      required={true}
+                                      reference={this.setRef}
+                                      name="address"
+                                      type="text"
+                                      id="address"
+                                      value={this.state.address}
+                                      error={errorAddress}
+                                      placeholder="Address"
+                                      errorMessage="Please this filled is required"
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Address"/>
                                 </div>
                             </div>
                         </div>
@@ -138,32 +180,44 @@ class AddStaff extends Component {
                             <div className={classes.entries}>
                               <div className={classes.entry}>
                               <Input
-                                    id="type"
+                                    id="staff-type"
                                     inputType={'select'}
                                     label="Staff Type"
-                                    name="stafftype"
+                                    reference={this.setRef}
+                                    name="staffType"
                                     required={true}
-                                    error={errorType}
+                                    type="text"
+                                    error={errorStaffType}
+                                    errorMessage="Please this filled is required"
+                                    value={this.state.staffType}
                                     options={['Pastor','Assistant']}
-                                    handleChange={this.handleChange}
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     helperText="Choose the staff category"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                       inputType="checkbox"
+                                      reference={this.setRef}
                                       placeholder="Province Head?"
-                                    error={errorProvince}
-                                    value=""
-                                    handleChange={this.handleChange}
-                                    label="Province Head?"/>
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
                                     inputType="checkbox"
-                                    error={errorArea}
+                                    reference={this.setRef}
+                                    name="areaHead"
+                                    value={this.state.areaHead}
+                                    error={errorAreaHead}
                                     placeholder="Area Head?"
-                                    value=""
-                                    handleChange={this.handleChange}
+                                    id="area-head"
+                                    type="checkbox"
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     label="Area Head"/>
                                 </div>
                             </div>

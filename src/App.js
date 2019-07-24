@@ -6,6 +6,7 @@ import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import AddBranch from './containers/AddBranch/AddBranch';
 import AddStaff from './containers/AddStaff/AddStaff';
+import NewReport from './containers/NewReport/NewReport';
 
 class App  extends Component{
   render(){
@@ -17,6 +18,7 @@ class App  extends Component{
                     <Route exact path='/' component={Dashboard}/>
                     <Route path='/addbranch' component={AddBranch}/>
                     <Route path='/addstaff' component={AddStaff}/>
+                    <Route path='/newreport' component={NewReport}/>
                 </Switch>
             </Layout>
         </MuiThemeProvider>

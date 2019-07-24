@@ -5,7 +5,7 @@ const styles = theme =>({
       width:'100%',
       display:'flex',
       flexWrap:'wrap',
-      marginTop:'90px',
+      paddingTop:'90px',
       position:'absolute',
       left:0,
       backgroundSize:'cover',

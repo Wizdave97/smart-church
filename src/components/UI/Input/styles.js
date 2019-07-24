@@ -7,9 +7,12 @@ const styles = theme =>({
     padding:'10px',
     boxSizing:'border-box',
   },
+  error:{
+    border: '1px solid red !important',
+    boxShadow:'4px 8px 10px rgba(255,0,0,0.3) -4px -8px 10px rgba(255,0,0,0.4) !important'
+  },
   checkbox:{
     maxWidth:'48px',
-    order:1,
     borderRadius:' 4px',
     margin:' 8px 0',
     display:' inline-block',
@@ -17,7 +20,6 @@ const styles = theme =>({
     boxSizing: 'border-box',
     padding:' 12px 20px',
     '&:hover':{
-      backgroundColor:'#f1f1f1',
       boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
     },
     '&:focus':{
@@ -39,6 +41,30 @@ const styles = theme =>({
     border: '1px solid #ccc',
     borderRadius:' 4px',
     boxSizing: 'border-box',
+    '&:hover':{
+      backgroundColor:'#f1f1f1',
+      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+    },
+    '&:focus':{
+      outline:'none',
+      backgroundColor:'#3CBC8D',
+      color:'white'
+    }
+  },
+  textarea:{
+    width:'100%',
+    marginTop:theme.spacing(0.5),
+    marginBottom:theme.spacing(0.5),
+    backgroundColor:'#fff',
+    fontSize:'12px',
+    color:'rgba(0,0,0,0.6)',
+    padding:' 12px 20px',
+    margin:' 8px 0',
+    display:' inline-block',
+    border: '1px solid #ccc',
+    borderRadius:' 4px',
+    boxSizing: 'border-box',
+    resize:'none',
     '&:hover':{
       backgroundColor:'#f1f1f1',
       boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',

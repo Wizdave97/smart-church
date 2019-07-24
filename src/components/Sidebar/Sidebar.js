@@ -31,7 +31,7 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Report'/></ListItem></Link>
+                  <Link to="/newreport"><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Report'/></ListItem></Link>
                   <Divider className={classes.divider}/>
                   <Link><ListItem><TableChart className={classes.icons}/><ListItemText className={classes.links} primary='View Reports'/></ListItem></Link>
                   <Divider className={classes.divider}/>
@@ -43,9 +43,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link><ListItem><Dashboard className={classes.icons}/><ListItemText className={classes.links} primary='Income'/></ListItem></Link>
+                  <Link><ListItem><Dashboard className={classes.icons}/><ListItemText className={classes.links} primary='Add Income'/></ListItem></Link>
                   <Divider className={classes.divider}/>
-                  <Link><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Expenditure'/></ListItem></Link>
+                  <Link><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Add Expenditure'/></ListItem></Link>
                   <Divider className={classes.divider}/>
               </List>
             </div>
