@@ -4,6 +4,7 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
+const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddStaff extends Component {
   state={
     firstName:'',
@@ -105,6 +106,7 @@ class AddStaff extends Component {
                                       name="email"
                                       type="email"
                                       label="Email"
+                                      pattern={emailPattern}
                                       errorMessage="Please enter a valid email"
                                       value={this.state.email}
                                       id="email"

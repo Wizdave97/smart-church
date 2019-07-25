@@ -54,9 +54,9 @@ const styles= theme =>(
     ...hover
   },
   navText:{
-    fontSize:'0.8rem',
+    fontSize:'1.2rem',
     [theme.breakpoints.down('sm')]:{
-      fontSize:'0.8rem'
+      fontSize:'1rem'
     },
     [theme.breakpoints.down('xs')]:{
       fontSize:'0.7rem'

@@ -101,6 +101,8 @@ const Input = props =>{
                     onChange={props.handleChange}></textarea>
                 )
                 break;
+            default:
+                break;
         }
 
   return (
