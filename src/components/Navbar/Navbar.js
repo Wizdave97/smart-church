@@ -29,7 +29,7 @@ const Navbar = props =>{
     x.addListener(removeMobileSearch)
   },[])
   return (
-    <AppBar position="fixed" color="default">
+    <AppBar className={classes.appbar} position="fixed" color="primary">
       <CSSTransitionGroup
           transitionName='searchbar'
           transitionAppear={true}
@@ -47,7 +47,7 @@ const Navbar = props =>{
         transitionEnter={false}
         transitionLeave={false}
         >
-        <Toolbar variant="dense">
+        <Toolbar className={classes.toolbar} variant="dense">
             <div className={classes.navbar}>
                 <div className={classes.one}>
                     <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><Menu/></div>

@@ -1,5 +1,7 @@
 import { fade } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
+import BG_3 from '../../assets/bg_3.jpg';
+import Nature from '../../assets/nature.jpg';
 const query1={
   '@media screen and (max-width:489px)':{
     display:'none'
@@ -20,6 +22,13 @@ const styles= theme =>(
     margin:0,
     boxSizing:'border-box',
     background:'transparent'
+  },
+  toolbar:{
+    background:'transparent'
+  },
+  appbar:{
+    backgroundSize:'cover',
+    backgroundImage:theme.palette.type==='dark'?`url('${Nature}')`:`url('${BG_3}')`
   },
   one:{
     width:'33.33%',

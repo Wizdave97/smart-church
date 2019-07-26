@@ -219,8 +219,8 @@ class Auth extends Component {
     }
     return(
     <div className={classes.root}>
-    <AppBar position="fixed" color="secondary">
-        <Toolbar>
+    <AppBar className={classes.appbar} position="fixed" color="primary">
+        <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
             <Typography variant="h1" align="center">Smart Church</Typography>
           </div>

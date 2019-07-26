@@ -8,7 +8,6 @@ const styles = theme =>({
       paddingTop:'90px',
       position:'absolute',
       left:0,
-      backgroundSize:'cover',
       [theme.breakpoints.up('md')]:{
         width:'80%',
         left:'20%'

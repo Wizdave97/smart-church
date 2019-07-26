@@ -48,7 +48,7 @@ const styles = theme =>({
     '&:focus':{
       outline:'none',
       backgroundColor:'rgba(150,157,204,0.7)',
-      color:'white'
+      color:'black'
     }
   },
   textarea:{

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import './sidebar.css';
 import {Paper, Typography , Divider, List, ListItem, ListItemText } from '@material-ui/core';
-import { Dashboard, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
+import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
 
 
 const sideBar = (props) =>{
@@ -13,6 +13,16 @@ const sideBar = (props) =>{
     <aside id="style-9" className={classes.aside}>
         <div className={classes.space}></div>
         <Paper square={true} elevation={0} className={classes.sideBar}>
+          <div className={classes.section}>
+            <div className={classes.title}>
+                <Typography  className={classes.titleText} align="left" variant='h5'>Setup</Typography>
+            </div>
+            <Divider className={classes.divider}/>
+            <List className={classes.list}>
+              <Link to="/settings"><ListItem><Settings className={classes.icons}/><ListItemText className={classes.links} primary='Settings'/></ListItem></Link>
+              <Divider className={classes.divider}/>
+            </List>
+          </div>
             <div className={classes.section}>
               <div className={classes.title}>
                   <Typography  className={classes.titleText} align="left" variant='h5'>General</Typography>

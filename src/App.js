@@ -8,24 +8,26 @@ import AddBranch from './containers/AddBranch/AddBranch';
 import AddStaff from './containers/AddStaff/AddStaff';
 import NewReport from './containers/NewReport/NewReport';
 import Auth from './containers/Auth/Auth';
+import Settings from './containers/Settings/Settings';
 
 class App  extends Component{
   render(){
     const theme=createMuiTheme(this.props.theme)
-    const unAuthenticated=<Route exact path='/' component={Auth}/>
+    const unAuthenticated=<Switch><Route  path='/' component={Auth}/></Switch>
     const Authenticated=(
       <Layout>
           <Switch>
-            <Route exact path='/dashboard' component={Dashboard}/>
+            <Route exact path='/' component={Dashboard}/>
             <Route path='/addbranch' component={AddBranch}/>
             <Route path='/addstaff' component={AddStaff}/>
             <Route path='/newreport' component={NewReport}/>
+            <Route path='/settings' component={Settings}/>
           </Switch>
       </Layout>
     )
     return (
         <MuiThemeProvider theme={theme}>
-            {unAuthenticated}
+            {Authenticated}
         </MuiThemeProvider>
     )
   }

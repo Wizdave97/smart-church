@@ -1,4 +1,5 @@
 import Auth from '../../assets/bg_1.jpg'
+import BG_3 from '../../assets/bg_3.jpg';
 const boxSizing={
   boxSizing:'border-box'
 }
@@ -16,11 +17,17 @@ const styles = theme =>({
   contain:{
     width:'100%',
     display:'flex',
-    width:'100%',
     flexWrap:'wrap',
     padding:0,
     margin:0,
     ...boxSizing
+  },
+  toolbar:{
+    background:'transparent'
+  },
+  appbar:{
+    backgroundSize:'cover',
+    backgroundImage:`url('${BG_3}')`
   },
   container:{
     marginTop:'90px',
