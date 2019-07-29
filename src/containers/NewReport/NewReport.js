@@ -3,12 +3,13 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { handleChange,submitHandler} from '../../utils/Utility';
+import formSerialize from 'form-serialize';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 
 class NewReport extends Component {
   state={
     serviceDate:'',
-    serviceDay:'',
+    serviceDay:true,
     serviceNumber:'',
     maleAttendance:'',
     femaleAttendance:'',
@@ -44,8 +45,14 @@ class NewReport extends Component {
 
   }
 
-  handleChange= input => e=>{
-    this.setState({[input]:e.target.value})
+  onSubmit = (references,hardSetState,e)=>{
+    e.preventDefault();
+    let valid= submitHandler(references, hardSetState)
+    if (valid){
+      let form= document.querySelector('form')
+      let authData=formSerialize(form,{hash:true})
+      console.log(authData)
+    }
   }
   render(){
     const { errorServiceDay,errorServiceNumber,errorServiceDate,errorMaleAttendance,errorNotes,errorTopic,
@@ -66,7 +73,7 @@ class NewReport extends Component {
             xs={12}
             sm={8}>
                 <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
+                    <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
                         <div className={classes.title} color="secondary">
                             <Typography variant="h2" color="secondary"  gutterBottom>New Report</Typography>
                         </div>

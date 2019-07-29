@@ -4,6 +4,7 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
+import formSerialize from 'form-serialize';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddStaff extends Component {
   state={
@@ -40,6 +41,15 @@ class AddStaff extends Component {
   componentDidUpdate(prevProps,prevState){
 
   }
+  onSubmit = (references,hardSetState,e)=>{
+    e.preventDefault();
+    let valid= submitHandler(references, hardSetState)
+    if (valid){
+      let form= document.querySelector('form')
+      let authData=formSerialize(form,{hash:true})
+      console.log(authData)
+    }
+  }
   render(){
     const { errorTelephone,errorStaffType,errorAreaHead,errorEmail,errorAddress,errorProvinceHead,errorFirstName,errorLastName,errorSex}=this.state
     const references=[this.firstName,this.lastName,this.sex,this.address,this.email,this.telephone,this.staffType,this.areaHead,this.provinceHead]
@@ -58,7 +68,7 @@ class AddStaff extends Component {
             xs={12}
             sm={8}>
                 <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
+                    <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
                         <div className={classes.title} color="secondary">
                             <Typography variant="h2" color="secondary"  gutterBottom>Register a New Staff</Typography>
                         </div>
@@ -141,7 +151,7 @@ class AddStaff extends Component {
                                       type="radio"
                                       errorMessage="Please this filled is required"
                                       error={errorSex}
-                                      value={this.state.sex}
+                                      value="male"
                                       handleChange={(event)=>handleChange(event,this.hardSetState)}
                                       label="Male"
                                       />
@@ -149,7 +159,7 @@ class AddStaff extends Component {
                                         inputType='radio'
                                         required={true}
                                         reference={this.setRef}
-                                        value={this.state.sex}
+                                        value="female"
                                         name="sex"
                                         id="female"
                                         errorMessage="Please this filled is required"
@@ -198,6 +208,7 @@ class AddStaff extends Component {
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
+                                      required={false}
                                       inputType="checkbox"
                                       reference={this.setRef}
                                       placeholder="Province Head?"
@@ -211,6 +222,7 @@ class AddStaff extends Component {
                                 </div>
                                 <div className={classes.entry}>
                                     <Input
+                                    required={false}
                                     inputType="checkbox"
                                     reference={this.setRef}
                                     name="areaHead"

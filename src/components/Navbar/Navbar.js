@@ -29,7 +29,7 @@ const Navbar = props =>{
     x.addListener(removeMobileSearch)
   },[])
   return (
-    <AppBar className={classes.appbar} position="fixed" color="primary">
+    <AppBar className={classes.appbar} position="fixed" color="default">
       <CSSTransitionGroup
           transitionName='searchbar'
           transitionAppear={true}

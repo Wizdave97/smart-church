@@ -27,8 +27,7 @@ const styles= theme =>(
     background:'transparent'
   },
   appbar:{
-    backgroundSize:'cover',
-    backgroundImage:theme.palette.type==='dark'?`url('${Nature}')`:`url('${BG_3}')`
+    backgroundColor:theme.palette.type==='dark'?'#303030':theme.palette.primary.main
   },
   one:{
     width:'33.33%',

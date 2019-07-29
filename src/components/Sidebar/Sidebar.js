@@ -1,25 +1,27 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import styles from './styles';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import './sidebar.css';
 import {Paper, Typography , Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
 
 
-const sideBar = (props) =>{
-  const { classes } = props
+const SideBar = (props) =>{
+  const { classes,path } = props
+
+
   return (
     <aside id="style-9" className={classes.aside}>
         <div className={classes.space}></div>
-        <Paper square={true} elevation={0} className={classes.sideBar}>
+        <Paper  square={true} elevation={0} className={classes.sideBar}>
           <div className={classes.section}>
             <div className={classes.title}>
                 <Typography  className={classes.titleText} align="left" variant='h5'>Setup</Typography>
             </div>
             <Divider className={classes.divider}/>
             <List className={classes.list}>
-              <Link to="/settings"><ListItem><Settings className={classes.icons}/><ListItemText className={classes.links} primary='Settings'/></ListItem></Link>
+              <NavLink to="/settings" ><ListItem><Settings className={classes.icons}/><ListItemText className={classes.links} primary='Settings'/></ListItem></NavLink>
               <Divider className={classes.divider}/>
             </List>
           </div>
@@ -29,9 +31,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                <Link to="/"><ListItem><Dashboard className={classes.icons}/><ListItemText className={classes.links} primary='Dashboard'/></ListItem></Link>
+                <NavLink to="/" exact><ListItem><Dashboard className={classes.icons}/><ListItemText className={classes.links} primary='Dashboard'/></ListItem></NavLink>
                 <Divider className={classes.divider}/>
-                <Link><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Analytics'/></ListItem></Link>
+                <NavLink to="/analytics" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Analytics'/></ListItem></NavLink>
                 <Divider className={classes.divider}/>
               </List>
             </div>
@@ -41,9 +43,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link to="/newreport"><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Report'/></ListItem></Link>
+                  <NavLink to="/newreport" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Service Report'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
-                  <Link><ListItem><TableChart className={classes.icons}/><ListItemText className={classes.links} primary='View Reports'/></ListItem></Link>
+                  <NavLink to="/viewreports" ><ListItem><TableChart className={classes.icons}/><ListItemText className={classes.links} primary='View Reports'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
               </List>
             </div>
@@ -53,9 +55,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link><ListItem><Dashboard className={classes.icons}/><ListItemText className={classes.links} primary='Add Income'/></ListItem></Link>
+                  <NavLink to="/finance" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Finance Report'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
-                  <Link><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Add Expenditure'/></ListItem></Link>
+                  <NavLink to="/viewfinances" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='View Finance Reports'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
               </List>
             </div>
@@ -65,9 +67,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link to="/addbranch"><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Branch'/></ListItem></Link>
+                  <NavLink to="/addbranch" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Branch'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
-                  <Link><ListItem><GroupWork className={classes.icons}/><ListItemText className={classes.links} primary='All Branches'/></ListItem></Link>
+                  <NavLink to="/allbranches" ><ListItem><GroupWork className={classes.icons}/><ListItemText className={classes.links} primary='All Branches'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
               </List>
             </div>
@@ -77,9 +79,9 @@ const sideBar = (props) =>{
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
-                  <Link to="/addstaff"><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='New Staff'/></ListItem></Link>
+                  <NavLink to="/addstaff" ><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='New Staff'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
-                  <Link><ListItem><People className={classes.icons}/><ListItemText className={classes.links} primary='All Staff'/></ListItem></Link>
+                  <NavLink to="/allstaff" ><ListItem><People className={classes.icons}/><ListItemText className={classes.links} primary='All Staff'/></ListItem></NavLink>
                   <Divider className={classes.divider}/>
               </List>
             </div>
@@ -89,4 +91,4 @@ const sideBar = (props) =>{
   )
 }
 
-export default withStyles(styles)(sideBar)
+export default withStyles(styles)(SideBar)

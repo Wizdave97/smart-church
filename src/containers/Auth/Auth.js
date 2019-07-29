@@ -5,7 +5,11 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import formSerialize from 'form-serialize';
+import { connect } from 'react-redux';
 import './auth.css';
+import { authAsync }  from '../../store/actions/authActions';
+import Spinner from '../../components/UI/Spinner/Spinner';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
 
 class Auth extends Component {
@@ -14,21 +18,21 @@ class Auth extends Component {
     name:'',
     email:'',
     address:'',
-    telephone:'',
-    adminFName:'',
-    adminLName:'',
-    adminEmail:'',
-    adminTelephone:'',
-    adminPassword:'',
+    phone:'',
+    adminfname:'',
+    adminlname:'',
+    adminemail:'',
+    adminsex:'',
+    password:'',
     errorName:false,
     errorEmail:false,
     errorAddress:false,
-    errorTelephone:false,
-    errorAdminFName:false,
-    errorAdminLName:false,
-    errorAdminEmail:false,
-    errorAdminTelephone:false,
-    errorAdminPassword:false,
+    errorSex:false,
+    errorAdminfname:false,
+    errorAdminlname:false,
+    errorAdminemail:false,
+    errorAdminsex:'',
+    errorPassword:false,
     fixValidityBug:''
   }
   componentDidMount(){
@@ -47,12 +51,22 @@ class Auth extends Component {
       this[element.name]=element;
     }
   }
+  onSubmit = (references,hardSetState,e)=>{
+    e.preventDefault();
+    let valid= submitHandler(references, hardSetState)
+    if (valid){
+      let form= document.querySelector('form')
+      let authData=formSerialize(form,{hash:true})
+      this.props.onSubmitAuth(this.state.isSignUp,authData)
+    }
+  }
   render() {
     const { classes } = this.props
-    const { name, email,address,telephone,adminEmail,adminFName,adminLName,adminPassword,adminTelephone,
-            errorName,errorEmail,errorAddress,errorTelephone,errorAdminEmail,errorAdminFName,errorAdminLName,errorAdminTelephone,errorAdminPassword}=this.state
-    let references=[this.name,this.email,this.telephone,this.address,this.adminFName,this.adminLName,this.adminEmail,this.adminTelephone]
+    const { name, email,address,phone,adminemail,adminfname,adminlname,password,adminsex,
+            errorName,errorEmail,errorAddress,errorPhone,errorAdminemail,errorAdminfname,errorAdminlname,errorAdminsex,errorPassword}=this.state
+    let references=[this.name,this.email,this.phone,this.address,this.adminfname,this.adminlname,this.adminemail,this.adminsex]
     let formDisplay=(
+      <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
       <div className={classes.contain}>
           <div className={classes.entry} ><Typography color="primary" variant="h2" align="center">The next generation church management tool<br></br>Sign up in seconds</Typography></div>
           <div className={classes.entry} ><Input
@@ -100,67 +114,79 @@ class Auth extends Component {
             required={true}
             reference={this.setRef}
             id="church-telephone"
-            name="telephone"
+            name="phone"
             type="text"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={telephone}
+            value={phone}
             placeholder="Enter the church telephone no."
             errorMessage="Please this field is required"
-            error={errorTelephone}/></div>
+            error={errorPhone}/></div>
           <div className={classes.entry} ><Input
             label="Admin FirstName"
             required={true}
             reference={this.setRef}
             id="admin-firstname"
-            name="adminFName"
+            name="adminfname"
             type="text"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminFName}
+            value={adminfname}
             placeholder="Enter the Admin's Firstname"
             errorMessage="Please this field is required"
-            error={errorAdminFName}/></div>
+            error={errorAdminfname}/></div>
           <div className={classes.entry} ><Input
             label="Admin LastName"
             required={true}
             reference={this.setRef}
             id="admin-lastname"
-            name="adminLName"
+            name="adminlname"
             type="text"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminLName}
+            value={adminlname}
             placeholder="Enter the Admin's Lastname"
             errorMessage="Please this field is required"
-            error={errorAdminLName}/></div>
+            error={errorAdminlname}/></div>
           <div className={classes.entry} ><Input
             label="Admin Email"
             required={true}
             id="admin-email"
             reference={this.setRef}
-            name="adminEmail"
+            name="adminemail"
             type="text"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminEmail}
+            value={adminemail}
             pattern={emailPattern}
             placeholder="example@gmail.com"
             errorMessage="Please use a valid email"
-            error={errorAdminEmail}/></div>
+            error={errorAdminemail}/></div>
           <div className={classes.entry} ><Input
-            label="Admin Telephone Number"
+            label="Male"
             required={true}
             reference={this.setRef}
-            id="admin-telephone"
-            name="adminTelephone"
+            id="male"
+            name="adminsex"
             type="text"
-            inputType="input"
+            inputType="radio"
+            value="male"
+            helperText="Select male or female"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminTelephone}
-            placeholder="Enter the Admin's Phone No."
             errorMessage="Please this field is required"
-            error={errorAdminTelephone}/></div>
+            error={errorAdminsex}/></div>
+            <div className={classes.entry} ><Input
+              label="Female"
+              required={true}
+              reference={this.setRef}
+              id="female"
+              name="adminsex"
+              type="text"
+              inputType="radio"
+              value="female"
+              handleChange={(event)=>handleChange(event,this.hardSetState)}
+              errorMessage="Please this field is required"
+              error={errorAdminsex}/></div>
           <div className={classes.entry}>
             <Button
             fullWidth={true}
@@ -172,38 +198,40 @@ class Auth extends Component {
           <div className={classes.entry} >
             <Typography color="primary" variant="body1" align="center">Already have an account? <span onClick={this.switchAuthMode} className={classes.span}>Login</span></Typography></div>
       </div>
+    </form>
     )
-    if(!this.state.isSignUp) {
-      references=[this.adminEmail]
+    if(!this.state.isSignUp && !this.props.authStart) {
+      references=[this.email]
         formDisplay=(
+          <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
           <div className={classes.contain}>
           <div className={classes.entry} ><Typography color="primary" variant="h2" align="center">The next generation church management tool.<br></br>Welcome</Typography></div>
           <div className={classes.entry} ><Input
             label="Admin Email"
             required={true}
             reference={this.setRef}
-            id="admin-email"
-            name="adminEmail"
+            id="email"
+            name="email"
             type="text"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminEmail}
+            value={email}
             pattern={emailPattern}
             placeholder="Email"
             errorMessage="Please use a valid email"
-            error={errorAdminEmail} /></div>
+            error={errorEmail} /></div>
           <div className={classes.entry} ><Input
             label="Password"
             required={true}
             id="admin-password"
-            name="adminPassword"
+            name="password"
             type="password"
             inputType="input"
             handleChange={(event)=>handleChange(event,this.hardSetState)}
-            value={adminPassword}
+            value={password}
             placeholder="Password"
             errorMessage="Please fill in the correct password"
-            error={errorAdminPassword}/></div>
+            error={errorPassword}/></div>
             <div className={classes.entry}>
               <Button
               fullWidth={true}
@@ -215,11 +243,15 @@ class Auth extends Component {
             <div className={classes.entry} >
               <Typography color="primary" variant="body1" align="center">Don't have an account? <span onClick={this.switchAuthMode}  className={classes.span}>Signup</span></Typography></div>
         </div>
+      </form>
     )
+    }
+    if(this.props.authStart){
+      formDisplay=<Spinner/>
     }
     return(
     <div className={classes.root}>
-    <AppBar className={classes.appbar} position="fixed" color="primary">
+    <AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
             <Typography variant="h1" align="center">Smart Church</Typography>
@@ -234,7 +266,6 @@ class Auth extends Component {
           <Grid item xs={12} sm={8} className={classes.gridItem} >
               <Paper square={true} className={classes.paper} >
                 <div className={classes.gradient}></div>
-                <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
                   <CSSTransitionGroup
                     transitionName="auth"
                     transitionEnter={true}
@@ -243,7 +274,6 @@ class Auth extends Component {
                     transitionLeaveTimeout={500}>
                       {formDisplay}
                   </CSSTransitionGroup>
-                </form>
               </Paper>
           </Grid>
       </Grid>
@@ -251,5 +281,13 @@ class Auth extends Component {
     )
   }
 }
+const mapStateToProps = state =>({
+  authStart:state.auth.authStart,
+  authFail:state.auth.authFail,
+  authSuccess:state.auth.authSuccess
 
-export default withStyles(styles)(Auth);
+})
+const mapDispatchToProps= dispatch =>({
+  onSubmitAuth: (isSignUp,authData)=> dispatch(authAsync(isSignUp, authData))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Auth));

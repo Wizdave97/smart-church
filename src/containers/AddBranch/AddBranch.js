@@ -4,6 +4,7 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 import { handleChange,submitHandler} from '../../utils/Utility';
+import formSerialize from 'form-serialize';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddBranch extends Component {
   state={
@@ -61,7 +62,15 @@ class AddBranch extends Component {
     }
   }
 
-
+  onSubmit = (references,hardSetState,e)=>{
+    e.preventDefault();
+    let valid= submitHandler(references, hardSetState)
+    if (valid){
+      let form= document.querySelector('form')
+      let authData=formSerialize(form,{hash:true})
+      console.log(authData)
+    }
+  }
 
   render(){
     const references=[this.branchName,this.branchPastor,this.established,this.lga,this.province,this.area,this.address,this.email]
@@ -92,7 +101,7 @@ class AddBranch extends Component {
             xs={12}
             sm={8}>
                 <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true} onSubmit={submitHandler(references,this.hardSetState)}>
+                    <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
                         <div className={classes.title} color="secondary">
                             <Typography variant="h2" color="secondary"  gutterBottom>Register a New Branch</Typography>
                         </div>

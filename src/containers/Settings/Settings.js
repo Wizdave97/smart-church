@@ -104,29 +104,17 @@ class Settings extends Component {
                   <Paper square={true} className={classes.paper}>
                         <div className={classes.category}>
                             <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Income Categories</Typography></div>
-                            <EditableList removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.incomeStreams} identifier="income" value={this.state.new_income_type} addItem={this.addItemCategory}/>
+                            <EditableList label="Add Income type" removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.incomeStreams} identifier="income" value={this.state.new_income_type} addItem={this.addItemCategory}/>
                         </div>
                         <div className={classes.category}>
                             <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Expenditure Categories</Typography></div>
-                            <EditableList removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.expenditureStreams} identifier="expenditure" value={this.state.new_expenditure_type} addItem={this.addItemCategory}/>
+                            <EditableList label="Add Expenditure type" removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.expenditureStreams} identifier="expenditure" value={this.state.new_expenditure_type} addItem={this.addItemCategory}/>
                         </div>
                         <div className={classes.category}>
                             <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>
-                            <EditableList removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.staffTypes} identifier="staffType" value={this.state.new_staff_type} addItem={this.addItemCategory}/>
+                            <EditableList label="Add Staff type" removeItem={this.removeItemCategory} handleChange={this.handleChange} list={this.state.staffTypes} identifier="staffType" value={this.state.new_staff_type} addItem={this.addItemCategory}/>
                         </div>
                         <div className={classes.submit}><Button color="secondary" variant="contained" size="large">Submit</Button></div>
-                  </Paper>
-              </Grid>
-              <Grid
-              item
-              xs={12}>
-                  <Paper square={true} className={classes.paper}>
-                      <div>
-                          <div className={classes.title}><Typography variant="h2" color="secondary" align='left'>Provinces</Typography></div>
-                      </div>
-                      <div>
-                          <div className={classes.title}><Typography variant="h2" color="secondary" align='left'>Areas</Typography></div>
-                      </div>
                   </Paper>
               </Grid>
           </Grid>

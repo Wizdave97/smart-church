@@ -25,10 +25,6 @@ const styles = theme =>({
   toolbar:{
     background:'transparent'
   },
-  appbar:{
-    backgroundSize:'cover',
-    backgroundImage:`url('${BG_3}')`
-  },
   container:{
     marginTop:'90px',
     minHeight:'calc(100% - 90px )'

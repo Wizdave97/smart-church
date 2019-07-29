@@ -12,13 +12,16 @@ import SideBar from '../../components/Sidebar/Sidebar'
 
 class Layout extends Component {
   state={
-    showSideBar:false
+    showSideBar:false,
   }
   componentDidMount(){
 
     const x=window.matchMedia("(min-width:960px)")
     this.showSideBar(x)
     x.addListener(this.showSideBar)
+
+  }
+  componentDidUpdate(prevProps,prevState){
   }
   showSideBar=(x)=>{
     if(x.matches){
@@ -39,7 +42,7 @@ class Layout extends Component {
   }
   render(){
     const { classes } = this.props
-    const path=window.location.pathname
+
     return (
       <React.Fragment>
           <CssBaseline/>
@@ -50,9 +53,9 @@ class Layout extends Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                { this.state.showSideBar?<SideBar key={"sidebar"}/>:null }
+                { this.state.showSideBar?<SideBar  key={"sidebar"}/>:null }
               </CSSTransitionGroup>}
-              <div className={[classes.root,path=='/addbranch'?classes.branchBackground:' ',].join(' ')} >
+              <div className={classes.root} >
                 <main className={classes.main}  style={{padding:32}}>
                     <Grid
                     container

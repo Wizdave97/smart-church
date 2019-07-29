@@ -9,8 +9,8 @@ const styles = theme =>({
       position:'absolute',
       left:0,
       [theme.breakpoints.up('md')]:{
-        width:'80%',
-        left:'20%'
+        width:'75%',
+        left:'25%'
       }
     },
     branchBackground:{

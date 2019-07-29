@@ -37,10 +37,10 @@ const styles= theme =>({
     backgroundImage:'linear-gradient(to bottom,#222c3c,#222c3c)',
     boxShadow:'0px 2px 6px -1px rgba(0,0,0,0.2), 0px 4px 8px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
     [theme.breakpoints.up('sm')]:{
-      width:'30%'
+      width:'40%'
     },
     [theme.breakpoints.up('md')]:{
-      width:'20%'
+      width:'25%'
     }
   },
   list:{
@@ -62,6 +62,7 @@ const styles= theme =>({
       }
     },
   },
+  
   divider:{
     width:'100%',
     height:'1px'

@@ -1,13 +1,17 @@
  const setValue = (input,setState,e)=>{
+  if(e.target.type=='checkbox'){
+    setState({[input]:e.target.checked})
+    return e
+  }
   setState({[input]:e.target.value})
   return e
 }
-export const submitHandler=(references,setState) => (event) =>{
-  event.preventDefault();
+export const submitHandler=(references,setState) => {
   let validity=references.every(element=>{
     let check=element.checkValidity()
     return check
   })
+  if(validity) return validity
   references.map(element=>{
     let check=element.checkValidity()
     if(!check){
@@ -16,6 +20,7 @@ export const submitHandler=(references,setState) => (event) =>{
       })
     }
   })
+
 }
 export const handleChange = async (e,setState) =>{
   e.persist()

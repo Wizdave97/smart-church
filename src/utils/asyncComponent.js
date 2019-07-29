@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Spinner from '../components/UI/Spinner/Spinner';
 
 const asyncComponent = (importComponent) =>{
 
@@ -17,7 +17,7 @@ const asyncComponent = (importComponent) =>{
 
     render(){
       const { C } = this.state
-      return C ? <C {...this.props}/>:null
+      return C ? <C {...this.props}/>:<Spinner/>
     }
   }
 }

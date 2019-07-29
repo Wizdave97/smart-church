@@ -65,11 +65,11 @@ const Input = props =>{
                 required={props.required}
                 name={props.name}
                 aria-describedby="helperText"
-                value={props.value}
                 placeholder={props.placeholder}
                 className={[classes.checkbox,props.error?classes.error:''].join(' ')}
                 type="checkbox"
                 id={props.id}
+                checked={props.value}
                 onChange={props.handleChange}/>)
                 break;
          case 'radio':
