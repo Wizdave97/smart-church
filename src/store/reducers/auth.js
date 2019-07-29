@@ -16,7 +16,6 @@ const reducer =(state=initialState,action)=>{
     case actionTypes.AUTH_FAIL:return updateObject(state,{authStart:false,authSuccess:false,authFail:true,error:true})
     default: return state
   }
-  return state
 }
 
 export default reducer

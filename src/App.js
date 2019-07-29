@@ -21,6 +21,9 @@ const asyncNewReport=asyncComponent(()=>{
 const asyncSettings= asyncComponent(()=>{
   return import('./containers/Settings/Settings')
 })
+const asyncFinanceReport= asyncComponent(()=>{
+  return import('./containers/Finance/FinanceReport')
+})
 class App  extends Component{
 
   componentDidMount(){
@@ -40,6 +43,7 @@ class App  extends Component{
             <Route path='/addstaff' component={asyncAddStaff}/>
             <Route path='/newreport' component={asyncNewReport}/>
             <Route path='/settings' component={asyncSettings}/>
+            <Route path='/finance' component={asyncFinanceReport}/>
           </Switch>
       </Layout>
     )

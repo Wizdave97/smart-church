@@ -1,4 +1,4 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar , Typography, InputBase, Switch} from '@material-ui/core';
@@ -29,7 +29,7 @@ const Navbar = props =>{
     x.addListener(removeMobileSearch)
   },[])
   return (
-    <AppBar className={classes.appbar} position="fixed" color="default">
+    <AppBar className={classes.appbar} position="fixed" color="primary">
       <CSSTransitionGroup
           transitionName='searchbar'
           transitionAppear={true}

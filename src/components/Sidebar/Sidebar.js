@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 import styles from './styles';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,8 +8,7 @@ import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,A
 
 
 const SideBar = (props) =>{
-  const { classes,path } = props
-
+  const { classes } = props
 
   return (
     <aside id="style-9" className={classes.aside}>

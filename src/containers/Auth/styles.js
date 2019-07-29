@@ -1,5 +1,5 @@
 import Auth from '../../assets/bg_1.jpg'
-import BG_3 from '../../assets/bg_3.jpg';
+
 const boxSizing={
   boxSizing:'border-box'
 }
