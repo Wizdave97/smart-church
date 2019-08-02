@@ -188,7 +188,7 @@ class AddStaff extends Component {
                         </div>
                         <Divider className={classes.divider}/>
                         <div className={classes.general}>
-                            <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Branch Details</Typography></div>
+                            <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Staff Details</Typography></div>
                             <div className={classes.entries}>
                               <div className={classes.entry}>
                               <Input
@@ -211,7 +211,7 @@ class AddStaff extends Component {
                                       required={false}
                                       inputType="checkbox"
                                       reference={this.setRef}
-                                      placeholder="Province Head?"
+                                      placeholder="Province Head ?"
                                       error={errorProvinceHead}
                                       id="province-head"
                                       name="provinceHead"
@@ -232,7 +232,124 @@ class AddStaff extends Component {
                                     id="area-head"
                                     type="checkbox"
                                     handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                    label="Area Head ?"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={classes.general}>
+                            <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Staff Permissions</Typography></div>
+                            <div className={classes.entries}>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="All Branches"
+                                      error={null}
+                                      id="all-branches"
+                                      name="allBranches"
+                                      type="checkbox"
+                                      value={this.state.allBranches}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="All Branches?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                    required={false}
+                                    inputType="checkbox"
+                                    reference={this.setRef}
+                                    name="areaHead"
+                                    value={this.state.areaHead}
+                                    error={errorAreaHead}
+                                    placeholder="Area Head?"
+                                    id="area-head"
+                                    type="checkbox"
+                                    handleChange={(event)=>handleChange(event,this.hardSetState)}
                                     label="Area Head"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
+                                </div>
+                                <div className={classes.entry}>
+                                    <Input
+                                      required={false}
+                                      inputType="checkbox"
+                                      reference={this.setRef}
+                                      placeholder="Province Head?"
+                                      error={errorProvinceHead}
+                                      id="province-head"
+                                      name="provinceHead"
+                                      type="checkbox"
+                                      value={this.state.provinceHead}
+                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
+                                      label="Province Head?"/>
                                 </div>
                             </div>
                         </div>

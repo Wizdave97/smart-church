@@ -1,3 +1,4 @@
 import themeReducer from './theme';
 import authReducer from './auth';
-export {themeReducer,authReducer}
+import branchReducer from './branch';
+export {themeReducer,authReducer,branchReducer}

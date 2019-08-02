@@ -7,6 +7,7 @@ import { handleChange,submitHandler} from '../../utils/Utility';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import formSerialize from 'form-serialize';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import './auth.css';
 import { authAsync }  from '../../store/actions/authActions';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -57,6 +58,7 @@ class Auth extends Component {
     if (valid){
       let form= document.querySelector('form')
       let authData=formSerialize(form,{hash:true})
+      console.log(authData)
       this.props.onSubmitAuth(this.state.isSignUp,authData)
     }
   }
@@ -250,7 +252,10 @@ class Auth extends Component {
       formDisplay=<Spinner/>
     }
     return(
+    <React.Fragment>
+      {this.props.isAuthenticated?<Redirect to="/"/>:null}
     <div className={classes.root}>
+    <div className={classes.topGradient}></div>
     <AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
@@ -263,8 +268,8 @@ class Auth extends Component {
     justify="center"
     className={classes.container}
       >
-          <Grid item xs={12} sm={8} className={classes.gridItem} >
-              <Paper square={true} className={classes.paper} >
+          <Grid item xs={12} sm={8} md={6} lg={4} className={classes.gridItem} >
+              <Paper elevation={4} square={true} className={classes.paper} >
                 <div className={classes.gradient}></div>
                   <CSSTransitionGroup
                     transitionName="auth"
@@ -278,13 +283,15 @@ class Auth extends Component {
           </Grid>
       </Grid>
     </div>
+  </React.Fragment>
     )
   }
 }
 const mapStateToProps = state =>({
   authStart:state.auth.authStart,
   authFail:state.auth.authFail,
-  authSuccess:state.auth.authSuccess
+  authSuccess:state.auth.authSuccess,
+  isAuthenticated:state.auth.token!==null
 
 })
 const mapDispatchToProps= dispatch =>({

@@ -1,4 +1,4 @@
-import Auth from '../../assets/bg_1.jpg'
+import Auth from '../../assets/bg_2.jpg'
 
 const boxSizing={
   boxSizing:'border-box'
@@ -11,8 +11,8 @@ const styles = theme =>({
     padding:'0 20px',
     paddingBottom:'60px',
     margin:0,
-    backgroundImage:`url(${Auth})`,
-    backgroundSize:'cover'
+    backgroundSize:'cover',
+    backgroundImage:`url('${Auth}')`
   },
   contain:{
     width:'100%',
@@ -56,6 +56,15 @@ const styles = theme =>({
     padding:0,
     borderRadius:'5px',
     position:'relative'
+  },
+  topGradient:{
+    position:'fixed',
+    width:'100%',
+    height:'10px',
+    left:0,
+    top:0,
+    zIndex:1500,
+    backgroundImage:'linear-gradient(to right,rgb(195,226,121),rgb(247,254,200),rgb(255,208,105),rgb(242,118,105),rgb(220,156,190),rgb(197,154,224),rgb(150,157,204))'
   },
   gradient:{
     position:'absolute',

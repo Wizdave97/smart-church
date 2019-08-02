@@ -46,6 +46,7 @@ class Layout extends Component {
     return (
       <React.Fragment>
           <CssBaseline/>
+              <div className={classes.gradient}></div>
               <Navbar toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
               {<CSSTransitionGroup
                 transitionName="sidebar"

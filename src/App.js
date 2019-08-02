@@ -34,27 +34,30 @@ class App  extends Component{
   }
   render(){
     const theme=createMuiTheme(this.props.theme)
-    const unAuthenticated=<Switch><Route  path='/' component={Auth}/></Switch>
-    const Authenticated=(
-      <Layout>
-          <Switch>
-            <Route exact path='/' component={Dashboard}/>
-            <Route path='/addbranch' component={asyncAddBranch}/>
-            <Route path='/addstaff' component={asyncAddStaff}/>
-            <Route path='/newreport' component={asyncNewReport}/>
-            <Route path='/settings' component={asyncSettings}/>
-            <Route path='/finance' component={asyncFinanceReport}/>
-          </Switch>
-      </Layout>
-    )
+    let routes=<Switch><Route  path='/' component={Auth}/></Switch>
+    if(this.props.isAuthenticated){
+      routes=(
+        <Layout>
+            <Switch>
+              <Route exact path='/' component={Dashboard}/>
+              <Route path='/addbranch' component={asyncAddBranch}/>
+              <Route path='/addstaff' component={asyncAddStaff}/>
+              <Route path='/newreport' component={asyncNewReport}/>
+              <Route path='/settings' component={asyncSettings}/>
+              <Route path='/finance' component={asyncFinanceReport}/>
+            </Switch>
+        </Layout>
+      )
+    }
     return (
         <MuiThemeProvider theme={theme}>
-            {Authenticated}
+            {routes}
         </MuiThemeProvider>
     )
   }
 }
 const mapStateToProps= state =>({
-  theme:state.theme
+  theme:state.theme,
+  isAuthenticated:state.auth.token!==null
 })
 export default connect(mapStateToProps)(App);

@@ -27,6 +27,12 @@ const styles= theme =>(
   appbar:{
     backgroundColor:theme.palette.type==='dark'?'#303030':theme.palette.primary.main
   },
+  popup:{
+    '& a':{
+      textDecoration:'none',
+      color:'inherit'
+    }
+  },
   one:{
     width:'33.33%',
     padding:'10px 0',
