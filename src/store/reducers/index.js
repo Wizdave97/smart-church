@@ -1,4 +1,7 @@
 import themeReducer from './theme';
 import authReducer from './auth';
 import branchReducer from './branch';
-export {themeReducer,authReducer,branchReducer}
+import staffReducer from './staff';
+import reportReducer from './report';
+import financeReducer from './finance'
+export {themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer}

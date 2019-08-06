@@ -1,13 +1,20 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
 
-const authSync = (type,payload=null)=>{
+export const authSync = (type,payload=null)=>{
   return{
     type:type,
     payload:payload
   }
 }
-
+const storeAuthInfo= (data) =>{
+  if(!localStorage.smartchurch){
+    localStorage.smartchurch='';
+  }
+  const expiresIn= new Date( new Date().getTime() + new Date(Number(3600)*1000).getTime()).getTime()
+  const authData={token:data.token,expiresIn:expiresIn}
+  localStorage.smartchurch=JSON.stringify(authData);
+}
 export const authAsync= (isSignUp,authData)=>{
   return dispatch=>{
     dispatch(authSync(actionTypes.AUTH_START))
@@ -21,9 +28,20 @@ export const authAsync= (isSignUp,authData)=>{
         headers:{
           "Content-Type":"application/json"
         }
-      }).then(res=>res.json()).then(res=>{
+      }).then(res=>{
+        if(res.status!==200){
+          return null
+      }
+      return res.json()}).then(res=>{
+        if(res.error){
+          console.log(res.error)
+          dispatch(authSync(actionTypes.AUTH_FAIL))
+          return
+        }
         dispatch(authSync(actionTypes.AUTH_SUCCESS,res.token))
-        console.log(res)
+        storeAuthInfo(res)
+        authCheckTimeout(3600)
+
       }).catch(err=>{
         dispatch(authSync(actionTypes.AUTH_FAIL))
         console.log(err)
@@ -40,15 +58,21 @@ export const authAsync= (isSignUp,authData)=>{
           "Content-Type":"application/json"
         }
       }).then(res=>{
-        if(res.status!=='200'){
-          return
+        if(res.status!==200){
+          return null
       }
       return res.json()}).then(res=>{
+        if(res.error){
+          console.log(res.error)
+          dispatch(authSync(actionTypes.AUTH_FAIL))
+          return
+        }
         dispatch(authSync(actionTypes.AUTH_SUCCESS,res.token))
-        console.log(res)
+        storeAuthInfo(res)
+        authCheckTimeout(3600)
+
       }).catch(err=>{
         dispatch(authSync(actionTypes.AUTH_FAIL))
-        console.log(err)
       })
     }
 
@@ -57,10 +81,28 @@ export const authAsync= (isSignUp,authData)=>{
 
 }
 
-export const authLogout=()=>{
-
+export const authLogout = () =>{
+  localStorage.smartchurch=''
+  return {
+    type:actionTypes.AUTH_LOGOUT
+  }
 }
-
-export const autoSignIn =()=>{
-
+export const authCheckTimeout = (expiresIn) =>{
+  return dispatch => {
+    setTimeout(()=>{
+      authLogout()
+    },Number(expiresIn*1000))
+  }
+}
+export const autoSignIn = () =>{
+  return (dispatch,getState) =>{
+    if(localStorage.smartchurch){
+      const authData=JSON.parse(localStorage.smartchurch);
+      const tokenValidity=new Date().getTime() < Number(authData.expiresIn);
+      if (tokenValidity) {
+        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData))
+      }
+      else dispatch(authSync(actionTypes.AUTH_FAIL,null))
+    }
+  }
 }

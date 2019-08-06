@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
 
-const reportSync = (type,payload=null)=>{
+export const reportSync = (type,payload=null)=>{
   return{
     type:type,
     payload:payload
@@ -9,10 +9,10 @@ const reportSync = (type,payload=null)=>{
 }
 
 export const reportAsync= (reportData)=>{
-  return dispatch=>{
-    dispatch(authSync(actionTypes.POST_REPORT_START))
+  return (dispatch,getState)=>{
+    dispatch(reportSync(actionTypes.POST_REPORT_START))
 
-      let url=baseUrl+'/login'
+      let url=baseUrl+'/reports'
       fetch(url,{
         method:'POST',
         mode:'cors',
@@ -22,10 +22,15 @@ export const reportAsync= (reportData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        dispatch(authSync(actionTypes.POST_REPORT_SUCCESS))
+        if(res.status!==200){
+          return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(reportSync(actionTypes.POST_REPORT_SUCCESS))
         console.log(res)
       }).catch(err=>{
-        dispatch(authSync(actionTypes.POST_REPORT_FAIL))
+        dispatch(reportSync(actionTypes.POST_REPORT_FAIL))
         console.log(err)
       })
 

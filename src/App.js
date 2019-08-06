@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Auth from './containers/Auth/Auth';
+import { autoSignIn } from './store/actions/authActions';
 import './App.css';
 
 
@@ -26,8 +27,9 @@ const asyncFinanceReport= asyncComponent(()=>{
 })
 class App  extends Component{
 
-  componentDidMount(){
 
+  componentDidMount(){
+    this.props.onAutoSignIn()
   }
   componentDidUpdate(prevProps,prevState){
 
@@ -60,4 +62,8 @@ const mapStateToProps= state =>({
   theme:state.theme,
   isAuthenticated:state.auth.token!==null
 })
-export default connect(mapStateToProps)(App);
+
+const mapDispatchToProps= dispatch=>({
+  onAutoSignIn:()=> dispatch(autoSignIn())
+})
+export default connect(mapStateToProps,mapDispatchToProps)(App);

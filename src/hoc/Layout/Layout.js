@@ -6,6 +6,7 @@ import { Grid,Typography } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
 import './routes.css'
+import { authLogout} from '../../store/actions/authActions';
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
@@ -13,6 +14,7 @@ import SideBar from '../../components/Sidebar/Sidebar'
 class Layout extends Component {
   state={
     showSideBar:false,
+    path:'/'
   }
   componentDidMount(){
 
@@ -22,6 +24,12 @@ class Layout extends Component {
 
   }
   componentDidUpdate(prevProps,prevState){
+    if(prevState.path!==window.location.pathname){
+      this.setPath(window.location.pathname)
+    }
+  }
+  setPath= (newPath)=>{
+    this.setState({path:newPath})
   }
   showSideBar=(x)=>{
     if(x.matches){
@@ -42,12 +50,34 @@ class Layout extends Component {
   }
   render(){
     const { classes } = this.props
+    let title="Dashboard"
+    switch (this.state.path) {
+      case '/':
+        title="Dashboard"
+        break;
+      case '/newreport':
+        title="Service Report"
+        break;
+      case '/addbranch':
+        title="New Branch"
+        break;
+      case '/settings':
+        title="Settings"
+        break;
+      case '/finance':
+        title="Income and Expenditure"
+        break;
+      case '/addstaff':
+        title="Staff"
+        break
+      default:title="Dashboard"
 
+    }
     return (
       <React.Fragment>
           <CssBaseline/>
               <div className={classes.gradient}></div>
-              <Navbar toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
+              <Navbar logOut={this.props.onLogOut} toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
               {<CSSTransitionGroup
                 transitionName="sidebar"
                 transitionEnter={true}
@@ -64,8 +94,7 @@ class Layout extends Component {
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography  variant="h2">Dashboard</Typography></div>
-                      <div className={classes.breadcrumb}><Typography variant="body1">Breadcrumbs</Typography></div>
+                      <div className={classes.title}><Typography  variant="h2">{title}</Typography></div>
                     </div>
                         {this.props.children}
                     </Grid>
@@ -76,6 +105,8 @@ class Layout extends Component {
   }
 }
 const mapDispatchToProps = dispatch =>({
-  toggleTheme:(mode)=> dispatch(toggleTheme(mode))
+  toggleTheme:(mode)=> dispatch(toggleTheme(mode)),
+  onLogOut:()=> dispatch(authLogout())
 })
+
 export default connect(null,mapDispatchToProps)(withStyles(styles)(Layout));

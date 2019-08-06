@@ -3,6 +3,7 @@ export const LIGHT_MODE='LIGHT_MODE';
 export const AUTH_START='AUTH_START';
 export const AUTH_SUCCESS='AUTH_SUCCESS';
 export const AUTH_FAIL='AUTH_FAIL';
+export const AUTH_LOGOUT='AUTH_LOGOUT';
 export const POST_STAFF_START='POST_STAFF_START';
 export const POST_STAFF_FAIL='POST_STAFF_FAIL';
 export const POST_STAFF_SUCCESS='POST_STAFF_SUCCESS';

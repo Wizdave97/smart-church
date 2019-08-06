@@ -4,7 +4,12 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 import { handleChange,submitHandler} from '../../utils/Utility';
+import { financeAsync, financeSync }  from '../../store/actions/financeActions';
 import formSerialize from 'form-serialize';
+import * as actionTypes  from '../../store/actions/actionTypes';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import baseUrl from '../../store/base_url';
+import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 
 class FinanceReport extends Component {
   state={
@@ -13,6 +18,8 @@ class FinanceReport extends Component {
     date:'',
     amount:'',
     description:'',
+    incomeCategories:[],
+    expenseCategories:[],
     errorReportType:false,
     errorCategory:false,
     errorDate:false,
@@ -22,6 +29,14 @@ class FinanceReport extends Component {
   }
   componentDidMount(){
     this.setState({fixValidityBug:''})
+    fetch(baseUrl+'/inmedium',{
+      headers:{
+        'Content-Type':"application/json",
+        'Authorization':"Bearer"+this.props.token
+      }
+    }).then(res=>res.json()).then(res=>{
+      
+    })
   }
   hardSetState=this.setState.bind(this)
   setRef= element =>{
@@ -38,21 +53,142 @@ class FinanceReport extends Component {
     let valid= submitHandler(references, hardSetState)
     if (valid){
       let form= document.querySelector('form')
-      let authData=formSerialize(form,{hash:true})
-      console.log(authData)
+      let data=formSerialize(form,{hash:true})
+      delete data.reportType
+      this.props.onSubmitHandler(this.state.reportType,data)
     }
   }
 
   render(){
-    const references=[this.reportType,this.category,this.amount,this.description,this.date]
-    const {errorReportType,errorDate,errorCategory,errorDescription,errorAmount }=this.state
+    const references=[this.reportType,this.category,this.description,this.date]
+    const {errorReportType,errorDate,errorCategory,errorDescription }=this.state
     const { classes }=this.props
-
+    let notification=null;
+    if (this.props.postFinanceSuccess){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postFinanceSuccess} message={"Upload was successful"}/>
+    }
+    if (this.props.postFinanceFail) {
+      notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.postFinanceFail} message={"There was an error please try again"}/>
+    }
+    let view=(<Paper square={true} elevation={4} className={classes.paper}>
+        <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
+            <div className={classes.title} color="secondary">
+                <Typography variant="h2" color="secondary"  gutterBottom>Create a New Finance Report</Typography>
+            </div>
+            <Divider className={classes.divider}/>
+            <div className={classes.general}>
+                <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Finance Report</Typography></div>
+                <div className={classes.entries}>
+                    <div className={classes.entry}>
+                        <Input
+                          inputType="radio"
+                          required={true}
+                          error={errorReportType}
+                          reference={this.setRef}
+                          type="radio"
+                          id="income-report"
+                          label="Income Report"
+                          placeholder="Income Report"
+                          name="reportType"
+                          errorMessage="Please this field is required"
+                          value="Income"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          />
+                    </div>
+                    <div className={classes.entry}>
+                        <Input
+                          inputType="radio"
+                          required={true}
+                          error={errorReportType}
+                          reference={this.setRef}
+                          type="radio"
+                          id="expenditure"
+                          label="Expenditure Report"
+                          placeholder="Expenditure Report"
+                          name="reportType"
+                          errorMessage="Please this field is required"
+                          value="Expenditure"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          />
+                    </div>
+                    <div className={classes.entry}>
+                        <Input
+                          inputType="select"
+                          required={true}
+                          id="category"
+                          name="category"
+                          reference={this.setRef}
+                          options={[]}
+                          value={this.state.category}
+                          error={errorCategory}
+                          type="select"
+                          errorMessage="Please select a category"
+                          label="Category"
+                          placeholder="Category"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          />
+                    </div>
+                    {/*<div className={classes.entry}>
+                        <Input
+                          inputType="input"
+                          type="number"
+                          required={true}
+                          reference={this.setRef}
+                          value={this.state.amount}
+                          name="amount"
+                          id="amount"
+                          error={errorAmount}
+                          min="0"
+                          errorMessage="Please this field is required"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          label="Amount"
+                          placeholder="Amount"/>
+                    </div>*/}
+                    <div className={classes.entry}>
+                        <Input
+                          inputType="input"
+                          type="date"
+                          required={true}
+                          reference={this.setRef}
+                          value={this.state.date}
+                          name="date"
+                          id="date"
+                          error={errorDate}
+                          errorMessage="Please this field is required"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          label="Date"/>
+                    </div>
+                    <div className={classes.entry}>
+                        <Input
+                          required={true}
+                          inputType="textarea"
+                          id="description"
+                          reference={this.setRef}
+                          error={errorDescription}
+                          value={this.state.description}
+                          name="description"
+                          type="text"
+                          errorMessage="Please this field is required"
+                          handleChange={(event)=>handleChange(event,this.hardSetState)}
+                          label="Description"
+                          helperText="Brief description of the expense or income"
+                          />
+                    </div>
+                </div>
+            </div>
+            <Divider className={classes.divider}/>
+            <div className={classes.button}><Button type="submit" color="secondary" variant="contained" fullWidth={true}>Submit</Button></div>
+        </form>
+    </Paper>)
+    if(this.props.postFinanceStart) {
+      view=<Spinner/>
+    }
     return(
       <Grid
       item
       xs={12}
       md={12}>
+      {notification}
           <Grid
           container
           spacing={0}
@@ -61,121 +197,23 @@ class FinanceReport extends Component {
             item
             xs={12}
             sm={8}>
-                <Paper square={true} elevation={4} className={classes.paper}>
-                    <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
-                        <div className={classes.title} color="secondary">
-                            <Typography variant="h2" color="secondary"  gutterBottom>Create a New Finance Report</Typography>
-                        </div>
-                        <Divider className={classes.divider}/>
-                        <div className={classes.general}>
-                            <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Finance Report</Typography></div>
-                            <div className={classes.entries}>
-                                <div className={classes.entry}>
-                                    <Input
-                                      inputType="radio"
-                                      required={true}
-                                      error={errorReportType}
-                                      reference={this.setRef}
-                                      type="radio"
-                                      id="income-report"
-                                      label="Income Report"
-                                      placeholder="Income Report"
-                                      name="reportType"
-                                      errorMessage="Please this field is required"
-                                      value="Income"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      />
-                                </div>
-                                <div className={classes.entry}>
-                                    <Input
-                                      inputType="radio"
-                                      required={true}
-                                      error={errorReportType}
-                                      reference={this.setRef}
-                                      type="radio"
-                                      id="expenditure"
-                                      label="Expenditure Report"
-                                      placeholder="Expenditure Report"
-                                      name="reportType"
-                                      errorMessage="Please this field is required"
-                                      value="Expenditure"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      />
-                                </div>
-                                <div className={classes.entry}>
-                                    <Input
-                                      inputType="select"
-                                      required={true}
-                                      id="category"
-                                      name="category"
-                                      reference={this.setRef}
-                                      options={[]}
-                                      value={this.state.category}
-                                      error={errorCategory}
-                                      type="select"
-                                      errorMessage="Please select a category"
-                                      label="Category"
-                                      placeholder="Category"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      />
-                                </div>
-                                <div className={classes.entry}>
-                                    <Input
-                                      inputType="input"
-                                      type="number"
-                                      required={true}
-                                      reference={this.setRef}
-                                      value={this.state.amount}
-                                      name="amount"
-                                      id="amount"
-                                      error={errorAmount}
-                                      min="0"
-                                      errorMessage="Please this field is required"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      label="Amount"
-                                      placeholder="Amount"/>
-                                </div>
-                                <div className={classes.entry}>
-                                    <Input
-                                      inputType="input"
-                                      type="date"
-                                      required={true}
-                                      reference={this.setRef}
-                                      value={this.state.date}
-                                      name="date"
-                                      id="date"
-                                      error={errorDate}
-                                      errorMessage="Please this field is required"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      label="Date"/>
-                                </div>
-                                <div className={classes.entry}>
-                                    <Input
-                                      required={true}
-                                      inputType="textarea"
-                                      id="description"
-                                      reference={this.setRef}
-                                      error={errorDescription}
-                                      value={this.state.description}
-                                      name="description"
-                                      type="text"
-                                      errorMessage="Please this field is required"
-                                      handleChange={(event)=>handleChange(event,this.hardSetState)}
-                                      label="Description"
-                                      helperText="Brief description of the expense or income"
-                                      />
-                                </div>
-                            </div>
-                        </div>
-                        <Divider className={classes.divider}/>
-                        <div className={classes.button}><Button type="submit" color="secondary" variant="contained" fullWidth={true}>Submit</Button></div>
-                    </form>
-                </Paper>
+                {view}
             </Grid>
           </Grid>
       </Grid>
     )
   }
 }
+const mapStateToProps= state=>({
+  postFinanceStart:state.finance.postFinanceStart,
+  postFinanceSuccess:state.finance.postFinanceSuccess,
+  postFinanceFail:state.finance.postFinanceFail,
+  branchId:state.auth.branchId,
+  token:state.auth.token
+})
 
-export default withStyles(styles)(FinanceReport);
+const mapDispatchToProps= dispatch=>({
+  onSubmitHandler:(type,financeData)=> dispatch(financeAsync(type,financeData)),
+  onUnmount:()=> dispatch(financeSync(actionTypes.RESET))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(FinanceReport));

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { branchAsync, branchSync }  from '../../store/actions/branchActions';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddBranch extends Component {
   state={
@@ -73,13 +74,18 @@ class AddBranch extends Component {
     let valid= submitHandler(references, hardSetState)
     if (valid){
       let form= document.querySelector('form')
-      let branchData=formSerialize(form,{hash:true})
+      let data=formSerialize(form,{hash:true})
+      let branchData={}
+      branchData.name=data.branchName
+      branchData.state=data.branchState
+      branchData.street=data.address
+      console.log(branchData)
       this.props.onSubmitHandler(branchData)
     }
   }
 
   render(){
-    const references=[this.branchName,this.branchPastor,this.established,this.lga,this.province,this.area,this.address,this.email]
+    const references=[this.branchName,this.lga,this.address,this.email]
     const { lga, branchState, state_index,errorLga,errorArea,errorEmail,
            errorBranchState,errorAddress,errorProvince,errorBranchName,errorBranchPastor,errorEstablished}=this.state
     const { classes }=this.props
@@ -92,6 +98,13 @@ class AddBranch extends Component {
       lg_list=this.state.lgs[state_index].map((lga,index)=>{
         return lga.name
       })
+    }
+    let notification=null;
+    if (this.props.postBranchSuccess){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postBranchSuccess} message={"Upload was successful"}/>
+    }
+    if (this.props.postBranchFail) {
+      notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.postBranchFail} message={"There was an error please try again"}/>
     }
     let view=(
     <Grid
@@ -140,7 +153,7 @@ class AddBranch extends Component {
                               handleChange={(event)=>handleChange(event,this.hardSetState)}
                               />
                         </div>
-                        <div className={classes.entry}>
+                        {/*<div className={classes.entry}>
                             <Input
                               inputType="input"
                               type="text"
@@ -170,7 +183,7 @@ class AddBranch extends Component {
                               label="Establishment date"
                               helperText="fill in the date this branch was established"
                               />
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
                 <Divider className={classes.divider}/>
@@ -225,7 +238,7 @@ class AddBranch extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Address"/>
                         </div>
-                        <div className={classes.entry}>
+                        {/*<div className={classes.entry}>
                             <Input
                               inputType="input"
                               required={false}
@@ -254,7 +267,7 @@ class AddBranch extends Component {
                             errorMessage="Please this filled is required"
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Area"/>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
                 <div className={classes.button}><Button type="submit" color="secondary" variant="contained" fullWidth={true}>Submit</Button></div>
@@ -269,6 +282,7 @@ class AddBranch extends Component {
       item
       xs={12}
       md={12}>
+          {notification}
           <Grid
           container
           spacing={0}

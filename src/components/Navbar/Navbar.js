@@ -136,7 +136,7 @@ const Navbar = props =>{
                             >
                               <NavLink to="/profile"><StyledMenuItem onClick={handleClose}>Profile</StyledMenuItem></NavLink>
                               <NavLink to="/account"><StyledMenuItem onClick={handleClose}>My account</StyledMenuItem></NavLink>
-                              <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
+                              <StyledMenuItem onClick={props.logOut}>Logout</StyledMenuItem>
                             </StyledMenu>
                       </div>
                    </div>

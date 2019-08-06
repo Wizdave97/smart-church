@@ -22,16 +22,17 @@ export const branchAsync= (branchData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!=='200'){
-            return
+        console.log(res)
+        if(res.status!==200){
+            return null
         }
         return res.json()
       }).then(res=>{
         dispatch(branchSync(actionTypes.POST_BRANCH_SUCCESS))
-        console.log(res)
+
       }).catch(err=>{
         dispatch(branchSync(actionTypes.POST_BRANCH_FAIL))
-        console.log(err)
+
       })
 
 

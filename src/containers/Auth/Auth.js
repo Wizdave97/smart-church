@@ -9,13 +9,15 @@ import formSerialize from 'form-serialize';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import './auth.css';
-import { authAsync }  from '../../store/actions/authActions';
+import { authAsync,authSync }  from '../../store/actions/authActions';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import * as actionTypes  from '../../store/actions/actionTypes';
+import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
 
 class Auth extends Component {
   state={
-    isSignUp:true,
+    isSignUp:false,
     name:'',
     email:'',
     address:'',
@@ -62,11 +64,21 @@ class Auth extends Component {
       this.props.onSubmitAuth(this.state.isSignUp,authData)
     }
   }
+  componentWillUnmount(){
+    this.props.onUnmount()
+  }
   render() {
     const { classes } = this.props
-    const { name, email,address,phone,adminemail,adminfname,adminlname,password,adminsex,
+    const { name, email,address,phone,adminemail,adminfname,adminlname,password,
             errorName,errorEmail,errorAddress,errorPhone,errorAdminemail,errorAdminfname,errorAdminlname,errorAdminsex,errorPassword}=this.state
     let references=[this.name,this.email,this.phone,this.address,this.adminfname,this.adminlname,this.adminemail,this.adminsex]
+    let notification=null;
+    if (this.props.authSuccess){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.authSuccess} message={"Authentication Successful"}/>
+    }
+    if (this.props.authFail) {
+      notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.authFail} message={"Check your Network or Make sure the details are correct"}/>
+    }
     let formDisplay=(
       <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
       <div className={classes.contain}>
@@ -255,6 +267,7 @@ class Auth extends Component {
     <React.Fragment>
       {this.props.isAuthenticated?<Redirect to="/"/>:null}
     <div className={classes.root}>
+      {notification}
     <div className={classes.topGradient}></div>
     <AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
@@ -295,6 +308,7 @@ const mapStateToProps = state =>({
 
 })
 const mapDispatchToProps= dispatch =>({
-  onSubmitAuth: (isSignUp,authData)=> dispatch(authAsync(isSignUp, authData))
+  onSubmitAuth: (isSignUp,authData)=> dispatch(authAsync(isSignUp, authData)),
+  onUnmount:()=> dispatch(authSync(actionTypes.RESET))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Auth));

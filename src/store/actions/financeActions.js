@@ -1,18 +1,27 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
 
-const financeSync = (type,payload=null)=>{
+export const financeSync = (type,payload=null)=>{
   return{
     type:type,
     payload:payload
   }
 }
 
-export const financeAsync= (financeData)=>{
-  return dispatch=>{
-    dispatch(authSync(actionTypes.POST_FINANCE_START))
+export const financeAsync= (type,financeData)=>{
+  return (dispatch,getState)=>{
+    dispatch(financeSync(actionTypes.POST_FINANCE_START))
 
-      let url=baseUrl+'/login'
+      let url=baseUrl
+      switch(type){
+        case 'income':
+          url+='/incomes';
+          break;
+        case 'expenditure':
+          url+='/expenditures';
+          break;
+        default: break;
+      }
       fetch(url,{
         method:'POST',
         mode:'cors',
@@ -22,10 +31,15 @@ export const financeAsync= (financeData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        dispatch(authSync(actionTypes.POST_FINANCE_SUCCESS))
+        if(res.status!==200){
+          return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(financeSync(actionTypes.POST_FINANCE_SUCCESS))
         console.log(res)
       }).catch(err=>{
-        dispatch(authSync(actionTypes.POST_FINANCE_FAIL))
+        dispatch(financeSync(actionTypes.POST_FINANCE_FAIL))
         console.log(err)
       })
 

@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
 
-const staffSync = (type,payload=null)=>{
+export const staffSync = (type,payload=null)=>{
   return{
     type:type,
     payload:payload
@@ -9,10 +9,10 @@ const staffSync = (type,payload=null)=>{
 }
 
 export const staffAsync= (staffData)=>{
-  return dispatch=>{
-    dispatch(authSync(actionTypes.POST_STAFF_START))
+  return (dispatch,getState)=>{
+    dispatch(staffSync(actionTypes.POST_STAFF_START))
 
-      let url=baseUrl+'/login'
+      let url=baseUrl+'/staffs'
       fetch(url,{
         method:'POST',
         mode:'cors',
@@ -22,11 +22,16 @@ export const staffAsync= (staffData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        dispatch(authSync(actionTypes.POST_STAFF_SUCCESS))
-        console.log(res)
+        if(res.status!==200){
+          return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(staffSync(actionTypes.POST_STAFF_SUCCESS))
+
       }).catch(err=>{
-        dispatch(authSync(actionTypes.POST_STAFF_FAIL))
-        console.log(err)
+        dispatch(staffSync(actionTypes.POST_STAFF_FAIL))
+
       })
 
 
