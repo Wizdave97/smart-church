@@ -1,9 +1,13 @@
 .container{
   width:100%;
-  min-height: 500px;
+  min-height: 100%;
   display: flex;
+  top:0;
+  left: 0;
   flex-wrap: wrap;
   justify-content: center;
+  position: absolute;
+  z-index: 1200;
 }
 .lds-facebook {
   display: inline-block;

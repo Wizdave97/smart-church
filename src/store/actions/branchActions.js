@@ -39,3 +39,34 @@ export const branchAsync= (branchData)=>{
   }
 
 }
+
+export const fetchBranchAsync=(url=null)=>{
+  return (dispatch,getState)=>{
+    dispatch(branchSync(actionTypes.FETCH_BRANCHES_START))
+      if(!url){
+        url=baseUrl+'/branches'
+      }
+      fetch(url,{
+        method:'GET',
+        mode:'cors',
+        headers:{
+           'Content-Type':'application/json',
+           'Authorization':'Bearer'+  getState().auth.token
+        }
+      }).then(res=>{
+        console.log(res)
+        if(res.status!==200){
+            return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(branchSync(actionTypes.FETCH_BRANCHES_SUCCESS,res))
+
+      }).catch(err=>{
+        dispatch(branchSync(actionTypes.FETCH_BRANCHES_FAIL))
+
+      })
+
+
+  }
+}

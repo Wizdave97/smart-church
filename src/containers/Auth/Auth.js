@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Grid, Paper, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Grid, Paper, Typography, Button, CircularProgress} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Input from '../../components/UI/Input/Input';
@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import './auth.css';
 import { authAsync,authSync }  from '../../store/actions/authActions';
-import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
@@ -68,6 +67,10 @@ class Auth extends Component {
     this.props.onUnmount()
   }
   render() {
+    let progress=null
+    if(this.props.authStart){
+      progress=<CircularProgress color="primary" />
+    }
     const { classes } = this.props
     const { name, email,address,phone,adminemail,adminfname,adminlname,password,
             errorName,errorEmail,errorAddress,errorPhone,errorAdminemail,errorAdminfname,errorAdminlname,errorAdminsex,errorPassword}=this.state
@@ -204,17 +207,18 @@ class Auth extends Component {
           <div className={classes.entry}>
             <Button
             fullWidth={true}
+            disabled={this.props.authStart}
             size="large"
             type="submit"
             variant="contained"
             classes={{outlined:classes.button}}
-            color="secondary">Create Account</Button></div>
+            color="secondary">Create Account{progress}</Button></div>
           <div className={classes.entry} >
             <Typography color="primary" variant="body1" align="center">Already have an account? <span onClick={this.switchAuthMode} className={classes.span}>Login</span></Typography></div>
       </div>
     </form>
     )
-    if(!this.state.isSignUp && !this.props.authStart) {
+    if(!this.state.isSignUp) {
       references=[this.email]
         formDisplay=(
           <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
@@ -248,25 +252,25 @@ class Auth extends Component {
             error={errorPassword}/></div>
             <div className={classes.entry}>
               <Button
+                disabled={this.props.authStart}
               fullWidth={true}
               size="large"
               type="submit"
               variant="contained"
               classes={{outlined:classes.button}}
-              color="secondary">Login</Button></div>
+              color="secondary">Login {progress}</Button></div>
             <div className={classes.entry} >
               <Typography color="primary" variant="body1" align="center">Don't have an account? <span onClick={this.switchAuthMode}  className={classes.span}>Signup</span></Typography></div>
         </div>
       </form>
     )
     }
-    if(this.props.authStart){
-      formDisplay=<Spinner/>
-    }
+
     return(
     <React.Fragment>
       {this.props.isAuthenticated?<Redirect to="/"/>:null}
     <div className={classes.root}>
+
       {notification}
     <div className={classes.topGradient}></div>
     <AppBar position="fixed" color="primary">
@@ -290,6 +294,7 @@ class Auth extends Component {
                     transitionLeave={true}
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={500}>
+
                       {formDisplay}
                   </CSSTransitionGroup>
               </Paper>

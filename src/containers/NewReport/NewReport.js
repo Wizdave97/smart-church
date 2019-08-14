@@ -13,12 +13,12 @@ import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 
 class NewReport extends Component {
   state={
-    serviceDate:'',
-    serviceDay:true,
+    date:'',
+    serviceDay:'',
     serviceNumber:'',
     maleAttendance:'',
     femaleAttendance:'',
-    childAttendance:'',
+    childrenAttendance:'',
     topic:'',
     speaker:'',
     salvation:'',
@@ -62,9 +62,9 @@ class NewReport extends Component {
     }
   }
   render(){
-    const { errorServiceDay,errorServiceDate,errorMaleAttendance,
-            errorFemaleAttendance,errorChildAttendance,errorFirstTimers,errorSalvation,}=this.state
-    const references=[this.serviceDate,this.serviceDay,this.maleAttendance,this.childAttendance,this.firstTimers,this.salvation]
+    const { errorServiceDay,errorDate,errorMaleAttendance,
+            errorFemaleAttendance,errorChildrenAttendance,errorFirstTimers,errorSalvation,}=this.state
+    const references=[this.date,this.serviceDay,this.maleAttendance,this.childrenAttendance,this.firstTimers,this.salvation]
     const { classes }=this.props
     let notification=null;
     if (this.props.postReportSuccess){
@@ -86,12 +86,13 @@ class NewReport extends Component {
                       <div className={classes.entry}>
                           <Input
                           id="service-day"
+                          required={true}
                           reference={this.setRef}
-                          inputType="checkbox"
+                          inputType="input"
                           error={errorServiceDay}
-                          placeholder="Service Day"
+                          placeholder="e.g monday"
                           name="serviceDay"
-                          type="checkbox"
+                          type="text"
                           value={this.state.serviceDay}
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
                           label="Service Day"/>
@@ -118,11 +119,11 @@ class NewReport extends Component {
                             type="date"
                             required={true}
                             reference={this.setRef}
-                          error={errorServiceDate}
+                          error={errorDate}
                           id="date"
-                          name="serviceDate"
+                          name="date"
                           errorMessage="Please this filled is required"
-                          value={this.state.serviceDate}
+                          value={this.state.date}
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
                           label="Service Date"
                           placeholder="Service Date"/>
@@ -165,13 +166,13 @@ class NewReport extends Component {
                             required={true}
                             id="children-attendance"
                             reference={this.setRef}
-                            error={errorChildAttendance}
+                            error={errorChildrenAttendance}
                             errorMessage="Please this filled is required"
                             type={"number"}
-                            name="childAttendance"
+                            name="childrenAttendance"
                             label="Children Attendance"
                             min="0"
-                            value={this.state.childAttendance}
+                            value={this.state.childrenAttendance}
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             />
                       </div>

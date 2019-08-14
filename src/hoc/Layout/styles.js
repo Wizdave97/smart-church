@@ -25,14 +25,35 @@ const styles = theme =>({
         flexWrap:'wrap'
     },
     pageInfo:{
-      display:'inline-block',
+      display:'block',
       width:'100%',
+      paddingTop:'10px',
+      boxSizing:'border-box',
     },
     title:{
       width:'100%',
-      display:'block',
+      display:'flex',
+      flexWrap:'nowrap',
       padding:'2px 8px',
       boxSizing:'border-box',
+      '& h2':{
+        alignSelf:'center'
+      },
+      '& div':{
+        width:'10%',
+        padding:'2px',
+        boxSizing:'border-box',
+        alignSelf:'center',
+        display:'inline-block',
+        [theme.breakpoints.up('md')]:{
+          width:'8%',
+          padding:'10px',
+        },
+        '& img':{
+          width:'100%',
+          height:'auto'
+        }
+      }
     },
     titleText:{
       fontSize:'1rem',
@@ -49,12 +70,6 @@ const styles = theme =>({
       zIndex:1500,
       backgroundImage:'linear-gradient(to right,rgb(195,226,121),rgb(247,254,200),rgb(255,208,105),rgb(242,118,105),rgb(220,156,190),rgb(197,154,224),rgb(150,157,204))'
     },
-    breadcrumb:{
-      width:'100%',
-      padding:'2px 8px',
-      boxSizing:'border-box'
-    }
-
 })
 
 export default styles

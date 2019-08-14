@@ -7,6 +7,7 @@ import { handleChange,submitHandler} from '../../utils/Utility';
 import { financeAsync, financeSync }  from '../../store/actions/financeActions';
 import formSerialize from 'form-serialize';
 import * as actionTypes  from '../../store/actions/actionTypes';
+import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import baseUrl from '../../store/base_url';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
@@ -31,12 +32,28 @@ class FinanceReport extends Component {
     this.setState({fixValidityBug:''})
     fetch(baseUrl+'/inmedium',{
       headers:{
-        'Content-Type':"application/json",
-        'Authorization':"Bearer"+this.props.token
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+this.props.token
       }
     }).then(res=>res.json()).then(res=>{
-      
-    })
+      let categories=[];
+      for(let obj of res.data){
+        categories.push(obj.category)
+      }
+      this.setState({incomeCategories:categories})
+    }).catch(err=> console.log(err))
+    fetch(baseUrl+'/expenses',{
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+this.props.token
+      }
+    }).then(res=>res.json()).then(res=>{
+      let categories=[];
+      for(let obj of res.data){
+        categories.push(obj.category)
+      }
+      this.setState({expenseCategories:categories})
+    }).catch(err=> console.log(err))
   }
   hardSetState=this.setState.bind(this)
   setRef= element =>{
@@ -55,6 +72,8 @@ class FinanceReport extends Component {
       let form= document.querySelector('form')
       let data=formSerialize(form,{hash:true})
       delete data.reportType
+      data.description=data.description.split(',')
+      data.branchid=this.props.branchId
       this.props.onSubmitHandler(this.state.reportType,data)
     }
   }
@@ -118,7 +137,7 @@ class FinanceReport extends Component {
                           id="category"
                           name="category"
                           reference={this.setRef}
-                          options={[]}
+                          options={this.state.reportType==='income'?this.state.incomeCategories:this.state.expenseCategories}
                           value={this.state.category}
                           error={errorCategory}
                           type="select"

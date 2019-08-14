@@ -59,7 +59,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Attendance</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart
@@ -107,7 +107,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart
@@ -151,7 +151,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Expand</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                     <Chart

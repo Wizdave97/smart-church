@@ -10,8 +10,6 @@ const styles= theme =>({
   },
   list:{
     width:'100%',
-    display:'flex',
-    flexWrap:'wrap',
 
   },
   inputBox:{

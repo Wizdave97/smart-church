@@ -90,7 +90,7 @@ export const authLogout = () =>{
 export const authCheckTimeout = (expiresIn) =>{
   return dispatch => {
     setTimeout(()=>{
-      authLogout()
+      dispatch(authLogout())
     },Number(expiresIn*1000))
   }
 }
@@ -100,7 +100,7 @@ export const autoSignIn = () =>{
       const authData=JSON.parse(localStorage.smartchurch);
       const tokenValidity=new Date().getTime() < Number(authData.expiresIn);
       if (tokenValidity) {
-        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData))
+        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData.token))
       }
       else dispatch(authSync(actionTypes.AUTH_FAIL,null))
     }

@@ -5,6 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid,Typography } from '@material-ui/core';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
+import Sunrise from '../../assets/sunrise.png';
+import Sunset from '../../assets/sunset.png';
+import Sunny from '../../assets/sunny.png';
 import './routes.css'
 import { authLogout} from '../../store/actions/authActions';
 import {toggleTheme } from '../../store/actions/themeActions';
@@ -14,22 +17,26 @@ import SideBar from '../../components/Sidebar/Sidebar'
 class Layout extends Component {
   state={
     showSideBar:false,
-    path:'/'
+    hours:null
   }
   componentDidMount(){
-
+    this.checkTime()
     const x=window.matchMedia("(min-width:960px)")
     this.showSideBar(x)
     x.addListener(this.showSideBar)
 
   }
   componentDidUpdate(prevProps,prevState){
-    if(prevState.path!==window.location.pathname){
-      this.setPath(window.location.pathname)
+    if(prevState.hours!==new Date().getHours()){
+      this.checkTime()
     }
   }
   setPath= (newPath)=>{
     this.setState({path:newPath})
+  }
+  checkTime=()=>{
+    let hours=new Date().getHours()
+    this.setState({hours:hours})
   }
   showSideBar=(x)=>{
     if(x.matches){
@@ -50,28 +57,20 @@ class Layout extends Component {
   }
   render(){
     const { classes } = this.props
-    let title="Dashboard"
-    switch (this.state.path) {
-      case '/':
-        title="Dashboard"
-        break;
-      case '/newreport':
-        title="Service Report"
-        break;
-      case '/addbranch':
-        title="New Branch"
-        break;
-      case '/settings':
-        title="Settings"
-        break;
-      case '/finance':
-        title="Income and Expenditure"
-        break;
-      case '/addstaff':
-        title="Staff"
-        break
-      default:title="Dashboard"
-
+    const { hours }=this.state
+    let greeting=null
+    let src=null
+    if(hours>=0 && hours<=11){
+      greeting="Good Morning"
+      src=Sunrise
+    }
+    else if (hours>=12 && hours<=16) {
+      greeting="Good Afternoon"
+      src=Sunny
+    }
+    else {
+      greeting="Good Evening"
+      src=Sunset
     }
     return (
       <React.Fragment>
@@ -94,7 +93,7 @@ class Layout extends Component {
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography  variant="h2">{title}</Typography></div>
+                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div></div>
                     </div>
                         {this.props.children}
                     </Grid>

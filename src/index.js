@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
-import { themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer} from './store/reducers';
+import { themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer,settingsReducer} from './store/reducers';
 import * as serviceWorker from './serviceWorker';
 
 const rootReducer=combineReducers({
@@ -15,7 +15,8 @@ const rootReducer=combineReducers({
     branch: branchReducer,
     staff:staffReducer,
     report:reportReducer,
-    finance:financeReducer
+    finance:financeReducer,
+    settings:settingsReducer
 })
 const composeEnhancers = process.env.NODE_ENV ==='development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
 const store=createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)));

@@ -13,6 +13,9 @@ import './App.css';
 const asyncAddBranch=asyncComponent(()=>{
   return import('./containers/AddBranch/AddBranch')
 })
+const asyncReports=asyncComponent(()=>{
+  return import('./containers/Reports/Reports')
+})
 const asyncAddStaff=asyncComponent(()=>{
   return import('./containers/AddStaff/AddStaff')
 })
@@ -24,6 +27,12 @@ const asyncSettings= asyncComponent(()=>{
 })
 const asyncFinanceReport= asyncComponent(()=>{
   return import('./containers/Finance/FinanceReport')
+})
+const asyncViewFinances= asyncComponent(()=>{
+  return import('./containers/ViewFinances/ViewFinances')
+})
+const asyncBranches= asyncComponent(()=>{
+  return import('./containers/Branches/Branches')
 })
 class App  extends Component{
 
@@ -47,6 +56,9 @@ class App  extends Component{
               <Route path='/newreport' component={asyncNewReport}/>
               <Route path='/settings' component={asyncSettings}/>
               <Route path='/finance' component={asyncFinanceReport}/>
+              <Route path='/viewreports' component={asyncReports}/>
+              <Route path='/viewfinances' component={asyncViewFinances}/>
+              <Route path='/allbranches' component={asyncBranches}/>
             </Switch>
         </Layout>
       )

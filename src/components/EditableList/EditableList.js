@@ -1,14 +1,15 @@
 import React from 'react';
-import { Paper, Button, Typography } from '@material-ui/core';
+import { Paper, Button, Typography,Table,TableHead,TableRow,TableCell,TableBody } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { CSSTransitionGroup } from 'react-transition-group';
 import ListItem from '../ListItem/ListItem';
+import Snackbar from '../NotificationSnackbar/NotificationSnackbar';
 import './list.css';
 import styles from './styles';
 
 const editableList = props => {
   const { classes, list }= props
-  let listItems=<Typography variant="body1">Start Adding categories</Typography>
+  let listItems=null
   if(list.length!==0){
     listItems=(
       list.map(item=>{
@@ -18,16 +19,18 @@ const editableList = props => {
   }
   return(
     <Paper elevation={6} className={classes.paper}>
-      <div className={classes.list}>
-        <CSSTransitionGroup
-        transitionName="list"
-        transitionEnter={true}
-        transitionLeave={true}
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}>
-          {listItems}
-        </CSSTransitionGroup>
-      </div>
+      {props.fail||props.success?<Snackbar open={props.fail||props.success} color={props.success?'primary':'error'} message={props.success?'success':'failed'} handleClose={props.handleClose}/>:null}
+      <Table className={classes.list}>
+        <TableHead><TableRow><TableCell align="left" component="th"><Typography variant="h4">Start Adding categories</Typography></TableCell></TableRow></TableHead>
+        <TableBody>
+          <CSSTransitionGroup
+          transitionName="list"
+          transitionEnter={true}
+          transitionLeave={true}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}>
+          {listItems}</CSSTransitionGroup></TableBody>
+      </Table>
       <div className={classes.inputBox}>
           <div className={classes.formGroup}>
               <label className={classes.label} htmlFor={props.identifier}>{props.label}</label>
