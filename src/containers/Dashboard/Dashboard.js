@@ -1,14 +1,197 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import Chart from 'react-google-charts';
-import { Grid,Paper,Typography, Fab,Divider} from '@material-ui/core';
+import { Line } from "react-chartjs-2";
+import { Grid,Paper,Typography, Fab,Divider, CircularProgress,Button} from '@material-ui/core';
 import { ShowChart, Money, Payment} from '@material-ui/icons';
+import { fetchAttendanceAsync,fetchFinanceAsync } from '../../store/actions/dashboardActions';
+import * as actionTypes from '../../store/actions/actionTypes';
 import styles from './styles';
 
 class Dashboard extends Component{
+  state={
+    title:null,
+    incomeLabels:null,
+    incomeData:null,
+    intervalId:null,
+    expenditureTitle:null,
+    expenditureLabels:null,
+    expenditureData:null,
+    expenditureId:null
+  }
+  componentDidMount(){
+    this.props.onFetchAttendance(this.props.branchId);
+    this.props.onFetchFinance(this.props.branchId,null,'Income');
+    this.props.onFetchFinance(this.props.branchId,null,'Expenditure')
+  }
+  cycle= (dataIndex,labels,data,title,dataset,datalabels) =>{
 
+    this.setState({
+      [title]:labels[dataIndex],
+      [dataset]:data[dataIndex][1],
+      [datalabels]:data[dataIndex][0]
+    })
+  }
+  cycleIncomeCategories= (incomeUngrouped,dataIndex,id,title,dataset,datalabels) =>{
+
+    let income=[]
+    for (let obj of incomeUngrouped){
+      if(income[obj.category]){
+        income[obj.category][0].push(obj.date)
+        income[obj.category][1].push(obj.total)
+      }
+      else{
+        income[obj.category]=[[],[]];
+        income[obj.category][0].push(obj.date)
+        income[obj.category][1].push(obj.total)
+      }
+    }
+    let labels=[...Object.keys(income)]
+    let data=[...Object.values(income)]
+    //console.log(data)
+
+    let intervalId=window.setInterval(()=>{
+      if(dataIndex>=labels.length){
+        dataIndex=0
+      }
+      this.cycle(dataIndex,labels,data,title,dataset,datalabels)
+      dataIndex++
+    },5000)
+  this.setState({[id]:intervalId})
+  }
+  componentDidUpdate(prevProps,prevState){
+    let dataIndex=0,expIndex=0;
+    if(this.props.fetchIncomeSuccess && this.props.income){
+      if(prevState.intervalId==null){
+        this.cycleIncomeCategories(this.props.income,dataIndex,'intervalId','title','incomeData','incomeLabels')
+      }
+    }
+    if(this.props.fetchExpenditureSuccess && this.props.expenditure){
+      if(prevState.expenditureId==null){
+        this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
+      }
+    }
+  }
+  componentWillUnmount(){
+    window.clearInterval(this.state.intervalId)
+  }
   render(){
     const { classes } = this.props
+    let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
+
+    let attendanceChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
+    if(this.props.fetchAttendanceSuccess && this.props.reports){
+      for(let obj of this.props.reports){
+        let temp=[];
+        temp.push(obj.date)
+        temp.push(obj.maleAttendance)
+        temp.push(obj.femaleAttendance)
+        temp.push(obj.childrenAttendance)
+        attendance.push(temp)
+      }
+      attendanceChart=( <Chart
+                          width={'100%'}
+                          height={340}
+                          chartType="Bar"
+                          loader={<div>Loading Chart</div>}
+                          data={attendance}
+                          options={{
+
+                            backgroundColor:'inherit',
+                            chart: {
+                               title: 'Attendance Chart',
+                            },
+                            hAxis: {
+                               title: 'Attendance Metrics',
+                               minValue: 0,
+                             },
+                             vAxis: {
+                               title: 'Date',
+                             },
+                             bars: 'vertical',
+                             axes: {
+                               y: {
+                                 0: { side: 'right' },
+                               },
+                          }}}
+                          legendToggle
+                          />
+
+      )
+    }
+    if(this.props.fetchAttendanceFail){
+      attendanceChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchAttendance(this.props.branchId)} size="small" color="secondary">Retry</Button></Typography>
+    }
+    let incomeChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
+    if(this.props.fetchIncomeSuccess && this.props.income){
+      incomeChart=(
+        <Line data={{
+      labels:this.state.incomeLabels,
+      datasets: [
+        {
+          label: this.state.title,
+          fill: true,
+          lineTension: 0.3,
+          backgroundColor: "rgba(225, 204,230, .3)",
+          borderColor: "rgb(205, 130, 158)",
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgb(205, 130,1 58)",
+          pointBackgroundColor: "rgb(255, 255, 255)",
+          pointBorderWidth: 10,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgb(0, 0, 0)",
+          pointHoverBorderColor: "rgba(220, 220, 220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 2,
+          pointHitRadius: 10,
+          data: this.state.incomeData
+        },
+      ]
+    }} options={{ responsive: true }} />
+      )
+    }
+    if (this.props.fetchIncomeFail){
+        incomeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Income')} size="small" color="secondary">Retry</Button></Typography>
+    }
+    let expenditureChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
+    if(this.props.fetchExpenditureSuccess && this.props.expenditure){
+      expenditureChart=(
+        <Line data={{
+      labels:this.state.expenditureLabels,
+      datasets: [
+        {
+          label: this.state.expenditureTitle,
+          fill: true,
+          lineTension: 0.3,
+          backgroundColor: "rgba(225, 204,230, .3)",
+          borderColor: "rgb(205, 130, 158)",
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgb(205, 130,1 58)",
+          pointBackgroundColor: "rgb(255, 255, 255)",
+          pointBorderWidth: 10,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgb(0, 0, 0)",
+          pointHoverBorderColor: "rgba(220, 220, 220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 2,
+          pointHitRadius: 10,
+          data: this.state.expenditureData
+        },
+      ]
+    }} options={{ responsive: true }} />
+      )
+    }
+    if (this.props.fetchExpenditureFail){
+        expenditureChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Expenditure')} size="small" color="secondary">Retry</Button></Typography>
+    }
+
     return (
       <Fragment>
           <Grid
@@ -62,40 +245,7 @@ class Dashboard extends Component{
                     <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
-                    <Chart
-                    width={'100%'}
-                    height={340}
-                    chartType="Bar"
-                    loader={<div>Loading Chart</div>}
-                    data={[
-                      ['City', '2010 Population', '2000 Population'],
-                      ['New York City, NY', 8175000, 8008000],
-                      ['Los Angeles, CA', 3792000, 3694000],
-                      ['Chicago, IL', 2695000, 2896000],
-                      ['Houston, TX', 2099000, 1953000],
-                      ['Philadelphia, PA', 1526000, 1517000],
-                    ]}
-                    options={{
-
-                      backgroundColor:'inherit',
-                      chart: {
-                         title: 'Population of Largest U.S. Cities',
-                      },
-                      hAxis: {
-                         title: 'Total Population',
-                         minValue: 0,
-                       },
-                       vAxis: {
-                         title: 'City',
-                       },
-                       bars: 'horizontal',
-                       axes: {
-                         y: {
-                           0: { side: 'right' },
-                         },
-                    }}}
-                    legendToggle
-                    />
+                  {attendanceChart}
                 </div>
             </Paper>
           </Grid>
@@ -109,37 +259,8 @@ class Dashboard extends Component{
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
                     <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
-                <div className={classes.chartContainer} id='attendance'>
-                    <Chart
-                    width={'100%'}
-                    height={340}
-                    chartType="LineChart"
-                    loader={<div>Loading Chart</div>}
-                    data={[
-                      [
-                        { type: 'number', label: 'x' },
-                        { type: 'number', label: 'values' },
-                        { id: 'i0', type: 'number', role: 'interval' },
-                        { id: 'i1', type: 'number', role: 'interval' },
-                        { id: 'i2', type: 'number', role: 'interval' },
-                        { id: 'i2', type: 'number', role: 'interval' },
-                        { id: 'i2', type: 'number', role: 'interval' },
-                        { id: 'i2', type: 'number', role: 'interval' },
-                      ],
-                      [1, 100, 90, 110, 85, 96, 104, 120],
-                      [2, 120, 95, 130, 90, 113, 124, 140],
-                      [3, 130, 105, 140, 100, 117, 133, 139],
-                      [4, 90, 85, 95, 85, 88, 92, 95],
-                      [5, 70, 74, 63, 67, 69, 70, 72],
-                      [6, 30, 39, 22, 21, 28, 34, 40],
-                      [7, 80, 77, 83, 70, 77, 85, 90],
-                      [8, 100, 90, 110, 85, 95, 102, 110],
-                    ]}
-                    options={{
-                      intervals: { style: 'sticks' },
-                      legend: 'none',
-                    }}
-                    />
+                <div className={classes.chartContainer}>
+                  {incomeChart}
                 </div>
             </Paper>
           </Grid>
@@ -153,25 +274,8 @@ class Dashboard extends Component{
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
                     <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
-                <div className={classes.chartContainer} id='attendance'>
-                    <Chart
-                      width={'100%'}
-                      height={'340px'}
-                      chartType="PieChart"
-                      loader={<div>Loading Chart</div>}
-                      data={[
-                        ['Task', 'Hours per Day'],
-                        ['Work', 11],
-                        ['Eat', 2],
-                        ['Commute', 2],
-                        ['Watch TV', 2],
-                        ['Sleep', 7],
-                      ]}
-                      options={{
-                        title: 'My Daily Activities',
-                      }}
-                      rootProps={{ 'data-testid': '1' }}
-                    />
+                <div className={classes.chartContainer}>
+                    {expenditureChart}
                 </div>
             </Paper>
           </Grid>
@@ -179,5 +283,23 @@ class Dashboard extends Component{
     )
   }
 }
-
-export default withStyles(styles)(Dashboard);
+const mapStateToProps = state =>({
+  fetchAttendanceStart:state.dashboard.fetchAttendanceStart,
+  fetchAttendanceSuccess:state.dashboard.fetchAttendanceSuccess,
+  fetchAttendanceFail:state.dashboard.fetchAttendanceFail,
+  fetchIncomeStart:state.dashboard.fetchIncomeStart,
+  fetchIncomeSuccess:state.dashboard.fetchIncomeSuccess,
+  fetchIncomeFail:state.dashboard.fetchIncomeFail,
+  fetchExpenditureStart:state.dashboard.fetchExpenditureStart,
+  fetchExpenditureSuccess:state.dashboard.fetchExpenditureSuccess,
+  fetchExpenditureFail:state.dashboard.fetchExpenditureFail,
+  reports:state.dashboard.reports,
+  income:state.dashboard.income,
+  expenditure:state.dashboard.expenditure,
+  branchId:state.auth.branchId
+})
+const mapDispatchToProps= dispatch =>({
+  onFetchAttendance:(branchId)=> dispatch(fetchAttendanceAsync(branchId)),
+  onFetchFinance:(branchId,url,type)=>dispatch(fetchFinanceAsync(branchId,url,type))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Dashboard));

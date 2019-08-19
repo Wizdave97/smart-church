@@ -5,4 +5,5 @@ import staffReducer from './staff';
 import reportReducer from './report';
 import financeReducer from './finance';
 import settingsReducer from './settings';
-export {themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer,settingsReducer}
+import dashboardReducer from './dashboard';
+export {themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer,settingsReducer,dashboardReducer}
