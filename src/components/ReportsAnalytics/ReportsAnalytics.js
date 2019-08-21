@@ -49,7 +49,7 @@ class ReportsAnalytics extends Component {
     let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
 
     let attendanceChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
-    if(this.props.fetchReportSuccess && this.props.reports){
+    if( this.props.reports){
       for(let obj of this.props.reports){
         let temp=[];
         temp.push(obj.date)

@@ -196,6 +196,8 @@ class Dashboard extends Component{
 
     return (
       <Fragment>
+          <Grid container spacing={8}>
+
           <Grid
            item
            xs={12}>
@@ -280,6 +282,7 @@ class Dashboard extends Component{
                     {expenditureChart}
                 </div>
             </Paper>
+          </Grid>
           </Grid>
       </Fragment>
     )

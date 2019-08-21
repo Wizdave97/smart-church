@@ -90,6 +90,7 @@ class Layout extends Component {
                     <Grid
                     container
                     spacing={8}
+                    style={{padding:32,display:'block'}}
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>

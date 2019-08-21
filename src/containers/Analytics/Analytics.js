@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { reportSync, fetchReportAsync } from '../../store/actions/reportActions';
 import ReportsAnalytics from '../../components/ReportsAnalytics/ReportsAnalytics';
+import FinanceAnalytics from '../../components/FinanceAnalytics/FinanceAnalytics';
+import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
 
 
 
@@ -31,10 +33,21 @@ class Analytics extends Component {
               />
           </Grid>
           <Grid item xs={12}>
-
-          </Grid>
-          <Grid item xs={12}>
-
+            <FinanceAnalytics
+              token={this.props.token}
+              next={this.props.next}
+              first={this.props.first}
+              prev={this.props.prev}
+              onFetchFinance={this.props.onFetchFinance}
+              onUnmount={this.props.onFinanceUnmount}
+              current_page={this.props.current_page_report}
+              total={this.props.total}
+              branchId={this.props.branchId}
+              data={this.props.financeReports}
+              fetchFinanceSuccess={this.props.fetchFinanceSuccess}
+              fetchFinanceFail={this.props.fetchFinanceFail}
+              fetchFiananceStart={this.props.fetchFinanceStart}
+              />
           </Grid>
         </Fragment>
       )
@@ -50,11 +63,23 @@ const mapStateToProps= state=>({
   firstReport:state.report.first,
   current_page_report:state.report.current_page,
   nextReport:state.report.next,
-  prevReport:state.report.prev
+  prevReport:state.report.prev,
+  token:state.auth.token,
+  fetchFinanceStart:state.finance.fetchFinanceStart,
+  fetchFinanceSuccess:state.finance.fetchFinanceSuccess,
+  fetchFinanceFail:state.finance.fetchFinanceFail,
+  total:state.finance.total,
+  financeReports:state.finance.reports,
+  first:state.finance.first,
+  next:state.finance.next,
+  prev:state.finance.prev,
+  current_page:state.finance.current_page
 })
 
 const mapDispatchToProps= dispatch=>({
   onFetchReport:(branchId,url=null,day='sunday',month=null,year='2019')=> dispatch(fetchReportAsync(branchId,url,day,month,year)),
-  onUnmount:()=> dispatch(reportSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(reportSync(actionTypes.RESET)),
+  onFetchFinance:(branchId,url=null,type='income',category=null,month=null,year='2019')=> dispatch(fetchFinanceAsync(branchId,url,type,category,month,year)),
+  onFinanceUnmount:()=> dispatch(financeSync(actionTypes.RESET))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Analytics);
