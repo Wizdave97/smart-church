@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Chart from 'react-google-charts';
 import { Line } from "react-chartjs-2";
+import { Link } from 'react-router-dom';
 import { Grid,Paper,Typography, Fab,Divider, CircularProgress,Button} from '@material-ui/core';
 import { ShowChart, Money, Payment} from '@material-ui/icons';
 import { fetchAttendanceAsync,fetchFinanceAsync } from '../../store/actions/dashboardActions';
@@ -57,7 +58,7 @@ class Dashboard extends Component{
       }
       this.cycle(dataIndex,labels,data,title,dataset,datalabels)
       dataIndex++
-    },5000)
+    },10000)
   this.setState({[id]:intervalId})
   }
   componentDidUpdate(prevProps,prevState){
@@ -75,6 +76,7 @@ class Dashboard extends Component{
   }
   componentWillUnmount(){
     window.clearInterval(this.state.intervalId)
+    window.clearInterval(this.state.expenditureId)
   }
   render(){
     const { classes } = this.props
@@ -139,14 +141,14 @@ class Dashboard extends Component{
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,1 58)",
+          pointBorderColor: "rgb(205, 130,240)",
           pointBackgroundColor: "rgb(255, 255, 255)",
           pointBorderWidth: 10,
           pointHoverRadius: 5,
           pointHoverBackgroundColor: "rgb(0, 0, 0)",
           pointHoverBorderColor: "rgba(220, 220, 220,1)",
           pointHoverBorderWidth: 2,
-          pointRadius: 2,
+          pointRadius: 3,
           pointHitRadius: 10,
           data: this.state.incomeData
         },
@@ -173,7 +175,7 @@ class Dashboard extends Component{
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,1 58)",
+          pointBorderColor: "rgb(205, 130,240)",
           pointBackgroundColor: "rgb(255, 255, 255)",
           pointBorderWidth: 10,
           pointHoverRadius: 5,
@@ -242,7 +244,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Attendance</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer} id='attendance'>
                   {attendanceChart}
@@ -257,7 +259,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer}>
                   {incomeChart}
@@ -272,7 +274,7 @@ class Dashboard extends Component{
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
-                    <Fab variant="extended" size="small" color="secondary"><Typography variant="body1">Explore</Typography></Fab>
+                    <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
                 </div>
                 <div className={classes.chartContainer}>
                     {expenditureChart}

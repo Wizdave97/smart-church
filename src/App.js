@@ -34,6 +34,9 @@ const asyncViewFinances= asyncComponent(()=>{
 const asyncBranches= asyncComponent(()=>{
   return import('./containers/Branches/Branches')
 })
+const asyncAnalytics= asyncComponent(()=>{
+  return import('./containers/Analytics/Analytics')
+})
 class App  extends Component{
 
 
@@ -59,6 +62,7 @@ class App  extends Component{
               <Route path='/viewreports' component={asyncReports}/>
               <Route path='/viewfinances' component={asyncViewFinances}/>
               <Route path='/allbranches' component={asyncBranches}/>
+              <Route path='/analytics' component={asyncAnalytics}/>
             </Switch>
         </Layout>
       )
