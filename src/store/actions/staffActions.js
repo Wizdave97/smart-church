@@ -38,3 +38,35 @@ export const staffAsync= (staffData)=>{
   }
 
 }
+
+export const fetchStaffsAsync=(url=null)=>{
+  return (dispatch,getState)=>{
+    dispatch(staffSync(actionTypes.FETCH_STAFFS_START))
+      if(!url){
+        url=baseUrl+'/staffs'
+      }
+      fetch(url,{
+        method:'GET',
+        mode:'cors',
+        headers:{
+           'Content-Type':'application/json',
+           'Authorization':'Bearer'+  getState().auth.token
+        }
+      }).then(res=>{
+        console.log(res)
+        if(res.status!==200){
+            return null
+        }
+        return res.json()
+      }).then(res=>{
+        console.log('success')
+        dispatch(staffSync(actionTypes.FETCH_STAFFS_SUCCESS,res))
+
+      }).catch(err=>{
+        console.log('failure')
+        dispatch(staffSync(actionTypes.FETCH_STAFFS_FAIL))
+      })
+
+
+  }
+}

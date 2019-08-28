@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import asyncComponent from './utils/asyncComponent';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Auth from './containers/Auth/Auth';
@@ -37,6 +37,9 @@ const asyncBranches= asyncComponent(()=>{
 const asyncAnalytics= asyncComponent(()=>{
   return import('./containers/Analytics/Analytics')
 })
+const asyncStaffs= asyncComponent(()=>{
+  return import('./containers/Staffs/Staffs')
+})
 class App  extends Component{
 
 
@@ -50,22 +53,39 @@ class App  extends Component{
     const theme=createMuiTheme(this.props.theme)
     let routes=<Switch><Route  path='/' component={Auth}/></Switch>
     if(this.props.isAuthenticated){
-      routes=(
-        <Layout>
-            <Switch>
-              <Route exact path='/' component={Dashboard}/>
-              <Route path='/addbranch' component={asyncAddBranch}/>
-              <Route path='/addstaff' component={asyncAddStaff}/>
-              <Route path='/newreport' component={asyncNewReport}/>
-              <Route path='/settings' component={asyncSettings}/>
-              <Route path='/finance' component={asyncFinanceReport}/>
-              <Route path='/viewreports' component={asyncReports}/>
-              <Route path='/viewfinances' component={asyncViewFinances}/>
-              <Route path='/allbranches' component={asyncBranches}/>
-              <Route path='/analytics' component={asyncAnalytics}/>
-            </Switch>
-        </Layout>
-      )
+      let availableRoutes=[{path:'/',cmp:Dashboard}]
+      if(this.props.permissions.indexOf(7)>0){
+        availableRoutes.push({path:'/allbranches',cmp:asyncBranches})
+      }
+      if(this.props.permissions.indexOf(8)>0){
+        availableRoutes.push({path:'/allstaff',cmp:asyncStaffs})
+      }
+      if(this.props.permissions.indexOf(9)>0){
+        availableRoutes.push({path:'/viewreports',cmp:asyncReports})
+        availableRoutes.push({path:'/analytics',cmp:asyncAnalytics})
+        availableRoutes.push({path:'/settings',cmp:asyncSettings})
+        availableRoutes.push({path:'/viewfinances',cmp:asyncViewFinances})
+      }
+      if(this.props.permissions.indexOf(10)>0){
+        availableRoutes.push({path:'/newreport',cmp:asyncNewReport})
+        availableRoutes.push({path:'/finance',cmp:asyncFinanceReport})
+      }
+      if(this.props.permissions.indexOf(6)>0){
+        availableRoutes.push({path:'/addbranch',cmp:asyncAddBranch})
+      }
+      if(this.props.permissions.indexOf(5)>0){
+        availableRoutes.push({path:'/addstaff',cmp:asyncAddStaff})
+      }
+        routes=(
+          <Layout>
+              <Switch>
+                {availableRoutes.map(obj=>{
+                  return (<Route exact path={obj.path} component={obj.cmp} key={obj.path}/>)
+                })}
+                <Redirect to="/"/>
+              </Switch>
+          </Layout>
+        )
     }
     return (
         <MuiThemeProvider theme={theme}>
@@ -76,7 +96,8 @@ class App  extends Component{
 }
 const mapStateToProps= state =>({
   theme:state.theme,
-  isAuthenticated:state.auth.token!==null
+  isAuthenticated:state.auth.token!==null,
+  permissions:state.auth.permissions
 })
 
 const mapDispatchToProps= dispatch=>({

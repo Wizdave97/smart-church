@@ -3,9 +3,10 @@ import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
 import { connect } from 'react-redux';
-import { Delete } from '@material-ui/icons';
+import { Delete, Visibility } from '@material-ui/icons';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { branchSync, fetchBranchAsync } from '../../store/actions/branchActions';
+import { changeBranchId } from '../../store/actions/authActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core'
@@ -14,7 +15,9 @@ import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody,
 class Branches extends Component {
   state={
     states:null,
-    fixValidityBug:''
+    fixValidityBug:'',
+    errorBranchState:false,
+    branchState:''
   }
 
   hardSetState=this.setState.bind(this)
@@ -35,7 +38,7 @@ class Branches extends Component {
         states:states,
       })
     }).catch(err=> console.log(err))
-    this.props.onFetchBranches(this.props.branchId)
+      this.props.onFetchBranches(this.props.branchId)
   }
   componentWillUnmount(){
     this.props.onUnmount()
@@ -66,6 +69,9 @@ class Branches extends Component {
     if(this.props.fetchBranchesStart){
       progress=<LinearProgress color="secondary"/>
     }
+    if (this.props.changeBranchId){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.changeBranchId} message={"Now viewing selected branch"}/>
+    }
     if(this.props.fetchBranchesSuccess || this.props.branches){
       view=(
         this.props.branches.map((data,index)=>{
@@ -79,7 +85,8 @@ class Branches extends Component {
               <TableCell>{data.province.name}</TableCell>
               <TableCell>{data.area.name}</TableCell>
               <TableCell>{data.email}</TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
+              <TableCell><Button onClick={()=>this.props.onChangeBranch(data.id)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
+              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )
         })
@@ -113,6 +120,7 @@ class Branches extends Component {
                   reference={this.setRef}
                   name="branchState"
                   value={this.state.branchState}
+                  error={this.state.errorBranchState}
                   handleChange={(event)=>handleChange(event,this.hardSetState)}
                   label="Select State"
                 /></div>
@@ -130,6 +138,7 @@ class Branches extends Component {
                     <TableCell>Province</TableCell>
                     <TableCell>Area</TableCell>
                     <TableCell>Email</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -159,10 +168,12 @@ const mapStateToProps= state=>({
   first:state.branch.first,
   current_page:state.branch.current_page,
   next:state.branch.next,
-  prev:state.branch.prev
+  prev:state.branch.prev,
+  changeBranchId:state.auth.changeBranchId
 })
 const mapDispatchToProps = dispatch =>({
   onFetchBranches:()=> dispatch(fetchBranchAsync()),
-  onUnmount:()=> dispatch(branchSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(branchSync(actionTypes.RESET)),
+  onChangeBranch:(id)=>dispatch(changeBranchId(id))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Branches))

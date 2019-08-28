@@ -8,6 +8,8 @@ export const branchSync = (type,payload=null)=>{
   }
 }
 
+
+
 export const branchAsync= (branchData)=>{
   return (dispatch,getState)=>{
     dispatch(branchSync(actionTypes.POST_BRANCH_START))

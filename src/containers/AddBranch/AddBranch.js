@@ -79,6 +79,7 @@ class AddBranch extends Component {
       branchData.name=data.branchName
       branchData.state=data.branchState
       branchData.street=data.address
+      branchData.lga=data.lga
       console.log(branchData)
       this.props.onSubmitHandler(branchData)
     }

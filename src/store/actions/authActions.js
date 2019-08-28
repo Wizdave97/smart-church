@@ -7,6 +7,12 @@ export const authSync = (type,payload=null)=>{
     payload:payload
   }
 }
+export const changeBranchId= (id)=>{
+  return {
+    type:actionTypes.CHANGE_BRANCH_ID,
+    payload:id
+  }
+}
 const storeAuthInfo= (data) =>{
   if(!localStorage.smartchurch){
     localStorage.smartchurch='';

@@ -31,6 +31,7 @@ class Reports extends Component {
   componentDidMount(){
     this.setState({fixValidityBug:''})
     this.props.onFetchReport(this.props.branchId)
+
   }
   componentWillUnmount(){
     this.props.onUnmount()

@@ -25,6 +25,7 @@ const reducer = (state=initialState,action)=>{
     case actionTypes.FETCH_BRANCHES_SUCCESS: return updateObject(state, {fetchBranchesFail: false, fetchBranchesStart:false, fetchBranchesSuccess:true,branches:action.payload.data,first:action.payload.links.first,next:action.payload.links.next,prev:action.payload.links.prev,total:action.payload.meta.total,current_page:action.payload.meta.current_page})
     case actionTypes.FETCH_BRANCHES_FAIL: return updateObject(state, {fetchBranchesFail:true, fetchBranchesStart:false, fetchBranchesSuccess:false})
     case actionTypes.RESET: return updateObject(state,{postBranchStart:false,postBranchFail:false,postBranchSuccess:false,fetchBranchesStart:false,fetchBranchesSuccess:false,fetchBranchesFail:false,})
+
     default: return state
   }
 }

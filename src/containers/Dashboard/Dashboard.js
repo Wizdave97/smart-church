@@ -64,14 +64,18 @@ class Dashboard extends Component{
   componentDidUpdate(prevProps,prevState){
     let dataIndex=0,expIndex=0;
     if(this.props.fetchIncomeSuccess && this.props.income){
-      if(prevState.intervalId==null){
-        this.cycleIncomeCategories(this.props.income,dataIndex,'intervalId','title','incomeData','incomeLabels')
+      if(this.props.income.length!==0){
+        if(prevState.intervalId==null){
+          this.cycleIncomeCategories(this.props.income,dataIndex,'intervalId','title','incomeData','incomeLabels')
+        }
       }
     }
     if(this.props.fetchExpenditureSuccess && this.props.expenditure){
-      if(prevState.expenditureId==null){
-        this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
-      }
+      if(this.props.expenditure.length!==0){
+        if(prevState.expenditureId==null){
+          this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
+        }
+      }  
     }
   }
   componentWillUnmount(){
