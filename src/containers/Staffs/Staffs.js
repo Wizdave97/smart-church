@@ -3,7 +3,8 @@ import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
 import { connect } from 'react-redux';
-import { Delete, Visibility } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import { Delete, Edit } from '@material-ui/icons';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { staffSync, fetchStaffsAsync } from '../../store/actions/staffActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
@@ -79,7 +80,7 @@ class Staffs extends Component {
               <TableCell>{data.address}</TableCell>
               <TableCell>{data.email}</TableCell>
               <TableCell>{data.sex}</TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="inspect branch"><Edit color="primary"/></Button></TableCell>
               <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )

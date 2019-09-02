@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
-import { Delete } from '@material-ui/icons';
+import { Delete, Edit} from '@material-ui/icons';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
@@ -100,6 +101,7 @@ class ViewFinances extends Component {
               <TableCell>{data.description.join(',')}</TableCell>
               <TableCell>{data.total}</TableCell>
               <TableCell>{data.percentage}</TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button></TableCell>
               <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )

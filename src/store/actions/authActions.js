@@ -13,6 +13,11 @@ export const changeBranchId= (id)=>{
     payload:id
   }
 }
+export const resetBranchId= (id)=>{
+  return {
+    type:actionTypes.RESET_BRANCH_ID
+  }
+}
 const storeAuthInfo= (data) =>{
   if(!localStorage.smartchurch){
     localStorage.smartchurch='';

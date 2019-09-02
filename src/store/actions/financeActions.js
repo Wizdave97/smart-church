@@ -47,7 +47,45 @@ export const financeAsync= (type,financeData)=>{
   }
 
 }
+export const updateFinanceAsync= (type,financeData)=>{
+  return (dispatch,getState)=>{
+    dispatch(financeSync(actionTypes.POST_FINANCE_START))
 
+      let url=baseUrl
+      switch(type){
+        case 'Income':
+          url+='/incomes';
+          break;
+        case 'Expenditure':
+          url+='/expenditures';
+          break;
+        default: break;
+      }
+      fetch(url,{
+        method:'PATCH',
+        mode:'cors',
+        body:JSON.stringify(financeData),
+        headers:{
+           'Content-Type':'application/json',
+           'Authorization':'Bearer'+  getState().auth.token
+        }
+      }).then(res=>{
+        if(res.status!==200){
+          return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(financeSync(actionTypes.POST_FINANCE_SUCCESS))
+
+      }).catch(err=>{
+        dispatch(financeSync(actionTypes.POST_FINANCE_FAIL))
+
+      })
+
+
+  }
+
+}
 export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=null,year=null)=>{
   return (dispatch,getState)=>{
     dispatch(financeSync(actionTypes.FETCH_FINANCE_REPORTS_START))

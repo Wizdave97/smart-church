@@ -4,7 +4,7 @@ import styles from './styles';
 import Input from '../../components/UI/Input/Input';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 import { handleChange,submitHandler} from '../../utils/Utility';
-import { financeAsync, financeSync }  from '../../store/actions/financeActions';
+import { financeAsync, financeSync, updateFinanceAsync }  from '../../store/actions/financeActions';
 import formSerialize from 'form-serialize';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { connect } from 'react-redux';
@@ -54,7 +54,19 @@ class FinanceReport extends Component {
       }
       this.setState({expenseCategories:categories})
     }).catch(err=> console.log(err))
+    if(Number(this.props.match.params.id)>=0){
+      for(let obj of this.props.reports ){
+        if(obj.id==Number(this.props.match.params.id)){
+          this.setState({
+            date:obj.date,
+            description:obj.description.join(','),
+            category:obj.category
+          })
+        }
+      }
+    }
   }
+
   hardSetState=this.setState.bind(this)
   setRef= element =>{
     if(element){
@@ -74,7 +86,13 @@ class FinanceReport extends Component {
       delete data.reportType
       data.description=data.description.split(',')
       data.branchid=this.props.branchId
-      this.props.onSubmitHandler(this.state.reportType,data)
+      if(Number(this.props.match.params.id)>=0){
+        data.id=Number(this.props.match.params.id)
+        this.props.onUpdateReport(this.state.reportType,data)
+      }
+      else {
+        this.props.onSubmitHandler(this.state.reportType,data)
+      }
     }
   }
 
@@ -189,8 +207,8 @@ class FinanceReport extends Component {
                           type="text"
                           errorMessage="Please this field is required"
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
-                          label="Description"
-                          helperText="Brief description of the expense or income"
+                          label="Amount"
+                          helperText="Type in the amount"
                           />
                     </div>
                 </div>
@@ -228,11 +246,13 @@ const mapStateToProps= state=>({
   postFinanceSuccess:state.finance.postFinanceSuccess,
   postFinanceFail:state.finance.postFinanceFail,
   branchId:state.auth.branchId,
-  token:state.auth.token
+  token:state.auth.token,
+  reports:state.finance.reports
 })
 
 const mapDispatchToProps= dispatch=>({
   onSubmitHandler:(type,financeData)=> dispatch(financeAsync(type,financeData)),
-  onUnmount:()=> dispatch(financeSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(financeSync(actionTypes.RESET)),
+  onUpdateReport:(type,financeData)=>dispatch(updateFinanceAsync(type,financeData))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(FinanceReport));

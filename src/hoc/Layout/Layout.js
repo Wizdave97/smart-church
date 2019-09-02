@@ -8,8 +8,8 @@ import styles from './styles';
 import Sunrise from '../../assets/sunrise.png';
 import Sunset from '../../assets/sunset.png';
 import Sunny from '../../assets/sunny.png';
-import './routes.css'
-import { authLogout} from '../../store/actions/authActions';
+import './routes.css';
+import { authLogout, resetBranchId } from '../../store/actions/authActions';
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
@@ -83,7 +83,7 @@ class Layout extends Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                { this.state.showSideBar?<SideBar  key={"sidebar"}/>:null }
+                { this.state.showSideBar?<SideBar toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>:null }
               </CSSTransitionGroup>}
               <div className={classes.root} >
                 <main className={classes.main}  style={{padding:32}}>
@@ -104,9 +104,13 @@ class Layout extends Component {
     )
   }
 }
+const mapStateToProps= state =>({
+  permissions:state.auth.permissions
+})
 const mapDispatchToProps = dispatch =>({
   toggleTheme:(mode)=> dispatch(toggleTheme(mode)),
-  onLogOut:()=> dispatch(authLogout())
+  onLogOut:()=> dispatch(authLogout()),
+  onResetBranchId:()=>dispatch(resetBranchId())
 })
 
-export default connect(null,mapDispatchToProps)(withStyles(styles)(Layout));
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Layout));

@@ -3,6 +3,7 @@ import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { reportSync, fetchReportAsync } from '../../store/actions/reportActions';
 import { Delete, Edit } from '@material-ui/icons';
@@ -74,7 +75,7 @@ class Reports extends Component {
               <TableCell>{data.totalAttendance}</TableCell>
               <TableCell>{data.firstTimers}</TableCell>
               <TableCell>{data.salvation}</TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
               <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )

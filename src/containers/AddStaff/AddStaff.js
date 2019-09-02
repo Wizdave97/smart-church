@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import baseUrl from '../../store/base_url';
 import { handleChange,submitHandler} from '../../utils/Utility';
-import { staffAsync, staffSync }  from '../../store/actions/staffActions';
+import { staffAsync, staffSync, updateStaffAsync }  from '../../store/actions/staffActions';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 import formSerialize from 'form-serialize';
@@ -73,6 +73,19 @@ class AddStaff extends Component {
       }
       this.setState({types:types,typeIds:typeIds})
     }).catch(err=>console.log(err))
+    if(Number(this.props.match.params.id)>=0){
+      for(let obj of this.props.staffs ){
+        if(obj.id==Number(this.props.match.params.id)){
+          this.setState({
+            firstName:obj.firstname,
+            lastName:obj.lastname,
+            email:obj.email,
+            sex:obj.sex,
+            address:obj.address
+          })
+        }
+      }
+    }
   }
   hardSetState=this.setState.bind(this)
   setRef= element =>{
@@ -107,8 +120,13 @@ class AddStaff extends Component {
       let type=this.state.typeIds[typeIndex]
       data.branchid=branchId
       data.type=type
-      this.props.onSubmitHandler(data)
-      console.log(data)
+      if(Number(this.props.match.params.id)>=0){
+        data.id=Number(this.props.match.params.id)
+        this.props.onUpdateReport(data)
+      }
+      else {
+        this.props.onSubmitHandler(data)
+      }
     }
   }
   render(){
@@ -435,11 +453,13 @@ const mapStateToProps= state=>({
   token:state.auth.token,
   postStaffStart:state.staff.postStaffStart,
   postStaffFail:state.staff.postStaffFail,
-  postStaffSuccess:state.staff.postStaffSuccess
+  postStaffSuccess:state.staff.postStaffSuccess,
+  staffs:state.staff.staffs
 })
 
 const mapDispatchToProps= dispatch=>({
   onSubmitHandler:(staffData)=> dispatch(staffAsync(staffData)),
-  onUnmount:()=> dispatch(staffSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(staffSync(actionTypes.RESET)),
+  onUpdateReport:(staffData)=> dispatch(updateStaffAsync(staffData))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(AddStaff));

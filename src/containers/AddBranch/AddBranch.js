@@ -6,15 +6,15 @@ import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import formSerialize from 'form-serialize';
 import { connect } from 'react-redux';
-import { branchAsync, branchSync }  from '../../store/actions/branchActions';
+import { branchAsync, branchSync,updateBranchAsync }  from '../../store/actions/branchActions';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 class AddBranch extends Component {
   state={
-    states:null,
-    lgs:null,
+    states:[],
+    lgs:[],
     state_index:null,
     branchName:'',
     branchPastor:'',
@@ -36,10 +36,10 @@ class AddBranch extends Component {
     errorAddress:false
   }
   componentDidMount(){
-    fetch('./assets/states.json').then(resp=>resp.json()).then(data=>{
+    fetch('../assets/states.json').then(resp=>resp.json()).then(data=>{
       const states=[]
       const lgs=[]
-      for(let obj of data){
+      for(let obj of data.data){
         let name=obj.state.name
         let locals=obj.state.locals
         states.push(name)
@@ -50,6 +50,19 @@ class AddBranch extends Component {
         lgs:lgs
       })
     }).catch(err=> console.log(err))
+
+    if(Number(this.props.match.params.id)>=0){
+      for(let obj of this.props.branches ){
+        if(obj.id==Number(this.props.match.params.id)){
+          this.setState({
+            branchName:obj.name,
+            branchState:obj.state,
+            address:obj.street,
+            lga:obj.lga
+          })
+        }
+      }
+    }
   }
   hardSetState=this.setState.bind(this)
   setRef= element =>{
@@ -80,8 +93,13 @@ class AddBranch extends Component {
       branchData.state=data.branchState
       branchData.street=data.address
       branchData.lga=data.lga
-      console.log(branchData)
-      this.props.onSubmitHandler(branchData)
+      if(Number(this.props.match.params.id)>=0){
+        branchData.id=Number(this.props.match.params.id)
+        this.props.onUpdateReport(branchData)
+      }
+      else {
+        this.props.onSubmitHandler(branchData)
+      }
     }
   }
 
@@ -199,7 +217,6 @@ class AddBranch extends Component {
                             label="State"
                             reference={this.setRef}
                             name="branchState"
-                            required={true}
                             error={errorBranchState}
                             value={branchState}
                             errorMessage="Please this filled is required"
@@ -297,12 +314,14 @@ class AddBranch extends Component {
 const mapStateToProps= state=>({
   postBranchStart:state.branch.postBranchStart,
   postBranchFail:state.branch.postBranchFail,
-  postBranchSuccess:state.branch.postBranchSuccess
+  postBranchSuccess:state.branch.postBranchSuccess,
+  branches:state.branch.branches,
 })
 
 const mapDispatchToProps= dispatch=>({
   onSubmitHandler:(branchData)=> dispatch(branchAsync(branchData)),
-  onUnmount:()=> dispatch(branchSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(branchSync(actionTypes.RESET)),
+  onUpdateReport:(branchData)=> dispatch(updateBranchAsync(branchData))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(AddBranch));

@@ -53,34 +53,34 @@ class App  extends Component{
     const theme=createMuiTheme(this.props.theme)
     let routes=<Switch><Route  path='/' component={Auth}/></Switch>
     if(this.props.isAuthenticated){
-      let availableRoutes=[{path:'/',cmp:Dashboard}]
+      let availableRoutes=[{path:'/',cmp:Dashboard,exact:true}]
       if(this.props.permissions.indexOf(7)>0){
-        availableRoutes.push({path:'/allbranches',cmp:asyncBranches})
+        availableRoutes.push({path:'/allbranches',exact:false,cmp:asyncBranches})
       }
       if(this.props.permissions.indexOf(8)>0){
-        availableRoutes.push({path:'/allstaff',cmp:asyncStaffs})
+        availableRoutes.push({path:'/allstaff',exact:false,cmp:asyncStaffs})
       }
       if(this.props.permissions.indexOf(9)>0){
-        availableRoutes.push({path:'/viewreports',cmp:asyncReports})
-        availableRoutes.push({path:'/analytics',cmp:asyncAnalytics})
-        availableRoutes.push({path:'/settings',cmp:asyncSettings})
-        availableRoutes.push({path:'/viewfinances',cmp:asyncViewFinances})
+        availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports})
+        availableRoutes.push({path:'/analytics',exact:false,cmp:asyncAnalytics})
+        availableRoutes.push({path:'/settings',exact:false,cmp:asyncSettings})
+        availableRoutes.push({path:'/viewfinances',exact:false,cmp:asyncViewFinances})
       }
       if(this.props.permissions.indexOf(10)>0){
-        availableRoutes.push({path:'/newreport',cmp:asyncNewReport})
-        availableRoutes.push({path:'/finance',cmp:asyncFinanceReport})
+        availableRoutes.push({path:'/newreport/:id',exact:false,cmp:asyncNewReport})
+        availableRoutes.push({path:'/finance/:id',exact:false,cmp:asyncFinanceReport})
       }
       if(this.props.permissions.indexOf(6)>0){
-        availableRoutes.push({path:'/addbranch',cmp:asyncAddBranch})
+        availableRoutes.push({path:'/addbranch/:id',exact:false,cmp:asyncAddBranch})
       }
       if(this.props.permissions.indexOf(5)>0){
-        availableRoutes.push({path:'/addstaff',cmp:asyncAddStaff})
+        availableRoutes.push({path:'/addstaff/:id',exact:false,cmp:asyncAddStaff})
       }
         routes=(
           <Layout>
               <Switch>
                 {availableRoutes.map(obj=>{
-                  return (<Route exact path={obj.path} component={obj.cmp} key={obj.path}/>)
+                  return (<Route exact={obj.exact} path={obj.path} component={obj.cmp} key={obj.path}/>)
                 })}
                 <Redirect to="/"/>
               </Switch>

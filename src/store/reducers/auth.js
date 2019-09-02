@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 const initialState={
   token:null,
-  branchId:4,
+  myBranchId:null,
+  branchId:1,
   userName:null,
   authStart:false,
   authSuccess:false,
@@ -19,6 +20,7 @@ const reducer =(state=initialState,action)=>{
     case actionTypes.AUTH_LOGOUT: return updateObject(state, {token:null,authStart:false,authFail:false,authSuccess:false,userName:null})
     case actionTypes.RESET: return updateObject(state,{authStart:false,authFail:false,authSuccess:false,changeBranchId:false})
     case actionTypes.CHANGE_BRANCH_ID:return updateObject(state, {branchId:action.payload,changeBranchId:true})
+    case actionTypes.RESET_BRANCH_ID: return updateObject(state, {branchId: state.myBranchId})
     default: return state
   }
 }

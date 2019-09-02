@@ -3,13 +3,14 @@ import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
 import { connect } from 'react-redux';
-import { Delete, Visibility } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import { Delete, Visibility, Edit } from '@material-ui/icons';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { branchSync, fetchBranchAsync } from '../../store/actions/branchActions';
 import { changeBranchId } from '../../store/actions/authActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core';
 
 
 class Branches extends Component {
@@ -86,6 +87,7 @@ class Branches extends Component {
               <TableCell>{data.area.name}</TableCell>
               <TableCell>{data.email}</TableCell>
               <TableCell><Button onClick={()=>this.props.onChangeBranch(data.id)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
               <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )

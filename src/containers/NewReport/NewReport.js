@@ -7,7 +7,7 @@ import formSerialize from 'form-serialize';
 import { connect } from 'react-redux'
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actionTypes  from '../../store/actions/actionTypes';
-import { reportAsync, reportSync }  from '../../store/actions/reportActions';
+import { reportAsync, reportSync, updateReportAsync }  from '../../store/actions/reportActions';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 import { Grid, Paper, Typography, Divider, Button} from '@material-ui/core';
 
@@ -39,6 +39,21 @@ class NewReport extends Component {
   }
   componentDidMount(){
     this.setState({fixValidityBug:''})
+    if(Number(this.props.match.params.id)>=0){
+      for(let obj of this.props.reports ){
+        if(obj.id==Number(this.props.match.params.id)){
+          this.setState({
+            date:obj.date,
+            serviceDay:obj.serviceDay,
+            maleAttendance:obj.maleAttendance,
+            femaleAttendance:obj.femaleAttendance,
+            childrenAttendance:obj.childrenAttendance,
+            salvation:obj.salvation,
+            firstTimers:obj.firstTimers
+          })
+        }
+      }
+    }
   }
   hardSetState=this.setState.bind(this)
   setRef= element =>{
@@ -57,7 +72,14 @@ class NewReport extends Component {
       let form= document.querySelector('form')
       let data=formSerialize(form,{hash:true})
       data.branchid=this.props.branchId
-      this.props.onSubmitHandler(data)
+      if(Number(this.props.match.params.id)>=0){
+        data.id=Number(this.props.match.params.id)
+        this.props.onUpdateReport(data)
+      }
+      else {
+        this.props.onSubmitHandler(data)
+      }
+
 
     }
   }
@@ -296,11 +318,13 @@ const mapStateToProps= state=>({
   postReportStart:state.report.postReportStart,
   postReportFail:state.report.postReportFail,
   postReportSuccess:state.report.postReportSuccess,
-  branchId:state.auth.branchId
+  branchId:state.auth.branchId,
+  reports:state.report.reports
 })
 
 const mapDispatchToProps= dispatch=>({
   onSubmitHandler:(reportData)=> dispatch(reportAsync(reportData)),
-  onUnmount:()=> dispatch(reportSync(actionTypes.RESET))
+  onUnmount:()=> dispatch(reportSync(actionTypes.RESET)),
+  onUpdateReport:(reportData)=> dispatch(updateReportAsync(reportData))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(NewReport));
