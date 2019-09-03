@@ -51,6 +51,10 @@ class Layout extends Component {
     }
   }
   toggleSideBar = () =>{
+    const x=window.matchMedia("(min-width:960px)")
+    if (x.matches){
+      return
+    }
     this.setState(state=>({
       showSideBar:!state.showSideBar
     }))
@@ -76,7 +80,7 @@ class Layout extends Component {
       <React.Fragment>
           <CssBaseline/>
               <div className={classes.gradient}></div>
-              <Navbar logOut={this.props.onLogOut} toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
+              <Navbar logOut={this.props.onLogOut} userName={this.props.userName} toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
               {<CSSTransitionGroup
                 transitionName="sidebar"
                 transitionEnter={true}
@@ -86,11 +90,11 @@ class Layout extends Component {
                 { this.state.showSideBar?<SideBar toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>:null }
               </CSSTransitionGroup>}
               <div className={classes.root} >
-                <main className={classes.main}  style={{padding:32}}>
+                <main className={classes.main}  style={{padding:16}}>
                     <Grid
                     container
-                    spacing={8}
-                    style={{padding:32,display:'block'}}
+                    spacing={4}
+                    style={{padding:8,display:'block'}}
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
@@ -105,7 +109,8 @@ class Layout extends Component {
   }
 }
 const mapStateToProps= state =>({
-  permissions:state.auth.permissions
+  permissions:state.auth.permissions,
+  userName:state.auth.userName
 })
 const mapDispatchToProps = dispatch =>({
   toggleTheme:(mode)=> dispatch(toggleTheme(mode)),

@@ -10,12 +10,12 @@ const initialState={
   authFail:false,
   error:false,
   changeBranchId:false,
-  permissions:[1,2,3,4,5,6,7,8,9,10]
+  permissions:[]
 }
 const reducer =(state=initialState,action)=>{
   switch(action.type){
     case actionTypes.AUTH_START: return updateObject(state,{authStart:true,authSuccess:false,authFail:false,error:false})
-    case actionTypes.AUTH_SUCCESS:return updateObject(state,{authStart:false,authSuccess:true,authFail:false,error:false,token:action.payload})
+    case actionTypes.AUTH_SUCCESS:return updateObject(state,{authStart:false,authSuccess:true,authFail:false,error:false,token:action.payload.token,branchId:action.payload.user.branchid,myBranchId:action.payload.user.branchid,userName:[action.payload.user.firstname,action.payload.user.lastname].join(' '),permissions:action.payload.user.permissions})
     case actionTypes.AUTH_FAIL:return updateObject(state,{authStart:false,authSuccess:false,authFail:true,error:true})
     case actionTypes.AUTH_LOGOUT: return updateObject(state, {token:null,authStart:false,authFail:false,authSuccess:false,userName:null})
     case actionTypes.RESET: return updateObject(state,{authStart:false,authFail:false,authSuccess:false,changeBranchId:false})

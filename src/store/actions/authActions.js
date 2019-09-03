@@ -23,7 +23,7 @@ const storeAuthInfo= (data) =>{
     localStorage.smartchurch='';
   }
   const expiresIn= new Date( new Date().getTime() + new Date(Number(3600)*1000).getTime()).getTime()
-  const authData={token:data.token,expiresIn:expiresIn}
+  const authData={token:data.token,expiresIn:expiresIn,user:data.user}
   localStorage.smartchurch=JSON.stringify(authData);
 }
 export const authAsync= (isSignUp,authData)=>{
@@ -49,7 +49,7 @@ export const authAsync= (isSignUp,authData)=>{
           dispatch(authSync(actionTypes.AUTH_FAIL))
           return
         }
-        dispatch(authSync(actionTypes.AUTH_SUCCESS,res.token))
+        dispatch(authSync(actionTypes.AUTH_SUCCESS,res))
         storeAuthInfo(res)
         authCheckTimeout(3600)
 
@@ -111,7 +111,7 @@ export const autoSignIn = () =>{
       const authData=JSON.parse(localStorage.smartchurch);
       const tokenValidity=new Date().getTime() < Number(authData.expiresIn);
       if (tokenValidity) {
-        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData.token))
+        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData))
       }
       else dispatch(authSync(actionTypes.AUTH_FAIL,null))
     }

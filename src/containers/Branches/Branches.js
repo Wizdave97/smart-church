@@ -83,8 +83,8 @@ class Branches extends Component {
               <TableCell>{data.state}</TableCell>
               <TableCell>{data.lga}</TableCell>
               <TableCell>{data.street}</TableCell>
-              <TableCell>{data.province.name}</TableCell>
-              <TableCell>{data.area.name}</TableCell>
+              <TableCell>{data.province?data.province.name:null}</TableCell>
+              <TableCell>{data.area?data.area.name:null}</TableCell>
               <TableCell>{data.email}</TableCell>
               <TableCell><Button onClick={()=>this.props.onChangeBranch(data.id)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
               <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>

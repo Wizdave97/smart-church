@@ -123,7 +123,7 @@ const Navbar = props =>{
                             </ArrowTooltip>
                           </div>
                         <div className={[classes.icons,classes.hide].join(' ')} tabIndex="0"><Notifications/></div>
-                        <div className={classes.profileName}><Typography variant="body1">Sarah Mckenzie</Typography></div>
+                        <div className={classes.profileName}><Typography variant="body1">{props.userName}</Typography></div>
                         <div className={classes.icons} tabIndex="0" aria-controls="simple-menu" aria-haspopup="true" >
                           <AccountCircle onClick={handleClick}/>
                             <StyledMenu
