@@ -7,7 +7,7 @@ import * as actionTypes  from '../../store/actions/actionTypes';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import baseUrl from '../../store/base_url';
-import { Paper, Grid, Typography, Button, CircularProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/core'
 
 
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -102,7 +102,7 @@ class FinanceAnalytics extends Component {
   componentDidUpdate(prevProps,prevState){
     if(this.props.fetchFinanceSuccess && this.props.data!==null){
       if(this.props.data.length!==0){
-        this.structureData(this.props.data)  
+        this.structureData(this.props.data)
       }
       this.props.onUnmount()
     }
@@ -110,7 +110,8 @@ class FinanceAnalytics extends Component {
   render(){
     const { classes }= this.props
     const references=[this.type]
-    let financeChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
+    let financeChart=<LinearProgress  color="primary"/>
+    if (this.props.fetchFinanceStart) financeChart=<LinearProgress  color="primary"/>
     if(this.state.dataset && this.state.labels){
       financeChart=(
         <Line data={{
@@ -183,7 +184,7 @@ class FinanceAnalytics extends Component {
                 <Input
                   inputType="select"
                   required={true}
-                  options={['Income','Expenses']}
+                  options={['Income','Expenditure']}
                   name="type"
                   reference={this.setRef}
                   value={this.state.type}

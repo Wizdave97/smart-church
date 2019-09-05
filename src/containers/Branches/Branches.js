@@ -39,7 +39,7 @@ class Branches extends Component {
         states:states,
       })
     }).catch(err=> console.log(err))
-      this.props.onFetchBranches(this.props.branchId)
+      this.props.onFetchBranches()
   }
   componentWillUnmount(){
     this.props.onUnmount()
@@ -60,7 +60,7 @@ class Branches extends Component {
     const references=[this.branchState]
     let notification=null;
     if (this.props.fetchBranchesSuccess){
-      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.fetchBranchesSuccess} message={"Reports fetched successfully"}/>
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.fetchBranchesSuccess} message={"Branches fetched successfully"}/>
     }
     if (this.props.fetchBranchesFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.fetchBranchesFail} message={"There was an error fetching click the filter button to try again"}/>
@@ -79,6 +79,9 @@ class Branches extends Component {
           return(
             <TableRow key={index}>
               <TableCell>{index+1}</TableCell>
+              <TableCell><Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
+              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
               <TableCell>{data.name}</TableCell>
               <TableCell>{data.state}</TableCell>
               <TableCell>{data.lga}</TableCell>
@@ -86,9 +89,6 @@ class Branches extends Component {
               <TableCell>{data.province?data.province.name:null}</TableCell>
               <TableCell>{data.area?data.area.name:null}</TableCell>
               <TableCell>{data.email}</TableCell>
-              <TableCell><Button onClick={()=>this.props.onChangeBranch(data.id)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )
         })
@@ -133,6 +133,9 @@ class Branches extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>S/N</TableCell>
+                    <TableCell>Actions</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>State</TableCell>
                     <TableCell>LGA</TableCell>
@@ -140,7 +143,6 @@ class Branches extends Component {
                     <TableCell>Province</TableCell>
                     <TableCell>Area</TableCell>
                     <TableCell>Email</TableCell>
-                    <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -174,8 +176,8 @@ const mapStateToProps= state=>({
   changeBranchId:state.auth.changeBranchId
 })
 const mapDispatchToProps = dispatch =>({
-  onFetchBranches:()=> dispatch(fetchBranchAsync()),
+  onFetchBranches:(url)=> dispatch(fetchBranchAsync(url)),
   onUnmount:()=> dispatch(branchSync(actionTypes.RESET)),
-  onChangeBranch:(id)=>dispatch(changeBranchId(id))
+  onChangeBranch:(id,name)=>dispatch(changeBranchId(id,name))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Branches))

@@ -39,9 +39,9 @@ class NewReport extends Component {
   }
   componentDidMount(){
     this.setState({fixValidityBug:''})
-    if(Number(this.props.match.params.id)>=0){
+    if(Number(this.props.match.params.id)>=0 && this.props.reports){
       for(let obj of this.props.reports ){
-        if(obj.id==Number(this.props.match.params.id)){
+        if(obj.id==Number(this.props.match.params.id) && this.props.reports){
           this.setState({
             date:obj.date,
             serviceDay:obj.serviceDay,

@@ -67,6 +67,9 @@ class Reports extends Component {
         this.props.reports.map((data,index)=>{
           return(
             <TableRow key={index}>
+              <TableCell>{index+1}</TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
+              <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
               <TableCell>{data.date}</TableCell>
               <TableCell>{data.serviceDay}</TableCell>
               <TableCell>{data.maleAttendance}</TableCell>
@@ -75,8 +78,6 @@ class Reports extends Component {
               <TableCell>{data.totalAttendance}</TableCell>
               <TableCell>{data.firstTimers}</TableCell>
               <TableCell>{data.salvation}</TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
             </TableRow>
           )
         })
@@ -141,7 +142,10 @@ class Reports extends Component {
               <Table >
                 <TableHead>
                   <TableRow>
-                    <TableCell>{'Date'}</TableCell>
+                    <TableCell>S/N</TableCell>
+                    <TableCell>Actions</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Date</TableCell>
                     <TableCell>Day</TableCell>
                     <TableCell>Male Attendance</TableCell>
                     <TableCell>Female Attendance</TableCell>
@@ -155,7 +159,7 @@ class Reports extends Component {
                   {view}
                   <TableRow>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></TableCell>
+                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, Number of entries:{this.props.total}</Typography></TableCell>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
                   </TableRow>
                 </TableBody>

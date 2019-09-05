@@ -5,7 +5,7 @@ import Input from '../../components/UI/Input/Input';
 import Chart from 'react-google-charts';
 import { connect } from 'react-redux';
 import { handleChange,submitHandler} from '../../utils/Utility';
-import { Paper, Grid, Typography, Button, CircularProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/core'
 
 const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -48,7 +48,8 @@ class ReportsAnalytics extends Component {
     const references=[this.day]
     let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
 
-    let attendanceChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
+    let attendanceChart=<LinearProgress  color="primary"/>
+    if(this.props.fetchReportStart) attendanceChart=<LinearProgress  color="primary"/>
     if( this.props.reports){
       for(let obj of this.props.reports){
         let temp=[];

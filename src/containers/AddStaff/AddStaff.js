@@ -73,7 +73,7 @@ class AddStaff extends Component {
       }
       this.setState({types:types,typeIds:typeIds})
     }).catch(err=>console.log(err))
-    if(Number(this.props.match.params.id)>=0){
+    if(Number(this.props.match.params.id)>=0 && this.props.staffs){
       for(let obj of this.props.staffs ){
         if(obj.id==Number(this.props.match.params.id)){
           this.setState({

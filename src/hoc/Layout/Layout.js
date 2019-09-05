@@ -94,11 +94,11 @@ class Layout extends Component {
                     <Grid
                     container
                     spacing={4}
-                    style={{padding:8,display:'block'}}
+                    style={{padding:32,display:'block'}}
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div></div>
+                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography  variant="h2">Viewing Branch: {this.props.branchName}</Typography>:null}</div>
                     </div>
                         {this.props.children}
                     </Grid>
@@ -110,7 +110,8 @@ class Layout extends Component {
 }
 const mapStateToProps= state =>({
   permissions:state.auth.permissions,
-  userName:state.auth.userName
+  userName:state.auth.userName,
+  branchName:state.auth.branchName
 })
 const mapDispatchToProps = dispatch =>({
   toggleTheme:(mode)=> dispatch(toggleTheme(mode)),

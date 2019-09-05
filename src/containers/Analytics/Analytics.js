@@ -79,7 +79,7 @@ const mapStateToProps= state=>({
 const mapDispatchToProps= dispatch=>({
   onFetchReport:(branchId,url=null,day='sunday',month=null,year='2019')=> dispatch(fetchReportAsync(branchId,url,day,month,year)),
   onUnmount:()=> dispatch(reportSync(actionTypes.RESET)),
-  onFetchFinance:(branchId,url=null,type='income',category=null,month=null,year='2019')=> dispatch(fetchFinanceAsync(branchId,url,type,category,month,year)),
+  onFetchFinance:(branchId,url=null,type='Income',category=null,month=null,year='2019')=> dispatch(fetchFinanceAsync(branchId,url,type,category,month,year)),
   onFinanceUnmount:()=> dispatch(financeSync(actionTypes.RESET))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Analytics);

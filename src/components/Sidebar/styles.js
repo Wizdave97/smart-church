@@ -46,6 +46,12 @@ const styles= theme =>({
   list:{
     width:'100%',
     paddingLeft:'10%',
+    '& li:hover>svg':{
+      ...hover
+    },
+    '& li:hover>div>span':{
+      ...hover
+    },
     '& a':{
       color:'inherit',
       display:'flex',
@@ -62,7 +68,7 @@ const styles= theme =>({
       }
     },
   },
-  
+
   divider:{
     width:'100%',
     height:'1px'

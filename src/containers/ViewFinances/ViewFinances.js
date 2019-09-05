@@ -96,13 +96,14 @@ class ViewFinances extends Component {
         this.props.reports.map((data,index)=>{
           return(
             <TableRow key={index}>
-              <TableCell>{data.date}</TableCell>
-              <TableCell>{data.category}</TableCell>
-              <TableCell>{data.description.join(',')}</TableCell>
-              <TableCell>{data.total}</TableCell>
-              <TableCell>{data.percentage}</TableCell>
+              <TableCell>{index+1}</TableCell>
               <TableCell><Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button></TableCell>
               <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
+              <TableCell>{data.date}</TableCell>
+              <TableCell>{data.category}</TableCell>
+              <TableCell>{data.description?data.description.join(','):null}</TableCell>
+              <TableCell>{data.total}</TableCell>
+              <TableCell>{data.percentage}</TableCell>
             </TableRow>
           )
         })
@@ -181,7 +182,10 @@ class ViewFinances extends Component {
               <Table >
                 <TableHead>
                   <TableRow>
-                    <TableCell>{'Date'}</TableCell>
+                    <TableCell>S/N</TableCell>
+                    <TableCell>Actions</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Date</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell>Description</TableCell>
                     <TableCell>Total</TableCell>
@@ -192,7 +196,7 @@ class ViewFinances extends Component {
                   {view}
                   <TableRow>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, No of Rows:{this.props.total}</Typography></TableCell>
+                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, No of entries:{this.props.total}</Typography></TableCell>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
                   </TableRow>
                 </TableBody>

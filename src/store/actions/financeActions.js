@@ -91,13 +91,22 @@ export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=
     dispatch(financeSync(actionTypes.FETCH_FINANCE_REPORTS_START))
       type=type.toLowerCase()
       if(!url){
-        url=baseUrl+`/incomes?branchid=${branchId}`
+        if(type=='expenditure'){
+          url=baseUrl+`/expenditures?branchid=${branchId}`
+        }
+        else{
+          url=baseUrl+`/incomes?branchid=${branchId}`
+        }
       }
       else{
         switch(type){
-          case 'income': url=url+`&branchid=${branchId}`
+          case 'income':
+          url=url.replace(/expenditures/gi,'incomes')
+          url=url+`&branchid=${branchId}`
           break;
-          case 'expenses': url=url+`&branchid=${branchId}`
+          case 'expenditure': url=url+`&branchid=${branchId}`
+          url=url.replace(/incomes/gi,'expenditures')
+          console.log(url)
           break;
           default: break;
         }

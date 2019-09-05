@@ -51,7 +51,7 @@ class AddBranch extends Component {
       })
     }).catch(err=> console.log(err))
 
-    if(Number(this.props.match.params.id)>=0){
+    if(Number(this.props.match.params.id)>=0 && this.props.branches){
       for(let obj of this.props.branches ){
         if(obj.id==Number(this.props.match.params.id)){
           this.setState({

@@ -54,7 +54,7 @@ class FinanceReport extends Component {
       }
       this.setState({expenseCategories:categories})
     }).catch(err=> console.log(err))
-    if(Number(this.props.match.params.id)>=0){
+    if(Number(this.props.match.params.id)>=0 && this.props.reports){
       for(let obj of this.props.reports ){
         if(obj.id==Number(this.props.match.params.id)){
           this.setState({

@@ -59,7 +59,7 @@ class Staffs extends Component {
     const references=[this.staffState]
     let notification=null;
     if (this.props.fetchStaffsSuccess){
-      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.fetchStaffsSuccess} message={"Reports fetched successfully"}/>
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.fetchStaffsSuccess} message={"Staff Data fetched successfully"}/>
     }
     if (this.props.fetchStaffsFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.fetchStaffsFail} message={"There was an error fetching click the filter button to try again"}/>
@@ -75,13 +75,14 @@ class Staffs extends Component {
           return(
             <TableRow key={index}>
               <TableCell>{index+1}</TableCell>
+              <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="inspect branch"><Edit color="primary"/></Button></TableCell>
+              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
               <TableCell>{data.firstname}</TableCell>
               <TableCell>{data.lastname}</TableCell>
               <TableCell>{data.address}</TableCell>
               <TableCell>{data.email}</TableCell>
               <TableCell>{data.sex}</TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="inspect branch"><Edit color="primary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
+
             </TableRow>
           )
         })
@@ -126,6 +127,8 @@ class Staffs extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>S/N</TableCell>
+                    <TableCell>Actions</TableCell>
+                    <TableCell></TableCell>
                     <TableCell>First Name</TableCell>
                     <TableCell>Last Name</TableCell>
                     <TableCell>Address</TableCell>
@@ -138,7 +141,7 @@ class Staffs extends Component {
                   {view}
                   <TableRow>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, Number of Rows:{this.props.total}</Typography></TableCell>
+                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, total entries:{this.props.total}</Typography></TableCell>
                     <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
                   </TableRow>
                 </TableBody>

@@ -7,10 +7,10 @@ export const authSync = (type,payload=null)=>{
     payload:payload
   }
 }
-export const changeBranchId= (id)=>{
+export const changeBranchId= (id,branchName)=>{
   return {
     type:actionTypes.CHANGE_BRANCH_ID,
-    payload:id
+    payload:{id:id,branchName:branchName}
   }
 }
 export const resetBranchId= (id)=>{
