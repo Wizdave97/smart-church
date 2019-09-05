@@ -24,7 +24,7 @@ const reducer = (state=initialState,action)=>{
     case actionTypes.POST_REPORT_FAIL: return updateObject(state,{postReportFail:true,postReportStart:false,postReportSuccess:false})
     case actionTypes.RESET: return updateObject(state,{postReportStart:false,postReportFail:false,postReportSuccess:false,fetchReportStart:false,fetchReportSuccess:false,fetchReportFail:false})
     case actionTypes.FETCH_SERVICE_REPORTS_START: return updateObject(state,{fetchReportStart:true,fetchReportSuccess:false,fetchReportFail:false,})
-    case actionTypes.FETCH_SERVICE_REPORTS_SUCCESS: return updateObject(state,{fetchReportStart:false,fetchReportSuccess:true,fetchReportFail:false,reports:action.payload.data,first:action.payload.links.first,last:action.payload.links.first,next:action.payload.links.next,prev:action.payload.links.prev,total:action.payload.meta.total,current_page:action.payload.meta.current_page})
+    case actionTypes.FETCH_SERVICE_REPORTS_SUCCESS: return updateObject(state,{fetchReportStart:false,fetchReportSuccess:true,fetchReportFail:false,reports:action.payload.data,first:action.payload.links.first,last:action.payload.links.first,next:action.payload.links.next,prev:action.payload.links.prev,total:action.payload.meta.last_page,current_page:action.payload.meta.current_page})
     case actionTypes.FETCH_SERVICE_REPORTS_FAIL: return updateObject(state,{fetchReportStart:false,fetchReportSuccess:false,fetchReportFail:true,})
     default: return state
   }

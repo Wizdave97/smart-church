@@ -38,7 +38,9 @@ const styles = theme =>({
   chartNav:{
     width:'100%',
     display:'flex',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    padding:'10px',
+    boxSizing:'border-box'
   }
 })
 

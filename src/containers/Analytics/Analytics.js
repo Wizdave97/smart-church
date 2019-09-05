@@ -40,7 +40,7 @@ class Analytics extends Component {
               prev={this.props.prev}
               onFetchFinance={this.props.onFetchFinance}
               onUnmount={this.props.onFinanceUnmount}
-              current_page={this.props.current_page_report}
+              current_page={this.props.current_page}
               total={this.props.total}
               branchId={this.props.branchId}
               data={this.props.financeReports}
