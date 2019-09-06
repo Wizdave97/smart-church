@@ -9,7 +9,7 @@ const styles = theme =>({
   },
   error:{
     border: '1px solid red !important',
-    boxShadow:'4px 8px 10px rgba(255,0,0,0.3) -4px -8px 10px rgba(255,0,0,0.4) !important'
+    boxShadow:'2px 2px 8px rgba(255,0,0,0.3), -2px -2px 8px rgba(255,0,0,0.4) !important'
   },
   checkbox:{
     maxWidth:'48px',
@@ -20,11 +20,11 @@ const styles = theme =>({
     boxSizing: 'border-box',
     padding:' 12px 20px',
     '&:hover':{
-      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
     },
     '&:focus':{
       outline:'none',
-      backgroundColor:'#3CBC8D',
+      boxShadow:'2px 2px 8px rgba(0,0,255,0.3), -2px -2px 8px rgba(0,0,255,0.4) !important',
       color:'white'
     }
   },
@@ -43,11 +43,11 @@ const styles = theme =>({
     boxSizing: 'border-box',
     '&:hover':{
       backgroundColor:'#f1f1f1',
-      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
     },
     '&:focus':{
       outline:'none',
-      backgroundColor:'rgba(150,157,204,0.7)',
+      boxShadow:'2px 2px 10px rgba(0,0,255,0.3), -2px -2px 10px rgba(0,0,255,0.4)',
       color:'black'
     }
   },
@@ -67,11 +67,11 @@ const styles = theme =>({
     resize:'none',
     '&:hover':{
       backgroundColor:'#f1f1f1',
-      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
     },
     '&:focus':{
       outline:'none',
-      backgroundColor:'rgba(150,157,204,0.7)',
+      boxShadow:'2px 2px 8px rgba(150,157,204,0.7), -2px -2px 8px rgbargba(150,157,204,0.7)',
       color:'black'
     }
   },

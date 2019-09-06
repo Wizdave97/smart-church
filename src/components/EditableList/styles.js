@@ -41,11 +41,11 @@ const styles= theme =>({
     boxSizing: 'border-box',
     '&:hover':{
       backgroundColor:'#f1f1f1',
-      boxShadow:'4px 8px 10px rgba(0,0,0,0.3) -4px -8px 10px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 10px rgba(0,0,0,0.3), -2px -2px 10px rgba(0,0,0,0.4)',
     },
     '&:focus':{
       outline:'none',
-      backgroundColor:'rgba(150,157,204,0.7)',
+      boxShadow:'2px 2px 10px rgba(150,157,204,0.7), -2px -2px 10px rgba(150,157,204,0.7)',
       color:'black'
     }
   },

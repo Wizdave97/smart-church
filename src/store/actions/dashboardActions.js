@@ -41,34 +41,22 @@ export const fetchAttendanceAsync=(branchId,url=null,day='sunday',month=null,yea
   }
 }
 
-export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=null,year=null)=>{
+export const fetchFinanceAsync =(branchId,url,type,category=null,month=null,year=null)=>{
   return (dispatch,getState)=>{
-    if(type==='Income'){
+    type=type.toLowerCase()
+    if(type==='income'){
       dispatch(fetchSync(actionTypes.FETCH_INCOME_START))
     }
     else{
       dispatch(fetchSync(actionTypes.FETCH_EXPENDITURE_START))
     }
-      type=type.toLowerCase()
-      if(!url){
-        url=baseUrl+`/incomes?branchid=${branchId}`
-      }
-      else{
         switch(type){
-          case 'income': url=url+`&branchid=${branchId}`
+          case 'income': url=baseUrl+'/incomes'+`?branchid=${branchId}`
           break;
-          case 'expenses': url=url+`&branchid=${branchId}`
+          case 'expenditure': url=baseUrl+'/expenditures'+`?branchid=${branchId}`
           break;
           default: break;
         }
-      }
-
-      if(category) url=url+`&category=${category}`
-      if(month && year){
-        const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
-        month=months.indexOf(month)+1
-        url=url+`&month=${month}-${year}`
-      }
       fetch(url,{
         method:'GET',
         mode:'cors',

@@ -27,6 +27,7 @@ const styles = theme =>({
     pageInfo:{
       display:'block',
       width:'100%',
+      height:'100px',
       paddingTop:'10px',
       boxSizing:'border-box',
     },
@@ -40,15 +41,12 @@ const styles = theme =>({
         alignSelf:'center'
       },
       '& div':{
-        width:'10%',
+        width:'64px',
+        height:'64px',
         padding:'2px',
         boxSizing:'border-box',
         alignSelf:'center',
         display:'inline-block',
-        [theme.breakpoints.up('md')]:{
-          width:'8%',
-          padding:'10px',
-        },
         '& img':{
           width:'100%',
           height:'auto'

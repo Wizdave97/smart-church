@@ -13,7 +13,7 @@ const styles= theme =>({
     },
     chartContainer:{
       width:'100%',
-      height:'400px',
+      maxHeight:'450px',
       margin:'8px',
       backgroundColor:'inherit'
     },

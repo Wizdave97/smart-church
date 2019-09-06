@@ -8,6 +8,7 @@ const styles = theme =>({
   },
   entry:{
     width:'90%',
+    alignSelf:'center',
     boxSizing:'inherit',
     display:'flex',
     [theme.breakpoints.up('sm')]:{
@@ -18,7 +19,8 @@ const styles = theme =>({
     }
   },
   button:{
-    alignSelf:'center'
+    alignSelf:'center',
+    padding:'10px',
   },
   tableWrapper:{
     overflowX:'auto',

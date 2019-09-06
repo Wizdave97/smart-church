@@ -156,10 +156,10 @@ class Settings extends Component {
   )
 
     return(
-      <div className={classes.wrapper} style={{padding:32}}>
+      <div className={classes.wrapper} style={{padding:16}}>
           <Grid
           container
-          spacing={8}
+          spacing={4}
           justify="flex-start">
               <Grid
               item

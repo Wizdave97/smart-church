@@ -50,7 +50,7 @@ class Dashboard extends Component{
     }
     let labels=[...Object.keys(income)]
     let data=[...Object.values(income)]
-    //console.log(data)
+    console.log(labels)
 
     let intervalId=window.setInterval(()=>{
       if(dataIndex>=labels.length){
@@ -75,7 +75,7 @@ class Dashboard extends Component{
         if(prevState.expenditureId==null){
           this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
         }
-      }  
+      }
     }
   }
   componentWillUnmount(){
@@ -199,8 +199,8 @@ class Dashboard extends Component{
     }
 
     return (
-      <Fragment>
-          <Grid container spacing={8}>
+
+          <Grid container spacing={4}>
 
           <Grid
            item
@@ -245,8 +245,8 @@ class Dashboard extends Component{
           <Grid
           item
           xs={12}
-          md={6}
-          xl={4}>
+          md={12}
+          xl={6}>
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Attendance</Typography>
@@ -260,8 +260,8 @@ class Dashboard extends Component{
           <Grid
           item
           xs={12}
-          md={6}
-          xl={4}>
+          md={12}
+          xl={6}>
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
@@ -275,8 +275,8 @@ class Dashboard extends Component{
           <Grid
           item
           xs={12}
-          md={6}
-          xl={4}>
+          md={12}
+          xl={6}>
             <Paper square={true} elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
@@ -288,7 +288,7 @@ class Dashboard extends Component{
             </Paper>
           </Grid>
           </Grid>
-      </Fragment>
+
     )
   }
 }
