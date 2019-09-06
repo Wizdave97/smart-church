@@ -1,10 +1,8 @@
 import React from 'react';
 import { Paper, Button, Typography,Table,TableHead,TableRow,TableCell,TableBody } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { CSSTransitionGroup } from 'react-transition-group';
 import ListItem from '../ListItem/ListItem';
 import Snackbar from '../NotificationSnackbar/NotificationSnackbar';
-import './list.css';
 import styles from './styles';
 
 const editableList = props => {
@@ -21,15 +19,10 @@ const editableList = props => {
     <Paper elevation={6} className={classes.paper}>
       {props.fail||props.success?<Snackbar open={props.fail||props.success} color={props.success?'primary':'error'} message={props.success?'success':'failed'} handleClose={props.handleClose}/>:null}
       <Table className={classes.list}>
-        <TableHead><TableRow><TableCell align="left" component="th"><Typography variant="h4">Start Adding categories</Typography></TableCell></TableRow></TableHead>
+        <TableHead><TableRow><TableCell align="left" component="th"><Typography variant="h6">Start Adding categories</Typography></TableCell></TableRow></TableHead>
         <TableBody>
-          <CSSTransitionGroup
-          transitionName="list"
-          transitionEnter={true}
-          transitionLeave={true}
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
-          {listItems}</CSSTransitionGroup></TableBody>
+          {listItems}
+        </TableBody>
       </Table>
       <div className={classes.inputBox}>
           <div className={classes.formGroup}>

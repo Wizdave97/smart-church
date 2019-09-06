@@ -7,7 +7,7 @@ const styles= theme =>({
   close: {
   padding: theme.spacing(0.5),
   },
-  
+
 })
 
 const NotificationSnackbar = props =>{
@@ -20,7 +20,7 @@ const NotificationSnackbar = props =>{
     }}
     open={props.open}
     onClose={props.handleClose}
-    autoHideDuration={6000}
+    autoHideDuration={2500}
     message={<Typography color={props.color} variant="body1" id="message-id">{props.message ? props.message : undefined}</Typography>}
     action={[
       <IconButton

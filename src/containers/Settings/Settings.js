@@ -3,7 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper,Typography,Button,CircularProgress } from '@material-ui/core';
 import styles from './styles';
 import { connect } from 'react-redux';
+import baseUrl from '../../store/base_url';
 import * as actionTypes  from '../../store/actions/actionTypes';
+import SettingsList from '../../components/SettingsList/SettingsList';
 import { settingsAsync, settingsSync }  from '../../store/actions/settingsActions';
 
 
@@ -16,7 +18,87 @@ class Settings extends Component {
     staffTypes:[],
     new_income_type:'',
     new_expenditure_type:'',
-    new_staff_type:''
+    new_staff_type:'',
+    fetchedStaffTypes:null,
+    fetchedIncomeTypes:null,
+    fetchedExpenditureTypes:null,
+    fetchStaffTypesSuccess:false,
+    fetchExpenditureTypesSuccess:false,
+    fetchIncomeTypesSuccess:false
+  }
+  componentDidMount(){
+    this.fetchSettings()
+  }
+  fetchSettings=()=>{
+    fetch(baseUrl+'/types',{
+      headers:{
+        'Content-Type':"application/json",
+        'Authorization':"Bearer"+this.props.token
+      }
+    }).then(res=>res.json()).then(res=>{
+      this.setState({fetchedStaffTypes:res.data,fetchStaffTypesSuccess:true})
+    }).catch(err=>console.log(err))
+    fetch(baseUrl+'/inmedium',{
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+this.props.token
+      }
+    }).then(res=>res.json()).then(res=>{
+      this.setState({fetchedIncomeTypes:res.data,fetchIncomeTypesSuccess:true})
+    }).catch(err=> console.log(err))
+    fetch(baseUrl+'/expenses',{
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+this.props.token
+      }
+    }).then(res=>res.json()).then(res=>{
+      this.setState({fetchedExpenditureTypes:res.data,fetchExpenditureTypesSuccess:true})
+    }).catch(err=> console.log(err))
+  }
+  deleteItem= (identifier,id) =>{
+    switch(identifier) {
+      case 'income':
+          return new Promise((resolve,reject)=>{
+            fetch(baseUrl+'/inmedium',{
+              method:'DELETE',
+              headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer'+this.props.token
+              },
+              body:JSON.stringify({id:id})
+            }).then(res=>res.json()).then(res=>{
+              resolve(true)
+            }).catch(err=>reject(false))
+          })
+      case 'expenditure':
+          return new Promise((resolve,reject)=>{
+            fetch(baseUrl+'/expenses',{
+              method:'DELETE',
+              headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer'+this.props.token
+              },
+              body:JSON.stringify({id:id})
+            }).then(res=>res.json()).then(res=>{
+              resolve(true)
+            }).catch(err=>reject(false))
+          })
+      case 'stafftype':
+          return new Promise((resolve,reject)=>{
+            fetch(baseUrl+'/types',{
+              method:'DELETE',
+              headers:{
+                'Content-Type':"application/json",
+                'Authorization':"Bearer"+this.props.token
+              },
+              body:JSON.stringify({id:id})
+            }).then(res=>res.json()).then(res=>{
+              resolve(true)
+            }).catch(err=>reject(false))
+          })
+      default:
+         break;
+    }
   }
   addItemCategory= (identifier) =>{
 
@@ -107,7 +189,7 @@ class Settings extends Component {
     if(this.props.postSettingsExpenditureStart) viewExpenditureProgress=<CircularProgress color="primary"/>
     let viewIncome=(
       <Fragment>
-      <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Income Categories</Typography></div>
+      <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Income Types</Typography></div>
       <EditableList
         label="Add Income type" removeItem={this.removeItemCategory}
         handleChange={this.handleChange} list={this.state.incomeStreams}
@@ -122,7 +204,7 @@ class Settings extends Component {
   )
     let viewExpenditure=(
       <Fragment>
-      <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Expenditure Categories</Typography></div>
+      <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Expenditure Types</Typography></div>
       <EditableList
         label="Add Expenditure type"
         removeItem={this.removeItemCategory}
@@ -139,7 +221,7 @@ class Settings extends Component {
   )
     let viewTypes=(
       <Fragment>
-      <div className={classes.title}><Typography variant="h2" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>
+      <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>
       <EditableList
         label="Add Staff type"
         removeItem={this.removeItemCategory}
@@ -177,6 +259,24 @@ class Settings extends Component {
 
               </Paper>
               </Grid>
+              <Grid
+              item
+              xs={12}>
+              <Paper square={true} className={classes.paper}>
+                <div className={classes.category}>
+                    <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Income Types</Typography></div>
+                    {this.state.fetchIncomeTypesSuccess?<SettingsList deleteItem={this.deleteItem} success={this.state.fetchIncomeTypesSuccess} data={this.state.fetchedIncomeTypes} identifier="income"/>:<CircularProgress color="secondary"/>}
+                </div>
+                <div className={classes.category}>
+                    <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Expenditure Types</Typography></div>
+                    {this.state.fetchExpenditureTypesSuccess?<SettingsList success={this.state.fetchExpenditureTypesSuccess} data={this.state.fetchedExpenditureTypes} identifier="expenditure"/>:<CircularProgress color="secondary"/>}
+                </div>
+                <div className={classes.category}>
+                    <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>
+                    {this.state.fetchStaffTypesSuccess?<SettingsList deleteItem={this.deleteItem} success={this.state.fetchStaffTypesSuccess} data={this.state.fetchedStaffTypes} identifier="stafftype"/>:<CircularProgress color="secondary"/>}
+                </div>
+              </Paper>
+              </Grid>
           </Grid>
       </div>
     )
@@ -191,7 +291,8 @@ const mapStateToProps= state=>({
   postSettingsExpenditureFail:state.settings.postSettingsExpenditureFail,
   postSettingsTypesStart:state.settings.postSettingsTypesStart,
   postSettingsTypesSuccess:state.settings.postSettingsTypesSuccess,
-  postSettingsTypesFail:state.settings.postSettingsTypesFail
+  postSettingsTypesFail:state.settings.postSettingsTypesFail,
+  token:state.auth.token
 })
 
 const mapDispatchToProps= dispatch=>({
