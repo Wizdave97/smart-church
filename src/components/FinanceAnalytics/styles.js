@@ -27,7 +27,7 @@ const styles = theme =>({
     width:'100%',
     padding:'8px',
     boxSizing:'border-box',
-    height:'340px',
+    maxHeight:'450px',
     [theme.breakpoints.up('sm')]:{
       height:'450px'
     },
