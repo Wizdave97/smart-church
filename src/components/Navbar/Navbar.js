@@ -6,6 +6,7 @@ import { Menu as MenuIcon, Search as SearchIcon, AccountCircle,Notifications}  f
 import  CSSTransitionGroup  from 'react-transition-group/CSSTransitionGroup';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
 import { NavLink } from 'react-router-dom';
+
 import SearchBar from '../Searchbar/Searchbar';
 import './navbar.css'
 
@@ -112,7 +113,7 @@ const Navbar = props =>{
                 </div>
                 <div className={classes.two}>
                     <div className={classes.logoContainer}>
-                        <Typography variant="h1">Smart Church</Typography>
+                        <div className={classes.logo}></div>
                     </div>
                 </div>
                 <div className={classes.three}>

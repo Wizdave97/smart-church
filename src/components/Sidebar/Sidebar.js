@@ -12,7 +12,7 @@ const SideBar = (props) =>{
 
   return (
     <aside id="style-9" className={classes.aside}>
-        <div className={classes.space}></div>
+        
         <Paper  square={true} elevation={0} className={classes.sideBar} onClick={()=>props.toggleSideBar()}>
           <div className={classes.section}>
             <div className={classes.title}>

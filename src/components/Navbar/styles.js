@@ -1,5 +1,7 @@
 import { fade } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
+import SmartChurch from '../../assets/smartchurch.png';
+import SC from '../../assets/SC.png';
 const query1={
   '@media screen and (max-width:489px)':{
     display:'none'
@@ -95,7 +97,23 @@ const styles= theme =>(
   },
   logoContainer:{
     alignSelf:'center',
-    ...query1
+    display:'flex',
+    justifyContent:'center'
+  },
+  logo:{
+    width:'60px',
+    height:'60px',
+    backgroundSize:'cover',
+    backgroundImage:`url(${SC})`,
+    alignSelf:'center',
+    '& img':{
+      width:'100%'
+    },
+    [theme.breakpoints.up('sm')]:{
+      width:'140px',
+      height:'40px',
+      backgroundImage:`url(${SmartChurch})`
+    }
   },
   three:{
     width:'33.33%',

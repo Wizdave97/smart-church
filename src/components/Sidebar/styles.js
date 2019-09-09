@@ -1,12 +1,13 @@
 import { fade } from '@material-ui/core/styles';
 const hover={
-    color:'#ff7c5f'
+    color:'#e57373'
 }
 const styles= theme =>({
   sideBar:{
     width:'100%',
     minHeight:'100%',
-    backgroundImage:'linear-gradient(to bottom,#222c3c,#222c3c)'
+    paddingTop:'85px'
+    //backgroundImage:'linear-gradient(to bottom,#222c3c,#222c3c)'
   },
   space:{
     width:'100%',
@@ -22,10 +23,10 @@ const styles= theme =>({
     padding:'8px'
   },
   titleText:{
-    color:fade(theme.palette.primary.main,0.7)
+    //color:fade(theme.palette.primary.main,0.7)
   },
   icons:{
-    color:fade(theme.palette.primary.main,0.7),
+    //color:fade(theme.palette.primary.main,0.7),
   },
   aside:{
     width:'60%',
@@ -34,7 +35,7 @@ const styles= theme =>({
     overflowY:'scroll',
     overflowX:'hidden',
     zIndex:900,
-    backgroundImage:'linear-gradient(to bottom,#222c3c,#222c3c)',
+    //backgroundImage:'linear-gradient(to bottom,#222c3c,#222c3c)',
     boxShadow:'0px 2px 6px -1px rgba(0,0,0,0.2), 0px 4px 8px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
     [theme.breakpoints.up('sm')]:{
       width:'40%'
@@ -58,7 +59,7 @@ const styles= theme =>({
       width:'100%',
       textDecoration:'none',
       '&:hover':{
-        backgroundColor:'#313d4f'
+        backgroundColor:'#616161'
       },
       '&:hover>li>svg':{
           ...hover
@@ -78,7 +79,7 @@ const styles= theme =>({
       marginLeft:theme.spacing(2),
       textAlign:'center',
       fontSize:'11px',
-      color:theme.palette.primary.main,
+      //color:theme.palette.primary.main,
       '@media screen and (min-width:706px)':{
         fontSize:'13px'
       },

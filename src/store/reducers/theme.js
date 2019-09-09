@@ -37,10 +37,10 @@ const initialState={
   palette:{
       type:'light',
       primary:{
-          main:'#1565c0'
+          main:'#0d47a1',
       },
       secondary:{
-          main:purple[500]
+          main:'#3f51b5'
       },
       error:{
         main:red[500],

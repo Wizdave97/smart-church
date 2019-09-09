@@ -1,10 +1,10 @@
 .active{
-    background-color:#313d4f;
+    background-color:#616161;
 }
 
 .active li svg{
-  color:#ff7c5f;
+  color:#e57373;
 }
 .active li div span{
- color:#ff7c5f;
+ color:#e57373;
 }
