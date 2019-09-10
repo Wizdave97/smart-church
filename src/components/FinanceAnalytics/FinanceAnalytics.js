@@ -111,7 +111,7 @@ class FinanceAnalytics extends Component {
     const { classes }= this.props
     const references=[this.type]
     let financeChart=<LinearProgress  color="primary"/>
-    if (this.props.fetchFinanceStart) financeChart=<LinearProgress  color="primary"/>
+
     if(this.state.dataset && this.state.labels){
       financeChart=(
         <Line data={{
@@ -145,6 +145,7 @@ class FinanceAnalytics extends Component {
     if(this.props.fetchFinanceFail){
       financeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,this.state.type?this.state.type:'Income')} size="small" color="secondary">Retry</Button></Typography>
     }
+    if (this.props.fetchFinanceStart) financeChart=<LinearProgress  color="primary"/>
     if(this.props.data){
       if(this.props.data.length==0){
         financeChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>

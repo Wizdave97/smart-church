@@ -72,6 +72,9 @@ export const fetchReportAsync=(branchId,url=null,day='sunday',month=null,year='2
 
   return (dispatch,getState)=>{
     dispatch(reportSync(actionTypes.FETCH_SERVICE_REPORTS_START))
+    if(!branchId){
+      branchId=getState().auth.branchId
+    }
     if(url==null){
       url=baseUrl+`/reports?branchid=${branchId}&day=${day}`
     }

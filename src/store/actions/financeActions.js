@@ -89,6 +89,9 @@ export const updateFinanceAsync= (type,financeData)=>{
 export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=null,year=null)=>{
   return (dispatch,getState)=>{
     dispatch(financeSync(actionTypes.FETCH_FINANCE_REPORTS_START))
+    if(!branchId){
+      branchId=getState().auth.branchId
+    }
       type=type.toLowerCase()
       if(!url){
         if(type=='expenditure'){

@@ -10,6 +10,10 @@ import Sunset from '../../assets/sunset.png';
 import Sunny from '../../assets/sunny.png';
 import './routes.css';
 import { authLogout, resetBranchId } from '../../store/actions/authActions';
+import {  fetchBranchAsync } from '../../store/actions/branchActions';
+import {  fetchStaffsAsync } from '../../store/actions/staffActions';
+import { fetchReportAsync} from '../../store/actions/reportActions';
+import {  fetchFinanceAsync } from '../../store/actions/financeActions';
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
@@ -116,7 +120,13 @@ const mapStateToProps= state =>({
 const mapDispatchToProps = dispatch =>({
   toggleTheme:(mode)=> dispatch(toggleTheme(mode)),
   onLogOut:()=> dispatch(authLogout()),
-  onResetBranchId:()=>dispatch(resetBranchId())
+  onResetBranchId:()=>{
+    dispatch(resetBranchId())
+    dispatch(fetchFinanceAsync())
+    dispatch(fetchBranchAsync())
+    dispatch(fetchReportAsync())
+    dispatch(fetchStaffsAsync())
+  }
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Layout));

@@ -49,7 +49,7 @@ class ReportsAnalytics extends Component {
     let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
 
     let attendanceChart=<LinearProgress  color="primary"/>
-    if(this.props.fetchReportStart) attendanceChart=<LinearProgress  color="primary"/>
+
     if( this.props.reports){
       for(let obj of this.props.reports){
         let temp=[];
@@ -92,6 +92,7 @@ class ReportsAnalytics extends Component {
     if(this.props.fetchReportFail){
       attendanceChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchReport(this.props.branchId)} size="small" color="secondary">Retry</Button></Typography>
     }
+    if(this.props.fetchReportStart) attendanceChart=<LinearProgress  color="primary"/>
     if(this.props.reports){
       if(this.props.reports.length==0){
         attendanceChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>
