@@ -1,4 +1,6 @@
 import Auth from '../../assets/bg_2.jpg'
+import SmartChurch from '../../assets/smartchurch.png';
+import SC from '../../assets/SC.png';
 
 const boxSizing={
   boxSizing:'border-box'
@@ -82,6 +84,40 @@ const styles = theme =>({
   span:{
     color:theme.palette.secondary.main,
     cursor:'pointer'
+  },
+  logoContainer:{
+    alignSelf:'center',
+    display:'flex',
+    width:'100%',
+    justifyContent:'center'
+  },
+  logo:{
+    width:'140px',
+    height:'40px',
+    backgroundSize:'cover',
+    backgroundImage:`url(${SmartChurch})`,
+    alignSelf:'center',
+    '& img':{
+      width:'100%'
+    }
+  },
+  mobileLogoContainer:{
+    width:'100%',
+    padding:'6px',
+    alignSelf:'center',
+    display:'flex',
+    flexWrap:'wrap',
+    justifyContent:'center'
+  },
+  mobileLogo:{
+    width:'60px',
+    height:'60px',
+    backgroundSize:'cover',
+    backgroundImage:`url(${SC})`,
+    alignSelf:'center',
+    '& img':{
+      width:'100%'
+    }
   }
 })
 

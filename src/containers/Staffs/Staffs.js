@@ -64,6 +64,12 @@ class Staffs extends Component {
     if (this.props.fetchStaffsFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.fetchStaffsFail} message={"There was an error fetching click the filter button to try again"}/>
     }
+    if (this.props.deleteStaffSuccess){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.deleteStaffSuccess} message={"Staff successfully deleted, reload to see changes"}/>
+    }
+    if (this.props.deleteStaffFail) {
+      notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.deleteStaffFail} message={"There was an error deleting, Please try again"}/>
+    }
     let view=null
     let progress=null
     if(this.props.fetchStaffsStart){
@@ -72,19 +78,20 @@ class Staffs extends Component {
     if(this.props.fetchStaffsSuccess || this.props.staffs){
       view=(
         this.props.staffs.map((data,index)=>{
-          return(
-            <TableRow key={index}>
-              <TableCell>{index+1}</TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="inspect branch"><Edit color="primary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
-              <TableCell>{data.firstname}</TableCell>
-              <TableCell>{data.lastname}</TableCell>
-              <TableCell>{data.address}</TableCell>
-              <TableCell>{data.email}</TableCell>
-              <TableCell>{data.sex}</TableCell>
-
-            </TableRow>
-          )
+          if(data.status.toLowerCase()==='active') {
+            return(
+              <TableRow key={index}>
+                <TableCell>{index+1}</TableCell>
+                <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button></TableCell>
+                <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
+                <TableCell>{data.firstname}</TableCell>
+                <TableCell>{data.lastname}</TableCell>
+                <TableCell>{data.address}</TableCell>
+                <TableCell>{data.email}</TableCell>
+                <TableCell>{data.sex}</TableCell>
+              </TableRow>
+            )
+          }
         })
       )
     }
@@ -159,6 +166,9 @@ const mapStateToProps= state=>({
   fetchStaffsStart:state.staff.fetchStaffsStart,
   fetchStaffsSuccess:state.staff.fetchStaffsSuccess,
   fetchStaffsFail:state.staff.fetchStaffsFail,
+  deleteStaffStart:state.staff.deleteStaffStart,
+  deleteStaffSuccess:state.staff.deleteStaffSuccess,
+  deleteStaffFail:state.staff.deleteStaffFail,
   total:state.staff.total,
   staffs:state.staff.staffs,
   first:state.staff.first,

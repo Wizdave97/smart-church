@@ -98,7 +98,7 @@ class ViewFinances extends Component {
             <TableRow key={index}>
               <TableCell>{index+1}</TableCell>
               <TableCell><Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
+              <TableCell><Button onClick={this.props.toggleModal} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
               <TableCell>{data.date}</TableCell>
               <TableCell>{data.category}</TableCell>
               <TableCell>{data.description?data.description.join(','):null}</TableCell>

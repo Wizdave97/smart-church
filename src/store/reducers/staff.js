@@ -14,6 +14,9 @@ const initialState={
   fetchStaffsStart:false,
   fetchStaffsSuccess:false,
   fetchStaffsFail:false,
+  deleteStaffStart:false,
+  deleteStaffFail:false,
+  deleteStaffSuccess:false,
 }
 
 const reducer = (state=initialState,action)=>{
@@ -24,7 +27,10 @@ const reducer = (state=initialState,action)=>{
     case actionTypes.FETCH_STAFFS_START: return updateObject(state, {fetchStaffsFail: false, fetchStaffsStart:true, fetchStaffsSuccess:false})
     case actionTypes.FETCH_STAFFS_SUCCESS: return updateObject(state, {fetchStaffsFail: false, fetchStaffsStart:false, fetchStaffsSuccess:true,staffs:action.payload.data})
     case actionTypes.FETCH_STAFFS_FAIL: return updateObject(state, {fetchStaffsFail:true, fetchStaffsStart:false, fetchStaffsSuccess:false})
-    case actionTypes.RESET: return updateObject(state,{postStaffStart:false,postStaffFail:false,postStaffSuccess:false,fetchStaffsFail:false,fetchStaffsSuccess:false,fetchStaffsStart:false})
+    case actionTypes.DELETE_STAFF_START: return updateObject(state,{deleteStaffStart:true,deleteStaffFail:false,deleteStaffSuccess:false,})
+    case actionTypes.DELETE_STAFF_SUCCESS: return updateObject(state,{deleteStaffStart:false,deleteStaffFail:false,deleteStaffSuccess:true,})
+    case actionTypes.DELETE_STAFF_FAIL: return updateObject(state,{deleteStaffStart:false,deleteStaffFail:true,deleteStaffSuccess:false,})
+    case actionTypes.RESET: return updateObject(state,{postStaffStart:false,postStaffFail:false,postStaffSuccess:false,fetchStaffsFail:false,fetchStaffsSuccess:false,fetchStaffsStart:false,deleteStaffStart:false,deleteStaffFail:false,deleteStaffSuccess:false,})
     default: return state
   }
 }

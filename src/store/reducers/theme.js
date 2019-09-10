@@ -2,6 +2,9 @@ import { updateObject } from '../utility';
 import { red,purple } from '@material-ui/core/colors'
 const initialState={
   overrides:{
+      'MuiTableCell-root':{
+        padding:'10px 15px'
+      },
       MuiTypography:{
           'body1':{
               fontFamily:'"Open Sans",  sans-serif',

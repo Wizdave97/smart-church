@@ -65,6 +65,12 @@ class Branches extends Component {
     if (this.props.fetchBranchesFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.fetchBranchesFail} message={"There was an error fetching click the filter button to try again"}/>
     }
+    if (this.props.deleteBranchSuccess){
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.deleteBranchSuccess} message={"Branch successfully deleted, reload to see changes"}/>
+    }
+    if (this.props.deleteBranchFail) {
+      notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.deleteBranchFail} message={"There was an error deleting, Please try again"}/>
+    }
     let view=null
     let progress=null
     if(this.props.fetchBranchesStart){
@@ -76,21 +82,23 @@ class Branches extends Component {
     if(this.props.fetchBranchesSuccess || this.props.branches){
       view=(
         this.props.branches.map((data,index)=>{
-          return(
-            <TableRow key={index}>
-              <TableCell>{index+1}</TableCell>
-              <TableCell><Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
-              <TableCell>{data.name}</TableCell>
-              <TableCell>{data.state}</TableCell>
-              <TableCell>{data.lga}</TableCell>
-              <TableCell>{data.street}</TableCell>
-              <TableCell>{data.province?data.province.name:null}</TableCell>
-              <TableCell>{data.area?data.area.name:null}</TableCell>
-              <TableCell>{data.email}</TableCell>
-            </TableRow>
-          )
+          if(data.status.toLowerCase()==='active'){
+            return(
+              <TableRow key={index}>
+                <TableCell>{index+1}</TableCell>
+                <TableCell><Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
+                <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
+                <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
+                <TableCell>{data.name}</TableCell>
+                <TableCell>{data.state}</TableCell>
+                <TableCell>{data.lga}</TableCell>
+                <TableCell>{data.street}</TableCell>
+                <TableCell>{data.province?data.province.name:null}</TableCell>
+                <TableCell>{data.area?data.area.name:null}</TableCell>
+                <TableCell>{data.email}</TableCell>
+              </TableRow>
+            )
+          }
         })
       )
     }
@@ -167,6 +175,9 @@ const mapStateToProps= state=>({
   fetchBranchesStart:state.branch.fetchBranchesStart,
   fetchBranchesSuccess:state.branch.fetchBranchesSuccess,
   fetchBranchesFail:state.branch.fetchBranchesFail,
+  deleteBranchStart:state.branch.deleteBranchStart,
+  deleteBranchSuccess:state.branch.deleteBranchSuccess,
+  deleteBranchFail:state.branch.deleteBranchFail,
   total:state.branch.total,
   branches:state.branch.branches,
   first:state.branch.first,

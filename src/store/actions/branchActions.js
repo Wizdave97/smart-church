@@ -72,6 +72,38 @@ export const updateBranchAsync= (branchData)=>{
   }
 
 }
+
+export const deleteBranchAsync= (id)=>{
+  return (dispatch,getState)=>{
+    dispatch(branchSync(actionTypes.DELETE_BRANCH_START))
+
+      let url=baseUrl+'/branches'
+      fetch(url,{
+        method:'PATCH',
+        mode:'cors',
+        body:JSON.stringify({id:id,status:'DELETED'}),
+        headers:{
+           'Content-Type':'application/json',
+           'Authorization':'Bearer'+  getState().auth.token
+        }
+      }).then(res=>{
+        //console.log(res)
+        if(res.status!==200){
+            return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(branchSync(actionTypes.DELETE_BRANCH_SUCCESS))
+
+      }).catch(err=>{
+        dispatch(branchSync(actionTypes.DELETE_BRANCH_FAIL))
+
+      })
+
+
+  }
+
+}
 export const fetchBranchAsync=(url=null)=>{
   return (dispatch,getState)=>{
     dispatch(branchSync(actionTypes.FETCH_BRANCHES_START))

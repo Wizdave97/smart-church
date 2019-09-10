@@ -85,7 +85,12 @@ class Auth extends Component {
     let formDisplay=(
       <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
       <div className={classes.contain}>
-          <div className={classes.entry} ><Typography color="primary" variant="h2" align="center">The next generation church management tool<br></br>Sign up in seconds</Typography></div>
+          <div className={classes.mobileLogoContainer} >
+            <div className={classes.logoContainer}>
+                <div className={classes.mobileLogo}></div>
+            </div>
+            <Typography color="primary" variant="h2" align="center">Welcome<br></br>Sign up in seconds</Typography>
+          </div>
           <div className={classes.entry} ><Input
             label="Church Name"
             required={true}
@@ -223,7 +228,12 @@ class Auth extends Component {
         formDisplay=(
           <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
           <div className={classes.contain}>
-          <div className={classes.entry} ><Typography color="primary" variant="h2" align="center">The next generation church management tool.<br></br>Welcome</Typography></div>
+            <div className={classes.mobileLogoContainer} >
+              <div className={classes.logoContainer}>
+                  <div className={classes.mobileLogo}></div>
+              </div>
+              <Typography color="primary" variant="h2" align="center">Welcome<br></br>Sign up in seconds</Typography>
+            </div>
           <div className={classes.entry} ><Input
             label="Admin Email"
             required={true}
@@ -276,7 +286,9 @@ class Auth extends Component {
     <AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
-            <Typography variant="h1" align="center">Smart Church</Typography>
+            <div className={classes.logoContainer}>
+                <div className={classes.logo}></div>
+            </div>
           </div>
         </Toolbar>
     </AppBar>

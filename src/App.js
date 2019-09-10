@@ -7,8 +7,14 @@ import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Auth from './containers/Auth/Auth';
 import { autoSignIn } from './store/actions/authActions';
+import { deleteStaffAsync } from './store/actions/staffActions';
+import { deleteBranchAsync } from './store/actions/branchActions';
 import './App.css';
+import { Slide,Dialog,DialogContent, DialogContentText,DialogTitle,DialogActions,Button} from '@material-ui/core';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const asyncAddBranch=asyncComponent(()=>{
   return import('./containers/AddBranch/AddBranch')
@@ -41,8 +47,33 @@ const asyncStaffs= asyncComponent(()=>{
   return import('./containers/Staffs/Staffs')
 })
 class App  extends Component{
+  state={
+    openModal:false,
+    dataId:null,
+    identifier:null,
+  }
+  toggleModal=(id,identifier)=>{
+    this.setState(state=>({
+      openModal:!state.openModal,
+      dataId:id,
+      identifier:identifier
+    }))
+  }
+  deleteRecord=()=>{
+    if(this.state.identifier==='branch'){
+      this.props.onDeleteBranch(this.state.dataId)
+    }
+    if(this.state.identifier==='staff'){
+      this.props.onDeleteStaff(this.state.dataId)
+    }
+    if(this.state.identifier==='finance'){
 
+    }
+    if(this.state.identifier==='report'){
 
+    }
+    this.toggleModal()
+  }
   componentDidMount(){
     this.props.onAutoSignIn()
   }
@@ -50,21 +81,46 @@ class App  extends Component{
 
   }
   render(){
+    let modal=(
+      <Dialog
+        open={this.state.openModal}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={this.toggleModal}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">{"Confirmation?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Are you sure you want to delete?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.toggleModal} color="primary">
+            No
+          </Button>
+          <Button onClick={this.deleteRecord} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
     const theme=createMuiTheme(this.props.theme)
     let routes=<Switch><Route  path='/' component={Auth}/></Switch>
     if(this.props.isAuthenticated){
       let availableRoutes=[{path:'/',cmp:Dashboard,exact:true}]
       if(this.props.permissions.indexOf(7)>0){
-        availableRoutes.push({path:'/allbranches',exact:false,cmp:asyncBranches})
+        availableRoutes.push({path:'/allbranches',exact:false,cmp:asyncBranches,confirm:true})
       }
       if(this.props.permissions.indexOf(8)>0){
-        availableRoutes.push({path:'/allstaff',exact:false,cmp:asyncStaffs})
+        availableRoutes.push({path:'/allstaff',exact:false,cmp:asyncStaffs,confirm:true})
       }
       if(this.props.permissions.indexOf(9)>0){
-        availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports})
+        availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports,confirm:true})
         availableRoutes.push({path:'/analytics',exact:false,cmp:asyncAnalytics})
         availableRoutes.push({path:'/settings',exact:false,cmp:asyncSettings})
-        availableRoutes.push({path:'/viewfinances',exact:false,cmp:asyncViewFinances})
+        availableRoutes.push({path:'/viewfinances',exact:false,cmp:asyncViewFinances,confirm:true})
       }
       if(this.props.permissions.indexOf(10)>0){
         availableRoutes.push({path:'/newreport/:id',exact:false,cmp:asyncNewReport})
@@ -80,7 +136,16 @@ class App  extends Component{
           <Layout>
               <Switch>
                 {availableRoutes.map(obj=>{
-                  return (<Route exact={obj.exact} path={obj.path} component={obj.cmp} key={obj.path}/>)
+
+                    if(obj.confirm){
+                      return <Route exact={obj.exact} path={obj.path} render={()=>{
+                          return <obj.cmp toggleModal={this.toggleModal}/>
+                        }} key={obj.path}/>
+                    }
+                    else{
+                      return <Route exact={obj.exact} path={obj.path} component={obj.cmp} key={obj.path}/>
+                    }
+
                 })}
                 <Redirect to="/"/>
               </Switch>
@@ -89,6 +154,7 @@ class App  extends Component{
     }
     return (
         <MuiThemeProvider theme={theme}>
+            {modal}
             {routes}
         </MuiThemeProvider>
     )
@@ -96,11 +162,13 @@ class App  extends Component{
 }
 const mapStateToProps= state =>({
   theme:state.theme,
-  isAuthenticated:state.auth.token!==null,
+  isAuthenticated:state.auth.token!==null && state.auth.status?state.auth.status.toLowerCase()==='active':false,
   permissions:state.auth.permissions
 })
 
 const mapDispatchToProps= dispatch=>({
-  onAutoSignIn:()=> dispatch(autoSignIn())
+  onAutoSignIn:()=> dispatch(autoSignIn()),
+  onDeleteBranch:(id)=> dispatch(deleteBranchAsync(id)),
+  onDeleteStaff:(id)=> dispatch(deleteStaffAsync(id))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(App);

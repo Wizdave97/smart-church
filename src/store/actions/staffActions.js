@@ -38,6 +38,37 @@ export const staffAsync= (staffData)=>{
   }
 
 }
+
+export const deleteStaffAsync= (id)=>{
+  return (dispatch,getState)=>{
+    dispatch(staffSync(actionTypes.DELETE_STAFF_START))
+
+      let url=baseUrl+'/staffs'
+      fetch(url,{
+        method:'PATCH',
+        mode:'cors',
+        body:JSON.stringify({id:id,status:'DELETED'}),
+        headers:{
+           'Content-Type':'application/json',
+           'Authorization':'Bearer'+  getState().auth.token
+        }
+      }).then(res=>{
+        if(res.status!==200){
+          return null
+        }
+        return res.json()
+      }).then(res=>{
+        dispatch(staffSync(actionTypes.DELETE_STAFF_SUCCESS))
+
+      }).catch(err=>{
+        dispatch(staffSync(actionTypes.DELETE_STAFF_FAIL))
+
+      })
+
+
+  }
+
+}
 export const updateStaffAsync= (staffData)=>{
   return (dispatch,getState)=>{
     dispatch(staffSync(actionTypes.POST_STAFF_START))

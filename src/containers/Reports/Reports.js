@@ -69,7 +69,7 @@ class Reports extends Component {
             <TableRow key={index}>
               <TableCell>{index+1}</TableCell>
               <TableCell><Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
+              <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'report')} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
               <TableCell>{data.date}</TableCell>
               <TableCell>{data.serviceDay}</TableCell>
               <TableCell>{data.maleAttendance}</TableCell>
