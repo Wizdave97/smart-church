@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid,Typography } from '@material-ui/core';
+import { Grid,Typography,Fab,Menu,MenuItem,Button } from '@material-ui/core';
+import { Visibility } from '@material-ui/icons';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
 import Sunrise from '../../assets/sunrise.png';
@@ -14,17 +16,37 @@ import {  fetchBranchAsync } from '../../store/actions/branchActions';
 import {  fetchStaffsAsync } from '../../store/actions/staffActions';
 import { fetchReportAsync} from '../../store/actions/reportActions';
 import {  fetchFinanceAsync } from '../../store/actions/financeActions';
+import { changeBranchId } from '../../store/actions/authActions';
 import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
 
+const options = [
+  'None',
+  'Atria',
+  'Callisto',
+  'Dione',
+  'Ganymede',
+  'Hangouts Call',
+  'Luna',
+  'Oberon',
+  'Phobos',
+  'Pyxis',
+  'Sedna',
+  'Titania',
+  'Triton',
+  'Umbriel',
+];
 class Layout extends Component {
   state={
     showSideBar:false,
-    hours:null
+    hours:null,
+    anchorEl:null,
+
   }
   componentDidMount(){
     this.checkTime()
+    this.props.onFetchBranches()
     const x=window.matchMedia("(min-width:960px)")
     this.showSideBar(x)
     x.addListener(this.showSideBar)
@@ -63,9 +85,21 @@ class Layout extends Component {
       showSideBar:!state.showSideBar
     }))
   }
+  handleClick=(event)=> {
+    this.setState({anchorEl:event.currentTarget});
+  }
+
+  handleClose=()=> {
+    this.setState({anchorEl:null});
+  }
+  onChangePage= (url)=>{
+    if (url==null) return
+    this.props.onFetchBranches(url)
+  }
   render(){
     const { classes } = this.props
     const { hours }=this.state
+    let open=Boolean(this.state.anchorEl)
     let greeting=null
     let src=null
     if(hours>=0 && hours<=11){
@@ -108,6 +142,34 @@ class Layout extends Component {
                     </Grid>
                 </main>
               </div>
+              <Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
+                  <Visibility />
+              </Fab>
+              <Menu
+               id="long-menu"
+               anchorEl={this.state.anchorEl}
+               keepMounted
+               open={open}
+               onClose={this.handleClose}
+               PaperProps={{
+                 style: {
+                   maxHeight: 48 * 4.5,
+                   width: 200,
+                   position:'relative'
+                 },
+               }}
+             >
+             {this.props.branches?this.props.branches.map((data,index)=>{
+               return (data.status.toLowerCase()==='active'?(
+                <MenuItem  key={index}  onClick={this.handleClose}>
+                  <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} color="default" variant="small" fullWidth>{data.name}</Button>
+                </MenuItem>):null)
+              }):null}
+              <div className={classes.menuNav} >
+                  <Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button>
+                  <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button>
+              </div>
+            </Menu>
       </React.Fragment>
     )
   }
@@ -115,10 +177,20 @@ class Layout extends Component {
 const mapStateToProps= state =>({
   permissions:state.auth.permissions,
   userName:state.auth.userName,
-  branchName:state.auth.branchName
+  branchName:state.auth.branchName,
+  branches:state.branch.branches,
+  next:state.branch.next,
+  prev:state.branch.prev,
 })
 const mapDispatchToProps = dispatch =>({
+  onFetchBranches:(url)=> dispatch(fetchBranchAsync(url)),
   toggleTheme:(mode)=> dispatch(toggleTheme(mode)),
+  onChangeBranch:(id,name)=>{
+    dispatch(changeBranchId(id,name))
+    dispatch(fetchBranchAsync())
+    dispatch(fetchFinanceAsync())
+    dispatch(fetchReportAsync())
+  },
   onLogOut:()=> dispatch(authLogout()),
   onResetBranchId:()=>{
     dispatch(resetBranchId())

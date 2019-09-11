@@ -14,7 +14,7 @@ export const branchAsync= (branchData)=>{
   return (dispatch,getState)=>{
     dispatch(branchSync(actionTypes.POST_BRANCH_START))
 
-      let url=baseUrl+'/branches'
+      let url=baseUrl+'/branches?all=1'
       fetch(url,{
         method:'POST',
         mode:'cors',

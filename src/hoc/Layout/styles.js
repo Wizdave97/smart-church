@@ -68,6 +68,19 @@ const styles = theme =>({
       zIndex:1500,
       backgroundImage:'linear-gradient(to right,rgb(195,226,121),rgb(247,254,200),rgb(255,208,105),rgb(242,118,105),rgb(220,156,190),rgb(197,154,224),rgb(150,157,204))'
     },
+    fab: {
+      margin: theme.spacing(1),
+      position:'fixed',
+      right:'50px',
+      bottom:'50px',
+      zIndex:'1000'
+   },
+   menuNav:{
+     width:'100%',
+     postion:'fixed',
+     bottom:0,
+     left:0
+   }
 })
 
 export default styles
