@@ -5,6 +5,7 @@ import * as actionTypes  from '../../store/actions/actionTypes';
 import { reportSync, fetchReportAsync } from '../../store/actions/reportActions';
 import ReportsAnalytics from '../../components/ReportsAnalytics/ReportsAnalytics';
 import FinanceAnalytics from '../../components/FinanceAnalytics/FinanceAnalytics';
+import AttendanceAnalytics from '../../components/AttendanceAnalytics/AttendanceAnalytics';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
 
 
@@ -16,22 +17,22 @@ class Analytics extends Component {
     render(){
       return(
        <Fragment>
-          <Grid item xs={12}>
-            <ReportsAnalytics
-              next={this.props.nextReport}
-              first={this.props.firstReport}
-              prev={this.props.prevReport}
-              onFetchReport={this.props.onFetchReport}
-              onUnmount={this.props.onUnmount}
-              current_page={this.props.current_page_report}
-              total={this.props.totalReport}
-              branchId={this.props.branchId}
-              reports={this.props.reports}
-              fetchReportSuccess={this.props.fetchReportSuccess}
-              fetchReportFail={this.props.fetchReportFail}
-              fetchReportStart={this.props.fetchReportStart}
-              />
-          </Grid>
+         <Grid item xs={12}>
+           <AttendanceAnalytics
+             next={this.props.nextReport}
+             first={this.props.firstReport}
+             prev={this.props.prevReport}
+             onFetchReport={this.props.onFetchReport}
+             onUnmount={this.props.onUnmount}
+             current_page={this.props.current_page_report}
+             total={this.props.totalReport}
+             branchId={this.props.branchId}
+             reports={this.props.reports}
+             fetchReportSuccess={this.props.fetchReportSuccess}
+             fetchReportFail={this.props.fetchReportFail}
+             fetchReportStart={this.props.fetchReportStart}
+             />
+         </Grid>
           <Grid item xs={12}>
             <FinanceAnalytics
               token={this.props.token}
@@ -46,7 +47,7 @@ class Analytics extends Component {
               data={this.props.financeReports}
               fetchFinanceSuccess={this.props.fetchFinanceSuccess}
               fetchFinanceFail={this.props.fetchFinanceFail}
-              fetchFiananceStart={this.props.fetchFinanceStart}
+              fetchFinanceStart={this.props.fetchFinanceStart}
               />
           </Grid>
         </Fragment>
@@ -77,9 +78,9 @@ const mapStateToProps= state=>({
 })
 
 const mapDispatchToProps= dispatch=>({
-  onFetchReport:(branchId,url=null,day='sunday',month=null,year='2019')=> dispatch(fetchReportAsync(branchId,url,day,month,year)),
+  onFetchReport:(branchId,url,day,month,year)=> dispatch(fetchReportAsync(branchId,url,day,month,year)),
   onUnmount:()=> dispatch(reportSync(actionTypes.RESET)),
-  onFetchFinance:(branchId,url=null,type='Income',category=null,month=null,year='2019')=> dispatch(fetchFinanceAsync(branchId,url,type,category,month,year)),
+  onFetchFinance:(branchId,url,type,category,month,year)=> dispatch(fetchFinanceAsync(branchId,url,type,category,month,year)),
   onFinanceUnmount:()=> dispatch(financeSync(actionTypes.RESET))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Analytics);

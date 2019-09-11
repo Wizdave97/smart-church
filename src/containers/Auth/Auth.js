@@ -232,7 +232,7 @@ class Auth extends Component {
               <div className={classes.logoContainer}>
                   <div className={classes.mobileLogo}></div>
               </div>
-              <Typography color="primary" variant="h2" align="center">Welcome<br></br>Sign up in seconds</Typography>
+              <Typography color="primary" variant="h2" align="center">Welcome back.</Typography>
             </div>
           <div className={classes.entry} ><Input
             label="Admin Email"

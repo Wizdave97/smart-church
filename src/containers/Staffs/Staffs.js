@@ -30,7 +30,7 @@ class Staffs extends Component {
     this.setState({fixValidityBug:''})
     fetch('./assets/states.json').then(resp=>resp.json()).then(data=>{
       const states=[]
-      for(let obj of data){
+      for(let obj of data.data){
         let name=obj.state.name
         states.push(name)
       }
@@ -38,7 +38,7 @@ class Staffs extends Component {
         states:states,
       })
     }).catch(err=> console.log(err))
-    this.props.onFetchStaffs(this.props.branchId)
+    this.props.onFetchStaffs()
   }
   componentWillUnmount(){
     this.props.onUnmount()
@@ -177,7 +177,7 @@ const mapStateToProps= state=>({
   prev:state.staff.prev
 })
 const mapDispatchToProps = dispatch =>({
-  onFetchStaffs:()=> dispatch(fetchStaffsAsync()),
+  onFetchStaffs:(url)=> dispatch(fetchStaffsAsync(url)),
   onUnmount:()=> dispatch(staffSync(actionTypes.RESET))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Staffs))

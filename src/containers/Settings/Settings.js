@@ -269,7 +269,7 @@ class Settings extends Component {
                 </div>
                 <div className={classes.category}>
                     <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Expenditure Types</Typography></div>
-                    {this.state.fetchExpenditureTypesSuccess?<SettingsList success={this.state.fetchExpenditureTypesSuccess} data={this.state.fetchedExpenditureTypes} identifier="expenditure"/>:<CircularProgress color="secondary"/>}
+                    {this.state.fetchExpenditureTypesSuccess?<SettingsList deleteItem={this.deleteItem}  success={this.state.fetchExpenditureTypesSuccess} data={this.state.fetchedExpenditureTypes} identifier="expenditure"/>:<CircularProgress color="secondary"/>}
                 </div>
                 <div className={classes.category}>
                     <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>

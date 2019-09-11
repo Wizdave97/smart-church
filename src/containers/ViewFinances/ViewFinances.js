@@ -16,10 +16,10 @@ import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody,
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 class ViewFinances extends Component {
   state={
-    month:'',
+    month:months[new Date().getMonth()],
     category:null,
     type:'',
-    year:'',
+    year:new Date().getFullYear(),
     incomeCategories:null,
     expenseCategories:null,
     errorType:false,
@@ -128,6 +128,9 @@ class ViewFinances extends Component {
           item
           xs={12}>
             <Paper square={true}>
+              <div className={classes.filters}>
+                <Typography variant='h4'>You are currently inspecting reports for <strong>{this.state.month}</strong> <strong>{this.state.year}</strong> </Typography>
+              </div>
               <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
                 <div className={classes.entry}>
                 <Input

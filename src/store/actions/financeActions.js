@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
-
+const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 export const financeSync = (type,payload=null)=>{
   return{
     type:type,
@@ -87,6 +87,9 @@ export const updateFinanceAsync= (type,financeData)=>{
 
 }
 export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=null,year=null)=>{
+
+  if(!year) year=new Date().getFullYear()
+  if(!month) month=months[new Date().getMonth()]
   return (dispatch,getState)=>{
     dispatch(financeSync(actionTypes.FETCH_FINANCE_REPORTS_START))
     if(!branchId){
@@ -117,7 +120,6 @@ export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=
 
       if(category) url=url+`&category=${category}`
       if(month && year){
-        const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
         month=months.indexOf(month)+1
         url=url+`&month=${month}-${year}`
       }

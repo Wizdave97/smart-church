@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import baseUrl from '../base_url';
-
+const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 export const reportSync = (type,payload=null)=>{
   return{
     type:type,
@@ -68,23 +68,29 @@ export const updateReportAsync= (reportData)=>{
   }
 
 }
-export const fetchReportAsync=(branchId,url=null,day='sunday',month=null,year='2019')=>{
-
+export const fetchReportAsync=(branchId,url=null,day=null,month=null,year=null)=>{
+  if(!year) year=new Date().getFullYear();
+  if(!month) month=months[new Date().getMonth()]
   return (dispatch,getState)=>{
     dispatch(reportSync(actionTypes.FETCH_SERVICE_REPORTS_START))
     if(!branchId){
       branchId=getState().auth.branchId
     }
     if(url==null){
-      url=baseUrl+`/reports?branchid=${branchId}&day=${day}`
+      url=baseUrl+`/reports?branchid=${branchId}`
+      if(day){
+        url=url+`&day=${day}`
+      }
     }
     else{
-      url=url+`&branchid=${branchId}&day=${day}`
-      if(month){
-        const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
-        month=months.indexOf(month)+1
-        url=url+`&month=${year}-${month}`
+      url=url+`&branchid=${branchId}`
+      if(day){
+        url=url+`&day=${day}`
       }
+    }
+    if(month && year ){
+      month=months.indexOf(month)+1
+      url=url+`&month=${month}-${year}`
     }
     fetch(url,{
       method:'GET',

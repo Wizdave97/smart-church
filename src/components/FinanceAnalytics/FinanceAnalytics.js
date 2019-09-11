@@ -19,7 +19,7 @@ class FinanceAnalytics extends Component {
     month:months[new Date().getMonth()],
     category:null,
     type:'Income',
-    year:'',
+    year:new Date().getFullYear(),
     incomeCategories:null,
     expenseCategories:null,
     errorType:false,
@@ -69,12 +69,12 @@ class FinanceAnalytics extends Component {
     e.preventDefault();
     let valid= submitHandler(references, hardSetState)
     if (valid){
-      this.props.onFetchFinance(this.props.branchId,this.props.first,this.state.type,this.state.category,this.state.month?this.state.month:null,this.state.year?this.state.year:null)
+      this.props.onFetchFinance(this.props.branchId,this.props.first,this.state.type,this.state.category,this.state.month,this.state.year)
     }
   }
   onChangePage= (url)=>{
     if (url==null) return
-    this.props.onFetchFinance(this.props.branchId,url,this.state.type,this.state.category,this.state.month?this.state.month:null,this.state.year?this.state.year:null)
+    this.props.onFetchFinance(this.props.branchId,url,this.state.type,this.state.category,this.state.month,this.state.year)
   }
 
   structureData= (raw) =>{
@@ -110,6 +110,7 @@ class FinanceAnalytics extends Component {
   render(){
     const { classes }= this.props
     const references=[this.type]
+    let progress=null
     let financeChart=<LinearProgress  color="primary"/>
 
     if(this.state.dataset && this.state.labels){
@@ -145,7 +146,10 @@ class FinanceAnalytics extends Component {
     if(this.props.fetchFinanceFail){
       financeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,this.state.type?this.state.type:'Income')} size="small" color="secondary">Retry</Button></Typography>
     }
-    if (this.props.fetchFinanceStart) financeChart=<LinearProgress  color="primary"/>
+    if (this.props.fetchFinanceStart) {
+      financeChart=<LinearProgress  color="primary"/>
+      progress=<LinearProgress  color="primary"/>
+    }
     if(this.props.data){
       if(this.props.data.length==0){
         financeChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>
@@ -157,6 +161,7 @@ class FinanceAnalytics extends Component {
       item
       xs={12}
       md={12}>
+        {progress}
         <Grid
         container
         spacing={0}
@@ -165,6 +170,12 @@ class FinanceAnalytics extends Component {
           item
           xs={12}>
             <Paper square={true}>
+              <div className={classes.filters}>
+                <Typography variant='h2' align="center" color="secondary" gutterBottom>Church Finance Analytics</Typography>
+              </div>
+              <div className={classes.filters}>
+                <Typography variant='h4'>You are currently inspecting reports for <strong>{this.state.month}</strong> <strong>{this.state.year}</strong> </Typography>
+              </div>
               <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
                 <div className={classes.entry}>
                 <Input

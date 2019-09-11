@@ -15,9 +15,9 @@ const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunda
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 class Reports extends Component {
   state={
-    month:'',
+    month:months[new Date().getMonth()],
     day:'',
-    year:'',
+    year:new Date().getFullYear(),
     errorMonth:false,
     errorDay:false,
     fixValidityBug:''
@@ -102,6 +102,9 @@ class Reports extends Component {
           item
           xs={12}>
             <Paper square={true}>
+              <div className={classes.filters}>
+                <Typography variant='h4'>You are currently analysing reports for {this.state.day} <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
+              </div>
               <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
                 <div className={classes.entry}>
                 <Input
@@ -126,7 +129,7 @@ class Reports extends Component {
                 <div className={classes.entry}>
                 <Input
                  inputType="select"
-                 required={true}
+                 required={false}
                  name="day"
                  value={this.state.day}
                  reference={this.setRef}

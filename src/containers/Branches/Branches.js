@@ -31,7 +31,7 @@ class Branches extends Component {
     this.setState({fixValidityBug:''})
     fetch('./assets/states.json').then(resp=>resp.json()).then(data=>{
       const states=[]
-      for(let obj of data){
+      for(let obj of data.data){
         let name=obj.state.name
         states.push(name)
       }
