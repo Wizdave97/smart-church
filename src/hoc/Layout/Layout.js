@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid,Typography,Fab,Menu,MenuItem,Button } from '@material-ui/core';
+import { Grid,Typography,Fab,Menu,MenuItem,Button,List,ListItem,Drawer,Divider} from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
@@ -21,22 +21,29 @@ import {toggleTheme } from '../../store/actions/themeActions';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import SideBar from '../../components/Sidebar/Sidebar'
 
-const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
-];
+const SideList =(props)=> (
+    <div
+      className={props.list}
+      role="presentation"
+      onClick={props.handleClose}
+      onKeyDown={props.handleClose}
+    >
+      <List>
+        {props.branches?props.branches.map((data,index)=>{
+          return (data.status.toLowerCase()==='active'?(
+           <ListItem  key={index}  onClick={props.handleClose}>
+             <Button component={Link} to={`/analytics`} onClick={()=>props.onChangeBranch(data.id,data.name)} color="default" variant="small" fullWidth>{data.name}</Button>
+           </ListItem>):null)
+         }):null}
+      </List>
+      <Divider />
+        <div className={props.menuNav} >
+            <Button onClick={(event)=>{event.stopPropagation();props.onChangePage(props.prev)}} size="small" variant="contained" color="secondary" disabled={props.prev==null?true:false}>Previous</Button>
+            <Button onClick={(event)=>{event.stopPropagation();props.onChangePage(props.next)}} size="small" variant="contained" color="secondary" disabled={props.next==null?true:false}>Next</Button>
+        </div>
+    </div>
+  );
+
 class Layout extends Component {
   state={
     showSideBar:false,
@@ -136,16 +143,16 @@ class Layout extends Component {
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography  variant="h2">Viewing Branch: {this.props.branchName}</Typography>:null}</div>
+                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography  variant="h2">Viewing Branch: <strong>{this.props.branchName}</strong></Typography>:null}</div>
                     </div>
                         {this.props.children}
                     </Grid>
                 </main>
               </div>
-              <Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
+              {this.props.permissions.indexOf(7)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
                   <Visibility />
-              </Fab>
-              <Menu
+              </Fab>:null}
+              {/*<Menu
                id="long-menu"
                anchorEl={this.state.anchorEl}
                keepMounted
@@ -154,7 +161,7 @@ class Layout extends Component {
                PaperProps={{
                  style: {
                    maxHeight: 48 * 4.5,
-                   width: 200,
+                   width: '30%',
                    position:'relative'
                  },
                }}
@@ -169,7 +176,18 @@ class Layout extends Component {
                   <Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button>
                   <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button>
               </div>
-            </Menu>
+            </Menu>*/}
+            <Drawer anchor="right" open={open} onClose={this.handleClose}>
+              <SideList
+                next={this.props.next}
+                handleClose={this.handleClose}
+                prev={this.props.prev}
+                onChangeBranch={this.props.onChangeBranch}
+                list={classes.list}
+                menuNav={classes.menuNav}
+                branches={this.props.branches}
+                onChangePage={this.onChangePage}/>
+            </Drawer>
       </React.Fragment>
     )
   }

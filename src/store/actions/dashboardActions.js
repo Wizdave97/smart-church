@@ -8,20 +8,14 @@ export const fetchSync = (type,payload=null)=>{
   }
 }
 
-export const fetchAttendanceAsync=(branchId,url=null,day='sunday',month=null,year='2019')=>{
-
+export const fetchAttendanceAsync=(branchId,url=null)=>{
+ let year=new Date().getFullYear()
+ let month=new Date().getMonth()-1
   return (dispatch,getState)=>{
     dispatch(fetchSync(actionTypes.FETCH_ATTENDANCE_START))
     if(url==null){
-      url=baseUrl+`/reports?branchid=${branchId}&day=${day}`
-    }
-    else{
-      url=url+`&branchid=${branchId}&day=${day}`
-      if(month){
-        const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
-        month=months.indexOf(month)+1
-        url=url+`&month=${year}-${month}`
-      }
+      url=baseUrl+`/reports?branchid=${branchId}`
+      url=url+`&month=${month}-${year}`
     }
     fetch(url,{
       method:'GET',
@@ -41,7 +35,9 @@ export const fetchAttendanceAsync=(branchId,url=null,day='sunday',month=null,yea
   }
 }
 
-export const fetchFinanceAsync =(branchId,url,type,category=null,month=null,year=null)=>{
+export const fetchFinanceAsync =(branchId,url,type)=>{
+  let year=new Date().getFullYear()
+  let month=new Date().getMonth()-1
   return (dispatch,getState)=>{
     type=type.toLowerCase()
     if(type==='income'){
@@ -51,9 +47,9 @@ export const fetchFinanceAsync =(branchId,url,type,category=null,month=null,year
       dispatch(fetchSync(actionTypes.FETCH_EXPENDITURE_START))
     }
         switch(type){
-          case 'income': url=baseUrl+'/incomes'+`?branchid=${branchId}`
+          case 'income': url=baseUrl+'/incomes'+`?branchid=${branchId}&month=${month}-${year}`
           break;
-          case 'expenditure': url=baseUrl+'/expenditures'+`?branchid=${branchId}`
+          case 'expenditure': url=baseUrl+'/expenditures'+`?branchid=${branchId}&month=${month}-${year}`
           break;
           default: break;
         }

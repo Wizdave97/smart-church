@@ -21,7 +21,7 @@ const styles = theme =>({
     alignSelf:'center'
   },
   tableWrapper:{
-    marginTop:'15px'
+    marginTop:'15px',
   },
   chart:{
     width:'100%',

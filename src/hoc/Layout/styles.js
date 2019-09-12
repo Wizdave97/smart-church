@@ -78,9 +78,14 @@ const styles = theme =>({
    menuNav:{
      width:'100%',
      postion:'fixed',
+     display:'flex',
+     justifyContent:'space-between',
      bottom:0,
      left:0
-   }
+   },
+   list: {
+   width: 250,
+ }
 })
 
 export default styles

@@ -19,7 +19,10 @@ class Dashboard extends Component{
     expenditureTitle:null,
     expenditureLabels:null,
     expenditureData:null,
-    expenditureId:null
+    expenditureId:null,
+    totalAttendance:0,
+    totalIncome:0,
+    totalExpenditure:0
   }
   componentDidMount(){
     this.props.onFetchAttendance(this.props.branchId);
@@ -74,6 +77,42 @@ class Dashboard extends Component{
       if(this.props.expenditure.length!==0){
         if(prevState.expenditureId==null){
           this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
+        }
+      }
+    }
+    if(prevProps.income!==this.props.income){
+      if(this.props.income){
+        if(this.props.income.length!==0){
+          let total=0;
+          for(let obj of this.props.income){
+            total+=Number(obj.total)
+          }
+          total=Math.round(total/this.props.income.length)
+          this.setState({totalIncome:total})
+        }
+      }
+    }
+    if(prevProps.reports!==this.props.reports){
+      if(this.props.reports){
+        if(this.props.reports.length!==0){
+          let total=0;
+          for(let obj of this.props.reports){
+            total+=Number(obj.totalAttendance)
+          }
+          total=Math.round(total/this.props.reports.length)
+          this.setState({totalAttendance:total})
+        }
+      }
+    }
+    if(prevProps.expenditure!==this.props.expenditure){
+      if(this.props.expenditure){
+        if(this.props.expenditure.length!==0){
+          let total=0;
+          for(let obj of this.props.expenditure){
+            total+=Number(obj.total)
+          }
+          total=Math.round(total/this.props.expenditure.length)
+          this.setState({totalExpenditure:total})
         }
       }
     }
@@ -210,34 +249,25 @@ class Dashboard extends Component{
                   <Grid item
                         xs={12}
                         sm={3}>
-                        <Paper square={true} elevation={4} className={classes.card}>
-                          <div className={[classes.imageContainer,classes.card1].join(' ')}>
-                            <ShowChart color="primary" />
-                          </div>
-                          <Divider className={classes.divider}/>
-                          <Typography className={classes.text} variant="body1">Attendance</Typography>
+                        <Paper  elevation={4} className={[classes.card,classes.card1].join(' ')}>
+                          <Typography className={classes.text} variant="h4" align="right">Attendance</Typography>
+                          <Typography className={classes.text} variant="body1" align="right">{this.state.totalAttendance}</Typography>
                         </Paper>
                   </Grid>
                   <Grid item
                         xs={12}
                         sm={3}>
-                        <Paper square={true} elevation={4} className={classes.card}>
-                          <div className={[classes.imageContainer,classes.card2].join(' ')}>
-                            <Money color="primary" />
-                          </div>
-                          <Divider className={classes.divider}/>
-                          <Typography className={classes.text} variant="body1">Income</Typography>
+                        <Paper elevation={6} className={[classes.card,classes.card2].join(' ')}>
+                          <Typography className={classes.text} variant="h4" align="right">Income</Typography>
+                          <Typography className={classes.text} variant="body1" align="right">{this.state.totalIncome}</Typography>
                         </Paper>
                   </Grid>
                   <Grid item
                         xs={12}
                         sm={3}>
-                        <Paper square={true} elevation={4} className={classes.card}>
-                          <div className={[classes.imageContainer,classes.card3].join(' ')}>
-                            <Payment color="primary"/>
-                          </div>
-                          <Divider className={classes.divider}/>
-                          <Typography className={classes.text} variant="body1">Expenditure</Typography>
+                        <Paper elevation={6} className={[classes.card,classes.card3].join(' ')}>
+                          <Typography className={classes.text} variant="h4" align="right">Expenditure</Typography>
+                          <Typography className={classes.text} variant="body1" align="right">{this.state.totalExpenditure}</Typography>
                         </Paper>
                   </Grid>
               </Paper>

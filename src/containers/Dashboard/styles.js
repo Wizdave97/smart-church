@@ -1,3 +1,7 @@
+
+import Red from '../../assets/red.jpg';
+import Purple from '../../assets/purple.jpg';
+import Blue from '../../assets/blue.jpg';
 const styles= theme =>({
     chart:{
       width:'100%',
@@ -23,7 +27,13 @@ const styles= theme =>({
       marginRight:theme.spacing.unit
     },
     text:{
-      alignSelf:'flex-start',
+      width:'100%',
+      alignSelf:'center',
+      fontSize:'1rem',
+      fontWeight:100,
+      color:'rgb(255,255,255,0.8)',
+      paddingBottom:'4px',
+      margin:0
     },
     imageContainer:{
       width:'20%',
@@ -47,25 +57,26 @@ const styles= theme =>({
     card:{
       width:'100%',
       display:'flex',
-      flexWrap:'nowrap',
-      padding:'0px 30px 0px 0px',
+      flexWrap:'wrap',
+      padding:'10px 20px',
       boxSizing:'border-box',
       '& p':{
-        textAlign:'left'
+        textAlign:'right'
       },
+      minHeight:'120px',
       [theme.breakpoints.down('sm')]:{
         marginTop:theme.spacing(2),
         marginBottom:theme.spacing(2)
       }
     },
     card1:{
-      backgroundImage:'linear-gradient(to right, rgba(255,94,58,0.6),rgba(255,94,58,1))'
+      backgroundImage:`url(${Purple})`
     },
     card2:{
-      backgroundImage:'linear-gradient(to right, rgba(255,149,0,0.6),rgba(255,149,0,1))'
+      backgroundImage:`url(${Blue})`
     },
     card3:{
-      backgroundImage:'linear-gradient(to right, rgba(118,200,14,0.6),rgba(118,200,14,1))'
+      backgroundImage:`url(${Red})`
     },
     cards:{
       width:'100%',

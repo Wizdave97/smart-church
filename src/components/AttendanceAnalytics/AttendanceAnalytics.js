@@ -117,7 +117,7 @@ class AttendanceAnalytics extends Component {
     const { classes }= this.props
     const references=[this.day]
     let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
-
+    let progress=null
     let attendanceChart=<LinearProgress  color="primary"/>
     let attendanceBarChart=<LinearProgress  color="primary"/>
 
@@ -143,24 +143,24 @@ class AttendanceAnalytics extends Component {
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: "miter",
-        pointBorderColor: "rgb(205, 130,240)",
+        pointBorderColor: "rgb(205, 130,158)",
         pointBackgroundColor: "rgb(255, 255, 255)",
         pointBorderWidth: 10,
         pointHoverRadius: 5,
         pointHoverBackgroundColor: "rgb(0, 0, 0)",
         pointHoverBorderColor: "rgba(220, 220, 220,1)",
         pointHoverBorderWidth: 2,
-        pointRadius: 3,
+        pointRadius: 1,
         pointHitRadius: 10,
         data: this.state.dataset
       },
     ]
-  }} options={{ responsive: true }} />
+  }} options={{ responsive: true}} />
 
       )
       attendanceBarChart=( <Chart
                           width={'100%'}
-                          height={340}
+                          height={400}
                           chartType="Bar"
                           loader={<div>Loading Chart</div>}
                           data={attendance}
@@ -195,6 +195,7 @@ class AttendanceAnalytics extends Component {
     if(this.props.fetchReportStart) {
       attendanceChart=<LinearProgress  color="primary"/>
       attendanceBarChart=<LinearProgress  color="primary"/>
+      progress=<LinearProgress  color="primary"/>
     }
     if(this.props.reports){
       if(this.props.reports.length==0){
@@ -207,6 +208,7 @@ class AttendanceAnalytics extends Component {
       item
       xs={12}
       md={12}>
+      {progress}
         <Grid
         container
         spacing={0}
