@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
-import { Line } from "react-chartjs-2";
+//import { Line } from "react-chartjs-2";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,Label,ResponsiveContainer,BarChart,Legend, Bar } from 'recharts';
 import Chart from 'react-google-charts';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
@@ -15,9 +16,8 @@ const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'Au
 const categories=['children','female','male','total'];
 class AttendanceAnalytics extends Component {
   state={
-    title:null,
-    labels:null,
-    dataset:null,
+    data:null,
+    title:'',
     day:'',
     month:months[new Date().getMonth()],
     category:'total',
@@ -55,36 +55,43 @@ class AttendanceAnalytics extends Component {
     this.props.onFetchReport(this.props.branchId,url,this.state.day,this.state.month,this.state.year)
   }
   structureData= (raw) =>{
-    let labels=[];
     let data=[];
     let title=null
     switch(this.state.category){
       case 'total':
           title="Total Attendance"
           for (let obj of raw){
-            labels.push(obj.date)
-            data.push(obj.totalAttendance)
+            let temp={}
+            temp.name=new Date(obj.date).toDateString()
+            temp.attendance=obj.totalAttendance
+            data.push(temp)
           }
           break;
       case 'children':
           title="Children Attendance"
           for (let obj of raw){
-            labels.push(obj.date)
-            data.push(obj.childrenAttendance)
+            let temp={}
+            temp.name=new Date(obj.date).toDateString()
+            temp.attendance=obj.childrenAttendance
+            data.push(temp)
           }
           break;
       case 'female':
           title="Female Attendance"
           for (let obj of raw){
-            labels.push(obj.date)
-            data.push(obj.femaleAttendance)
+            let temp={}
+            temp.name=new Date(obj.date).toDateString()
+            temp.attendance=obj.femaleAttendance
+            data.push(temp)
           }
           break;
       case 'male':
           title="Male Attendance"
           for (let obj of raw){
-            labels.push(obj.date)
-            data.push(obj.maleAttendance)
+            let temp={}
+            temp.name=new Date(obj.date).toDateString()
+            temp.attendance=obj.maleAttendance
+            data.push(temp)
           }
           break;
       default: break
@@ -92,9 +99,8 @@ class AttendanceAnalytics extends Component {
     }
 
     this.setState({
-      title:title,
-      dataset:data,
-      labels:labels
+    data:data,
+    title:title
     })
   }
   componentDidUpdate(prevProps,prevState){
@@ -116,75 +122,45 @@ class AttendanceAnalytics extends Component {
   render(){
     const { classes }= this.props
     const references=[this.day]
-    let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
+    let attendance=[]
     let progress=null
     let attendanceChart=<LinearProgress  color="primary"/>
     let attendanceBarChart=<LinearProgress  color="primary"/>
 
     if( this.props.reports){
       for(let obj of this.props.reports){
-        let temp=[];
-        temp.push(obj.date)
-        temp.push(obj.maleAttendance)
-        temp.push(obj.femaleAttendance)
-        temp.push(obj.childrenAttendance)
+        let temp={};
+        temp.name=new Date(obj.date).toDateString()
+        temp['male attendance']=obj.maleAttendance
+        temp['female attendance']=obj.femaleAttendance
+        temp['children attendance']=obj.childrenAttendance
         attendance.push(temp)
       }
-      attendanceChart=( <Line data={{
-    labels:this.state.labels,
-    datasets: [
-      {
-        label: this.state.title,
-        fill: true,
-        lineTension: 0.3,
-        backgroundColor: "rgba(225, 204,230, .3)",
-        borderColor: "rgb(205, 130, 158)",
-        borderCapStyle: "butt",
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: "miter",
-        pointBorderColor: "rgb(205, 130,158)",
-        pointBackgroundColor: "rgb(255, 255, 255)",
-        pointBorderWidth: 10,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "rgb(0, 0, 0)",
-        pointHoverBorderColor: "rgba(220, 220, 220,1)",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: this.state.dataset
-      },
-    ]
-  }} options={{ responsive: true}} />
-
+      attendanceChart=(
+    <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+      <LineChart data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <Line type="monotone" dataKey="attendance" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <XAxis dataKey="name" ><Label value={this.state.title} offset={0} position="insideTopRight" /></XAxis>
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+      </ResponsiveContainer>
       )
-      attendanceBarChart=( <Chart
-                          width={'100%'}
-                          height={400}
-                          chartType="Bar"
-                          loader={<div>Loading Chart</div>}
-                          data={attendance}
-                          options={{
+      attendanceBarChart=(
+      <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+      <BarChart  data={attendance}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="male attendance" fill="#8884d8" />
+        <Bar dataKey="female attendance" fill="#82ca9d" />
+        <Bar dataKey="children attendance" fill="#83ca9d" />
+      </BarChart>
+      </ResponsiveContainer>
 
-                            backgroundColor:'inherit',
-                            chart: {
-                               title: 'Attendance Chart',
-                            },
-                            hAxis: {
-                               title: 'Attendance Metrics',
-                               minValue: 0,
-                             },
-                             vAxis: {
-                               title: 'Date',
-                             },
-                             bars: 'vertical',
-                             axes: {
-                               y: {
-                                 0: { side: 'right' },
-                               },
-                          }}}
-                          legendToggle
-                          />
 
       )
     }

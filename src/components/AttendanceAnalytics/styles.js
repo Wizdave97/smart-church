@@ -27,6 +27,7 @@ const styles = theme =>({
     width:'100%',
     padding:'8px',
     boxSizing:'border-box',
+    overflowX:'auto'
   },
   chartNav:{
     width:'100%',
