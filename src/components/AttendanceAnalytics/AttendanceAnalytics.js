@@ -138,10 +138,12 @@ class AttendanceAnalytics extends Component {
       }
       attendanceChart=(
     <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+
       <LineChart data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <Line type="monotone" dataKey="attendance" stroke="#8884d8" />
+        <Legend verticalAlign="top" height={36}/>
+        <Line name={this.state.category} type="monotone" dataKey="attendance" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis dataKey="name" ><Label value={this.state.title} offset={0} position="insideTopRight" /></XAxis>
+        <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
       </LineChart>
@@ -154,10 +156,10 @@ class AttendanceAnalytics extends Component {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        <Legend verticalAlign="top" height={36}/>
         <Bar dataKey="male attendance" fill="#8884d8" />
         <Bar dataKey="female attendance" fill="#82ca9d" />
-        <Bar dataKey="children attendance" fill="#83ca9d" />
+        <Bar dataKey="children attendance" fill="#85539d" />
       </BarChart>
       </ResponsiveContainer>
 

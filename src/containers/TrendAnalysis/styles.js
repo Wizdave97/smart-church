@@ -1,4 +1,5 @@
-const styles = theme =>({
+const styles = theme =>(
+  {
   filters:{
     display:'flex',
     width:'100%',
@@ -29,13 +30,6 @@ const styles = theme =>({
     boxSizing:'border-box',
     overflowX:'auto',
   },
-  chartNav:{
-    width:'100%',
-    display:'flex',
-    justifyContent:'space-between',
-    padding:'10px',
-    boxSizing:'border-box'
-  }
-})
-
+}
+)
 export default styles

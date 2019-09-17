@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Chart from 'react-google-charts';
-import { Line } from "react-chartjs-2";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer,BarChart,Bar, Legend } from "recharts";
 import { Link } from 'react-router-dom';
 import { Grid,Paper,Typography, Fab,Divider, CircularProgress,Button} from '@material-ui/core';
 import { ShowChart, Money, Payment} from '@material-ui/icons';
@@ -13,6 +13,9 @@ import styles from './styles';
 class Dashboard extends Component{
   state={
     title:null,
+    expMax:null,
+    label:null,
+    incomeMax:null,
     incomeLabels:null,
     incomeData:null,
     intervalId:null,
@@ -29,54 +32,59 @@ class Dashboard extends Component{
     this.props.onFetchFinance(this.props.branchId,null,'Income');
     this.props.onFetchFinance(this.props.branchId,null,'Expenditure')
   }
-  cycle= (dataIndex,labels,data,title,dataset,datalabels) =>{
+  cycle= (dataIndex,labels,dataset,data,label) =>{
 
     this.setState({
-      [title]:labels[dataIndex],
-      [dataset]:data[dataIndex][1],
-      [datalabels]:data[dataIndex][0]
+      [dataset]:data[labels[dataIndex]],
+      [label]:labels[dataIndex]
     })
   }
-  cycleIncomeCategories= (incomeUngrouped,dataIndex,id,title,dataset,datalabels) =>{
-
-    let income=[]
+  cycleIncomeCategories= (incomeUngrouped,dataIndex,id,dataset,maxVal,label) =>{
+    let amounts=[]
+    let data=[]
     for (let obj of incomeUngrouped){
-      if(income[obj.category]){
-        income[obj.category][0].push(obj.date)
-        income[obj.category][1].push(obj.total)
+      if(data[obj.category]){
+        let temp={}
+        temp.name=new Date(obj.date).toDateString()
+        temp.amount=obj.total
+        data[obj.category].push(temp)
+        amounts.push(obj.total)
       }
       else{
-        income[obj.category]=[[],[]];
-        income[obj.category][0].push(obj.date)
-        income[obj.category][1].push(obj.total)
+        data[obj.category]=[];
+        let temp={}
+        temp.name=new Date(obj.date).toDateString()
+        temp.amount=obj.total
+        data[obj.category].push(temp)
+        amounts.push(obj.total)
       }
     }
-    let labels=[...Object.keys(income)]
-    let data=[...Object.values(income)]
+    let labels=[...Object.keys(data)]
+    //let data=[...Object.values(income)]
     console.log(labels)
 
     let intervalId=window.setInterval(()=>{
       if(dataIndex>=labels.length){
         dataIndex=0
       }
-      this.cycle(dataIndex,labels,data,title,dataset,datalabels)
+      this.cycle(dataIndex,labels,dataset,data,label)
       dataIndex++
     },10000)
-  this.setState({[id]:intervalId})
+  this.setState({[id]:intervalId,[maxVal]:Math.max(...amounts)})
   }
   componentDidUpdate(prevProps,prevState){
     let dataIndex=0,expIndex=0;
     if(this.props.fetchIncomeSuccess && this.props.income){
       if(this.props.income.length!==0){
         if(prevState.intervalId==null){
-          this.cycleIncomeCategories(this.props.income,dataIndex,'intervalId','title','incomeData','incomeLabels')
+          this.cycleIncomeCategories(this.props.income,dataIndex,'intervalId','incomeData','incomeMax','incomeLabel')
         }
       }
     }
     if(this.props.fetchExpenditureSuccess && this.props.expenditure){
       if(this.props.expenditure.length!==0){
         if(prevState.expenditureId==null){
-          this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureTitle','expenditureData','expenditureLabels')
+          this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureData','expMax','expLabel')
         }
       }
     }
@@ -123,45 +131,30 @@ class Dashboard extends Component{
   }
   render(){
     const { classes } = this.props
-    let attendance=[['Date','Male Attendance','Female Attendance','Children Attendance']]
+    let attendance=[]
 
     let attendanceChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
     if(this.props.fetchAttendanceSuccess && this.props.reports){
       for(let obj of this.props.reports){
-        let temp=[];
-        temp.push(obj.date)
-        temp.push(obj.maleAttendance)
-        temp.push(obj.femaleAttendance)
-        temp.push(obj.childrenAttendance)
+        let temp={};
+        temp.name=new Date(obj.date).toDateString()
+        temp['male attendance']=obj.maleAttendance
+        temp['female attendance']=obj.femaleAttendance
+        temp['children attendance']=obj.childrenAttendance
         attendance.push(temp)
       }
-      attendanceChart=( <Chart
-                          width={'100%'}
-                          height={340}
-                          chartType="Bar"
-                          loader={<div>Loading Chart</div>}
-                          data={attendance}
-                          options={{
-
-                            backgroundColor:'inherit',
-                            chart: {
-                               title: 'Attendance Chart',
-                            },
-                            hAxis: {
-                               title: 'Attendance Metrics',
-                               minValue: 0,
-                             },
-                             vAxis: {
-                               title: 'Date',
-                             },
-                             bars: 'vertical',
-                             axes: {
-                               y: {
-                                 0: { side: 'right' },
-                               },
-                          }}}
-                          legendToggle
-                          />
+      attendanceChart=(<ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+      <BarChart  data={attendance}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend verticalAlign="top" height={36}/>
+        <Bar dataKey="male attendance" fill="#8884d8" />
+        <Bar dataKey="female attendance" fill="#82ca9d" />
+        <Bar dataKey="children attendance" fill="#85539d" />
+      </BarChart>
+      </ResponsiveContainer>
 
       )
     }
@@ -171,32 +164,17 @@ class Dashboard extends Component{
     let incomeChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
     if(this.props.fetchIncomeSuccess && this.props.income){
       incomeChart=(
-        <Line data={{
-      labels:this.state.incomeLabels,
-      datasets: [
-        {
-          label: this.state.title,
-          fill: true,
-          lineTension: 0.3,
-          backgroundColor: "rgba(225, 204,230, .3)",
-          borderColor: "rgb(205, 130, 158)",
-          borderCapStyle: "butt",
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,240)",
-          pointBackgroundColor: "rgb(255, 255, 255)",
-          pointBorderWidth: 10,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgb(0, 0, 0)",
-          pointHoverBorderColor: "rgba(220, 220, 220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 3,
-          pointHitRadius: 10,
-          data: this.state.incomeData
-        },
-      ]
-    }} options={{ responsive: true }} />
+        <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+
+          <LineChart data={this.state.incomeData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <Legend verticalAlign="top" height={36}/>
+            <Line name={this.state.incomeLabel} type="monotone" dataKey="amount" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="name" />
+            <YAxis allowDataOverflow={false} domain={[0, this.state.incomeMax+1000]}/>
+            <Tooltip />
+          </LineChart>
+          </ResponsiveContainer>
       )
     }
     if (this.props.fetchIncomeFail){
@@ -205,32 +183,17 @@ class Dashboard extends Component{
     let expenditureChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
     if(this.props.fetchExpenditureSuccess && this.props.expenditure){
       expenditureChart=(
-        <Line data={{
-      labels:this.state.expenditureLabels,
-      datasets: [
-        {
-          label: this.state.expenditureTitle,
-          fill: true,
-          lineTension: 0.3,
-          backgroundColor: "rgba(225, 204,230, .3)",
-          borderColor: "rgb(205, 130, 158)",
-          borderCapStyle: "butt",
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: "miter",
-          pointBorderColor: "rgb(205, 130,240)",
-          pointBackgroundColor: "rgb(255, 255, 255)",
-          pointBorderWidth: 10,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgb(0, 0, 0)",
-          pointHoverBorderColor: "rgba(220, 220, 220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 2,
-          pointHitRadius: 10,
-          data: this.state.expenditureData
-        },
-      ]
-    }} options={{ responsive: true }} />
+        <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
+
+          <LineChart data={this.state.expenditureData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <Legend verticalAlign="top" height={36}/>
+            <Line name={this.state.expLabel} type="monotone" dataKey="amount" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="name" />
+            <YAxis allowDataOverflow={false} domain={[0, this.state.expMax+1000]}/>
+            <Tooltip />
+          </LineChart>
+          </ResponsiveContainer>
       )
     }
     if (this.props.fetchExpenditureFail){

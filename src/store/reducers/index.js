@@ -7,4 +7,5 @@ import financeReducer from './finance';
 import settingsReducer from './settings';
 import dashboardReducer from './dashboard';
 import analyticsReducer from './analytics';
-export {themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer,settingsReducer,dashboardReducer,analyticsReducer}
+import trendReducer from './trend';
+export {themeReducer,authReducer,branchReducer,staffReducer,reportReducer,financeReducer,settingsReducer,dashboardReducer,analyticsReducer,trendReducer}

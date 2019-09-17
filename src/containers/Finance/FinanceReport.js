@@ -198,7 +198,7 @@ class FinanceReport extends Component {
                     <div className={classes.entry}>
                         <Input
                           required={true}
-                          inputType="textarea"
+                          inputType="input"
                           id="description"
                           reference={this.setRef}
                           error={errorDescription}

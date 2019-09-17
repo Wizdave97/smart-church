@@ -18,7 +18,9 @@ const styles= theme =>({
     chartContainer:{
       width:'100%',
       margin:'8px',
-      backgroundColor:'inherit'
+      backgroundColor:'inherit',
+      overflowY:'hidden',
+      overflowX:'auto'
     },
     divider:{
       height:'100%',

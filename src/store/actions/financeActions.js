@@ -86,7 +86,7 @@ export const updateFinanceAsync= (type,financeData)=>{
   }
 
 }
-export const fetchFinanceAsync =(branchId,url,type='Income',category=null,month=null,year=null)=>{
+export const fetchFinanceAsync =(branchId,url,type='Income',category='offering',month=null,year=null)=>{
 
   if(!year) year=new Date().getFullYear()
   if(!month) month=months[new Date().getMonth()]

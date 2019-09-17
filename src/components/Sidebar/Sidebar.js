@@ -12,7 +12,7 @@ const SideBar = (props) =>{
 
   return (
     <aside id="style-9" className={classes.aside}>
-        
+
         <Paper  square={true} elevation={0} className={classes.sideBar} onClick={()=>props.toggleSideBar()}>
           <div className={classes.section}>
             <div className={classes.title}>
@@ -38,6 +38,8 @@ const SideBar = (props) =>{
                 <Divider className={classes.divider}/>
                 <NavLink to="/analytics" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Analytics'/></ListItem></NavLink>
                 <Divider className={classes.divider}/>
+                <NavLink to="/trends" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Trend Analysis'/></ListItem></NavLink>
+              <Divider className={classes.divider}/>
               </List>
             </div>
             <div className={classes.section}>

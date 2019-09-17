@@ -46,6 +46,9 @@ const asyncAnalytics= asyncComponent(()=>{
 const asyncStaffs= asyncComponent(()=>{
   return import('./containers/Staffs/Staffs')
 })
+const asyncTrendAnalysis= asyncComponent(()=>{
+  return import('./containers/TrendAnalysis/TrendAnalysis')
+})
 class App  extends Component{
   state={
     openModal:false,
@@ -119,6 +122,7 @@ class App  extends Component{
       if(this.props.permissions.indexOf(9)>0){
         availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports,confirm:true})
         availableRoutes.push({path:'/analytics',exact:false,cmp:asyncAnalytics})
+        availableRoutes.push({path:'/trends',exact:false,cmp:asyncTrendAnalysis})
         availableRoutes.push({path:'/settings',exact:false,cmp:asyncSettings})
         availableRoutes.push({path:'/viewfinances',exact:false,cmp:asyncViewFinances,confirm:true})
       }

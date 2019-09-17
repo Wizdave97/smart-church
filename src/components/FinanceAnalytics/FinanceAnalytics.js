@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,ResponsiveContainer } from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
@@ -13,11 +13,10 @@ import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/cor
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 class FinanceAnalytics extends Component {
   state={
-    title:null,
-    labels:null,
-    dataset:null,
+    data:null,
+    dataMax:null,
     month:months[new Date().getMonth()],
-    category:null,
+    category:'offering',
     type:'Income',
     year:new Date().getFullYear(),
     incomeCategories:null,
@@ -78,27 +77,17 @@ class FinanceAnalytics extends Component {
   }
 
   structureData= (raw) =>{
-    let dictionary=[]
+    let data=[]
+    let amounts=[]
     for (let obj of raw){
-      let temp={}
-      if(dictionary[obj.category]){
-        dictionary[obj.category][0].push(obj.date)
-        dictionary[obj.category][1].push(obj.total)
+        let temp={}
+        temp.name=new Date(obj.date).toDateString()
+        temp.amount=obj.total
+        amounts.push(obj.total)
+        data.push(temp)
       }
-      else{
-        dictionary[obj.category]=[[],[]];
-        dictionary[obj.category][0].push(new Date(obj.date).toDateString())
-        dictionary[obj.category][1].push(obj.total)
-      }
-    }
-    let labels=[...Object.keys(dictionary)]
-    let data=[...Object.values(dictionary)]
-    //console.log(labels)
-    this.setState({
-      title:labels[0],
-      dataset:data[0][1],
-      labels:data[0][0]
-    })
+    this.setState({data:data,dataMax:Math.max(...amounts)})
+
   }
   componentDidUpdate(prevProps,prevState){
     if(this.props.fetchFinanceSuccess && this.props.data!==null){
@@ -114,10 +103,21 @@ class FinanceAnalytics extends Component {
     let progress=null
     let financeChart=<LinearProgress  color="primary"/>
 
-    if(this.state.dataset && this.state.labels){
-      /*financeChart=(
+    if(this.state.data){
+      //console.log(this.state.dataMax)
+      financeChart=(
+        <ResponsiveContainer width={'100%'} height={"100%"} minHeight={400} minWidth={600} >
 
-      )*/
+          <LineChart data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <Legend verticalAlign="top" height={36}/>
+            <Line name={this.state.category} type="monotone" dataKey="amount" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="name" />
+            <YAxis allowDataOverflow={false} domain={[0, this.state.dataMax+1000]}/>
+            <Tooltip />
+          </LineChart>
+          </ResponsiveContainer>
+      )
     }
     if(this.props.fetchFinanceFail){
       financeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,this.state.type?this.state.type:'Income')} size="small" color="secondary">Retry</Button></Typography>
