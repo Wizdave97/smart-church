@@ -152,31 +152,7 @@ class Layout extends Component {
               {this.props.permissions.indexOf(7)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
                   <Visibility />
               </Fab>:null}
-              {/*<Menu
-               id="long-menu"
-               anchorEl={this.state.anchorEl}
-               keepMounted
-               open={open}
-               onClose={this.handleClose}
-               PaperProps={{
-                 style: {
-                   maxHeight: 48 * 4.5,
-                   width: '30%',
-                   position:'relative'
-                 },
-               }}
-             >
-             {this.props.branches?this.props.branches.map((data,index)=>{
-               return (data.status.toLowerCase()==='active'?(
-                <MenuItem  key={index}  onClick={this.handleClose}>
-                  <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} color="default" variant="small" fullWidth>{data.name}</Button>
-                </MenuItem>):null)
-              }):null}
-              <div className={classes.menuNav} >
-                  <Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button>
-                  <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button>
-              </div>
-            </Menu>*/}
+              
             <Drawer anchor="right" open={open} onClose={this.handleClose}>
               <SideList
                 next={this.props.next}
