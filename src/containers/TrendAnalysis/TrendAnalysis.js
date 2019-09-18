@@ -310,7 +310,7 @@ class TrendAnalysis extends Component {
               name="financeFrom"
               value={this.state.financeFrom}
               reference={this.setRef}
-              error={this.state.errorfinanceFrom}
+              error={this.state.errorFinanceFrom}
               handleChange={(event)=>handleChange(event,this.hardSetState)}
               label="From"
             /></div>

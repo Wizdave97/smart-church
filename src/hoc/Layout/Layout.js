@@ -152,7 +152,7 @@ class Layout extends Component {
               {this.props.permissions.indexOf(7)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
                   <Visibility />
               </Fab>:null}
-              
+            {this.props.permissions.indexOf(7)>=0?
             <Drawer anchor="right" open={open} onClose={this.handleClose}>
               <SideList
                 next={this.props.next}
@@ -163,7 +163,7 @@ class Layout extends Component {
                 menuNav={classes.menuNav}
                 branches={this.props.branches}
                 onChangePage={this.onChangePage}/>
-            </Drawer>
+            </Drawer>:null}
       </React.Fragment>
     )
   }
