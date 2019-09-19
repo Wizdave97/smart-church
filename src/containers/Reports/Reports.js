@@ -11,7 +11,7 @@ import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
 import { Paper, Grid, Typography, Button, Card,CardHeader,Avatar, CardActions,CardContent,LinearProgress} from '@material-ui/core'
 
-const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 class Reports extends Component {
   state={

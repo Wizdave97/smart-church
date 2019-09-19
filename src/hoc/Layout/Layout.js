@@ -32,7 +32,7 @@ const SideList =(props)=> (
         {props.branches?props.branches.map((data,index)=>{
           return (data.status.toLowerCase()==='active'?(
            <ListItem  key={index}  onClick={props.handleClose}>
-             <Button component={Link} to={`/analytics`} onClick={()=>props.onChangeBranch(data.id,data.name)} color="default" variant="small" fullWidth>{data.name}</Button>
+             <Button component={Link} to={`/analytics`} onClick={()=>props.onChangeBranch(data.id,data.name)} color="default" variant="text" fullWidth>{data.name}</Button>
            </ListItem>):null)
          }):null}
       </List>

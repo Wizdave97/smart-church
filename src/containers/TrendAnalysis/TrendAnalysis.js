@@ -11,6 +11,7 @@ import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContai
 import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 import styles from './styles';
 
+const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
 const categories=['children','female','male','total'];
 class TrendAnalysis extends Component {
@@ -20,6 +21,8 @@ class TrendAnalysis extends Component {
       dataMax:null,
       reportTo:'',
       reportFrom:'',
+      reportDay:'',
+      financeDay:'',
       financeTo:'',
       financeFrom:'',
       errorReportTo:false,
@@ -169,6 +172,46 @@ class TrendAnalysis extends Component {
       if((prevProps.fetchTrendFinanceSuccess!=this.props.fetchTrendFinanceSuccess && prevProps.fetchTrendReportsSuccess != this.props.fetchTrendReportsSuccess) && (this.props.fetchTrendFinanceSuccess && this.props.fetchTrendReportsSuccess)){
         this.props.onUnmount()
       }
+      if((this.state.reportDay && (prevState.reportDay !==this.state.reportDay))||(this.state.reportDay && (prevState.category!==this.state.category))) {
+        let data=[];
+        if(this.props.reports){
+          if(this.props.reports.length!==0){
+            for(let obj of this.props.reports){
+              if(new Date(obj.date).getDay()==days.indexOf(this.state.reportDay)){
+                data.push(obj)
+              }
+            }
+            this.structureData(data)
+          }
+        }
+      }
+      if(prevState.reportDay && !this.state.reportDay) {
+        if(this.props.reports){
+          if(this.props.reports.length!==0){
+            this.structureData(this.props.reports)
+          }
+        }
+      }
+      if(this.state.financeDay && (prevState.financeDay !==this.state.financeDay)) {
+        let data=[];
+        if(this.props.finances){
+          if(this.props.finances.length!==0){
+            for(let obj of this.props.finances){
+              if(new Date(obj.date).getDay()==days.indexOf(this.state.financeDay)){
+                data.push(obj)
+              }
+            }
+            this.structureFinanceData(data)
+          }
+        }
+      }
+      if(prevState.financeDay && !this.state.financeDay) {
+        if(this.props.finances){
+          if(this.props.finances.length!==0){
+            this.structureFinanceData(this.props.finances)
+          }
+        }
+      }
     }
     render(){
       const { classes }= this.props
@@ -284,7 +327,18 @@ class TrendAnalysis extends Component {
             value={this.state.category}
             handleChange={(event)=>handleChange(event,this.hardSetState)}
             label="Select Demography"
-          /></div></div>
+          /></div>
+          <div className={classes.entry}>
+          <Input
+            inputType="select"
+            required={false}
+            options={days}
+            name="reportDay"
+            value={this.state.reportDay}
+            handleChange={(event)=>handleChange(event,this.hardSetState)}
+            label="Select Day"
+          /></div>
+          </div>
           <div className={classes.chart}>
             {reportChart}
           </div>
@@ -364,6 +418,18 @@ class TrendAnalysis extends Component {
             /></div>
           <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
           </form>
+          <div className={classes.filters}>
+          <div className={classes.entry}>
+          <Input
+            inputType="select"
+            required={false}
+            options={days}
+            name="financeDay"
+            value={this.state.financeDay}
+            handleChange={(event)=>handleChange(event,this.hardSetState)}
+            label="Select Day"
+          /></div>
+          </div>
           <div className={classes.tableWrapper}>
           <div className={classes.chart}>
             {financeChart}

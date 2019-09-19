@@ -51,7 +51,7 @@ const Input = props =>{
             type={props.type}
             id={props.id}
             onChange={props.handleChange}>
-              <option value="">select</option>
+              <option value="" >select</option>
               {props.options?props.options.map((option,index)=>{
                 return(
                   <option key={index} value={option}>{option}</option>
