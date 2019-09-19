@@ -91,7 +91,7 @@ class FinanceAnalytics extends Component {
 
   }
   componentDidUpdate(prevProps,prevState){
-    if(this.props.fetchFinanceSuccess && this.props.data!==null){
+    if(this.props.data!==prevProps.data && this.props.data!==null){
       if(this.props.data.length!==0){
         this.structureData(this.props.data)
       }

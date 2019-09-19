@@ -105,7 +105,7 @@ class AttendanceAnalytics extends Component {
     })
   }
   componentDidUpdate(prevProps,prevState){
-    if(this.props.fetchReportSuccess && this.props.reports!==null){
+    if(this.props.reports!==prevProps.reports && this.props.reports!==null){
       if(this.props.reports.length!==0){
         this.structureData(this.props.reports)
       }
