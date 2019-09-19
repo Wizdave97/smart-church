@@ -3,7 +3,6 @@ import {Paper, Grid, }  from '@material-ui/core';
 import { connect } from 'react-redux';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { reportSync, fetchReportAsync } from '../../store/actions/reportActions';
-import ReportsAnalytics from '../../components/ReportsAnalytics/ReportsAnalytics';
 import FinanceAnalytics from '../../components/FinanceAnalytics/FinanceAnalytics';
 import AttendanceAnalytics from '../../components/AttendanceAnalytics/AttendanceAnalytics';
 import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';

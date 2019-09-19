@@ -30,30 +30,8 @@ class FinanceReport extends Component {
   }
   componentDidMount(){
     this.setState({fixValidityBug:''})
-    fetch(baseUrl+'/inmedium',{
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer'+this.props.token
-      }
-    }).then(res=>res.json()).then(res=>{
-      let categories=[];
-      for(let obj of res.data){
-        categories.push(obj.category)
-      }
-      this.setState({incomeCategories:categories})
-    }).catch(err=> console.log(err))
-    fetch(baseUrl+'/expenses',{
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer'+this.props.token
-      }
-    }).then(res=>res.json()).then(res=>{
-      let categories=[];
-      for(let obj of res.data){
-        categories.push(obj.category)
-      }
-      this.setState({expenseCategories:categories})
-    }).catch(err=> console.log(err))
+    this.fetchIncomeCategories(this.props.token)
+    this.fetchExpenseCategories(this.props.token)
     if(Number(this.props.match.params.id)>=0 && this.props.reports){
       for(let obj of this.props.reports ){
         if(obj.id==Number(this.props.match.params.id)){
@@ -72,6 +50,34 @@ class FinanceReport extends Component {
     if(element){
       this[element.name]=element;
     }
+  }
+  fetchIncomeCategories=(token)=>{
+    fetch(baseUrl+'/inmedium',{
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+token
+      }
+    }).then(res=>res.json()).then(res=>{
+      let categories=[];
+      for(let obj of res.data){
+        categories.push(obj.category)
+      }
+      this.setState({incomeCategories:categories})
+    }).catch(err=>setTimeout(()=>this.fetchIncomeCategories(token),1000))
+  }
+  fetchExpenseCategories=(token)=>{
+    fetch(baseUrl+'/expenses',{
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer'+token
+      }
+    }).then(res=>res.json()).then(res=>{
+      let categories=[];
+      for(let obj of res.data){
+        categories.push(obj.category)
+      }
+      this.setState({expenseCategories:categories})
+    }).catch(err=>setTimeout(()=>this.fetchExpenseCategories(token),1000))
   }
   componentDidUpdate(prevProps,prevState){
 
@@ -155,7 +161,7 @@ class FinanceReport extends Component {
                           id="category"
                           name="category"
                           reference={this.setRef}
-                          options={this.state.reportType==='income'?this.state.incomeCategories:this.state.expenseCategories}
+                          options={this.state.reportType==='Income'?this.state.incomeCategories:this.state.expenseCategories}
                           value={this.state.category}
                           error={errorCategory}
                           type="select"

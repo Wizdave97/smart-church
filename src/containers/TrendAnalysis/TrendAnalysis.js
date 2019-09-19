@@ -48,30 +48,8 @@ class TrendAnalysis extends Component {
     }
     componentDidMount(){
       this.setState({fixValidityBug:null})
-      fetch(baseUrl+'/inmedium',{
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer'+this.props.token
-        }
-      }).then(res=>res.json()).then(res=>{
-        let categories=[];
-        for(let obj of res.data){
-          categories.push(obj.category)
-        }
-        this.setState({incomeCategories:categories})
-      }).catch(err=> console.log(err))
-      fetch(baseUrl+'/expenses',{
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer'+this.props.token
-        }
-      }).then(res=>res.json()).then(res=>{
-        let categories=[];
-        for(let obj of res.data){
-          categories.push(obj.category)
-        }
-        this.setState({expenseCategories:categories})
-      }).catch(err=> console.log(err))
+      this.fetchIncomeCategories(this.props.token)
+      this.fetchExpenseCategories(this.props.token)
     }
     structureData= (raw) =>{
       let data=[];
@@ -132,6 +110,34 @@ class TrendAnalysis extends Component {
         }
       this.setState({finances:data,dataMax:Math.max(...amounts)})
 
+    }
+    fetchIncomeCategories=(token)=>{
+      fetch(baseUrl+'/inmedium',{
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer'+token
+        }
+      }).then(res=>res.json()).then(res=>{
+        let categories=[];
+        for(let obj of res.data){
+          categories.push(obj.category)
+        }
+        this.setState({incomeCategories:categories})
+      }).catch(err=>setTimeout(()=>this.fetchIncomeCategories(token),1000))
+    }
+    fetchExpenseCategories=(token)=>{
+      fetch(baseUrl+'/expenses',{
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer'+token
+        }
+      }).then(res=>res.json()).then(res=>{
+        let categories=[];
+        for(let obj of res.data){
+          categories.push(obj.category)
+        }
+        this.setState({expenseCategories:categories})
+      }).catch(err=>setTimeout(()=>this.fetchExpenseCategories(token),1000))
     }
     onSubmit = (references,hardSetState,e)=>{
       e.preventDefault();

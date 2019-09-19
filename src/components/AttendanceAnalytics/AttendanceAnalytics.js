@@ -10,6 +10,7 @@ import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActio
 import { handleChange,submitHandler} from '../../utils/Utility';
 import baseUrl from '../../store/base_url';
 import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/core'
+import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 
 const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -109,7 +110,7 @@ class AttendanceAnalytics extends Component {
         this.structureData(this.props.reports)
       }
 
-      this.props.onUnmount()
+      //this.props.onUnmount()
     }
     if(this.props.reports){
       if(this.props.reports.length!==0){
@@ -166,10 +167,7 @@ class AttendanceAnalytics extends Component {
 
       )
     }
-    if(this.props.fetchReportFail){
-      attendanceChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchReport(this.props.branchId)} size="small" color="secondary">Retry</Button></Typography>
-      attendanceBarChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchReport(this.props.branchId)} size="small" color="secondary">Retry</Button></Typography>
-    }
+
     if(this.props.fetchReportStart) {
       attendanceChart=<LinearProgress  color="primary"/>
       attendanceBarChart=<LinearProgress  color="primary"/>
@@ -177,9 +175,13 @@ class AttendanceAnalytics extends Component {
     }
     if(this.props.reports){
       if(this.props.reports.length==0){
-        attendanceChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>
-        attendanceBarChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>
+        attendanceChart=<SnackbarContent message="You have no records based on the selected filters, please select new filters and try again" variant="info"/>
+        attendanceBarChart=<SnackbarContent message="You have no records based on the selected filters, please select new filters and try again" variant="info"/>
       }
+    }
+    if(this.props.fetchReportFail){
+      attendanceChart=<React.Fragment><SnackbarContent message="An Error occured please reload" variant="error"/> <Button onClick={()=>this.props.onFetchReport(this.props.branchId)} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
+      attendanceBarChart=<React.Fragment><SnackbarContent message="An Error occured please reload" variant="error"/> <Button onClick={()=>this.props.onFetchReport(this.props.branchId)} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
     }
     return(
       <Grid

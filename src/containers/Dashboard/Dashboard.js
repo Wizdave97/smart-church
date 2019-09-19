@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import Chart from 'react-google-charts';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer,BarChart,Bar, Legend } from "recharts";
 import { Link } from 'react-router-dom';
 import { Grid,Paper,Typography, Fab,Divider, CircularProgress,Button} from '@material-ui/core';
@@ -9,6 +8,7 @@ import { ShowChart, Money, Payment} from '@material-ui/icons';
 import { fetchAttendanceAsync,fetchFinanceAsync } from '../../store/actions/dashboardActions';
 import * as actionTypes from '../../store/actions/actionTypes';
 import styles from './styles';
+import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 
 class Dashboard extends Component{
   state={
@@ -159,7 +159,7 @@ class Dashboard extends Component{
       )
     }
     if(this.props.fetchAttendanceFail){
-      attendanceChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchAttendance(this.props.branchId)} size="small" color="secondary">Retry</Button></Typography>
+      attendanceChart=<React.Fragment><SnackbarContent message="An Error occured please reload"  variant="error"/><Button onClick={()=>this.props.onFetchAttendance(this.props.branchId)} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
     }
     let incomeChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
     if(this.props.fetchIncomeSuccess && this.props.income){
@@ -178,7 +178,7 @@ class Dashboard extends Component{
       )
     }
     if (this.props.fetchIncomeFail){
-        incomeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Income')} size="small" color="secondary">Retry</Button></Typography>
+        incomeChart=<React.Fragment><SnackbarContent message="An Error occured please reload" variant="error"/><Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Income')} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
     }
     let expenditureChart=<CircularProgress style={{alignSelf:"center"}} color="primary"/>
     if(this.props.fetchExpenditureSuccess && this.props.expenditure){
@@ -197,7 +197,7 @@ class Dashboard extends Component{
       )
     }
     if (this.props.fetchExpenditureFail){
-        expenditureChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Expenditure')} size="small" color="secondary">Retry</Button></Typography>
+        expenditureChart=<React.Fragment><SnackbarContent message="An Error occured please reload" variant="error"/><Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,'Expenditure')} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
     }
 
     return (

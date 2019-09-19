@@ -92,10 +92,10 @@ const Navbar = props =>{
                 <div className={classes.one}>
                     <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><MenuIcon/></div>
                     <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h1"> Smart Church</Typography></div>
-                      <div onClick={()=>setState(state=>({searchBar:!state.searchBar }))} className={classes.searchButton} tabIndex="0">
+                      <div style={{visibility:'hidden'}} onClick={()=>setState(state=>({searchBar:!state.searchBar }))} className={classes.searchButton} tabIndex="0">
                         <SearchIcon className={classes.iconSearch} />
                       </div>
-                    <div className={classes.searchBar}>
+                    <div style={{visibility:'hidden'}} className={classes.searchBar}>
                         <div className={classes.search}>
                              <div className={classes.searchIcon}>
                                <SearchIcon />
@@ -123,7 +123,7 @@ const Navbar = props =>{
                                 <Switch  onChange={(event)=>props.toggleTheme(event.target.checked)} color="secondary" />
                             </ArrowTooltip>
                           </div>
-                        <div className={[classes.icons,classes.hide].join(' ')} tabIndex="0"><Notifications/></div>
+                        <div style={{visibility:'hidden'}} className={[classes.icons,classes.hide].join(' ')} tabIndex="0"><Notifications/></div>
                         <div className={classes.profileName}><Typography variant="body1">{props.userName}</Typography></div>
                         <div className={classes.icons} tabIndex="0" aria-controls="simple-menu" aria-haspopup="true" >
                           <AccountCircle onClick={handleClick}/>

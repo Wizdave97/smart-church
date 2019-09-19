@@ -8,6 +8,7 @@ import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActio
 import { handleChange,submitHandler} from '../../utils/Utility';
 import baseUrl from '../../store/base_url';
 import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/core'
+import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 
 
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -94,7 +95,7 @@ class FinanceAnalytics extends Component {
       if(this.props.data.length!==0){
         this.structureData(this.props.data)
       }
-      this.props.onUnmount()
+      //this.props.onUnmount()
     }
   }
   render(){
@@ -119,17 +120,18 @@ class FinanceAnalytics extends Component {
           </ResponsiveContainer>
       )
     }
-    if(this.props.fetchFinanceFail){
-      financeChart=<Typography variant="body1">An Error occured please reload <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,this.state.type?this.state.type:'Income')} size="small" color="secondary">Retry</Button></Typography>
-    }
+
     if (this.props.fetchFinanceStart) {
       financeChart=<LinearProgress  color="primary"/>
       progress=<LinearProgress  color="primary"/>
     }
     if(this.props.data){
       if(this.props.data.length==0){
-        financeChart=<Typography variant="body1" >You have no records based on the selected filters, please select new filters and try again</Typography>
+        financeChart=<SnackbarContent message="You have no records based on the selected filters, please select new filters and try again" variant="info"/>
       }
+    }
+    if(this.props.fetchFinanceFail){
+      financeChart=<React.Fragment><SnackbarContent message="An Error occured please reload" variant="error"/> <Button onClick={()=>this.props.onFetchFinance(this.props.branchId,null,this.state.type?this.state.type:'Income')} size="small" variant="contained" color="secondary">Retry</Button></React.Fragment>
     }
 
     return(
