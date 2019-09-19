@@ -17,6 +17,12 @@ const styles = theme =>({
       width:'23%'
     }
   },
+  card: {
+    width: '100%',
+  },
+  title: {
+  fontSize: 14,
+},
   button:{
     alignSelf:'center'
   },

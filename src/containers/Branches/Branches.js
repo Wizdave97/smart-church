@@ -10,7 +10,7 @@ import { branchSync, fetchBranchAsync } from '../../store/actions/branchActions'
 import { changeBranchId } from '../../store/actions/authActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core';
+import { Paper, Grid, Typography, Button,LinearProgress,Card,CardHeader,Avatar, CardActions,CardContent} from '@material-ui/core';
 
 
 class Branches extends Component {
@@ -84,19 +84,41 @@ class Branches extends Component {
         this.props.branches.map((data,index)=>{
           if(data.status.toLowerCase()==='active'){
             return(
-              <TableRow key={index}>
-                <TableCell>{index+1}</TableCell>
-                <TableCell><Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button></TableCell>
-                <TableCell><Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button></TableCell>
-                <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
-                <TableCell>{data.name}</TableCell>
-                <TableCell>{data.state}</TableCell>
-                <TableCell>{data.lga}</TableCell>
-                <TableCell>{data.street}</TableCell>
-                <TableCell>{data.province?data.province.name:null}</TableCell>
-                <TableCell>{data.area?data.area.name:null}</TableCell>
-                <TableCell>{data.email}</TableCell>
-              </TableRow>
+              <Grid item xs={12} sm={4} lg={3} key={index}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        {index+1}
+                      </Avatar>
+                    }
+                    title={data.name}
+                    subheader={data.state}
+                    />
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Email: {data.email}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      LGA : {data.lga}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Street: {data.street}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Province: {data.province?data.province.name:null}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Area: {data.area?data.area.name:null}
+                    </Typography>
+                  </CardContent>
+                  <CardActions style={{flexWrap:'wrap',display:'flex'}}>
+                    <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button>
+                    <Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button>
+                    <Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             )
           }
         })
@@ -107,66 +129,47 @@ class Branches extends Component {
     }
 
     return(
+      <div style={{padding:4,width:'100%',margin:0}}>
       <Grid
+      container
       item
       xs={12}
-      md={12}>
-      {progress}
-      {notification}
-        <Grid
-        container
-        spacing={0}
-        justify="center">
-          <Grid
-          item
-          xs={12}>
-            <Paper square={true}>
-              <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
-                <div className={classes.entry}>
-                <Input
-                  inputType="select"
-                  required={true}
-                  options={this.state.states}
-                  reference={this.setRef}
-                  name="branchState"
-                  value={this.state.branchState}
-                  error={this.state.errorBranchState}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Select State"
-                /></div>
-              <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
-              </form>
-              <div className={classes.tableWrapper}>
-              <Table >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>S/N</TableCell>
-                    <TableCell>Actions</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>State</TableCell>
-                    <TableCell>LGA</TableCell>
-                    <TableCell>Address</TableCell>
-                    <TableCell>Province</TableCell>
-                    <TableCell>Area</TableCell>
-                    <TableCell>Email</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {view}
-                  <TableRow>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></TableCell>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              </div>
-            </Paper>
-          </Grid>
+      spacing={2}
+      justify="flex-start">
+        <Grid item xs={12}>
+          {progress}
+          {notification}
+          <Paper square={true}>
+            <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
+              <div className={classes.entry}>
+              <Input
+                inputType="select"
+                required={true}
+                options={this.state.states}
+                reference={this.setRef}
+                name="branchState"
+                value={this.state.branchState}
+                error={this.state.errorBranchState}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Select State"
+              /></div>
+            <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
+            </form>
+          </Paper>
         </Grid>
+          {view}
+          <Grid
+          container
+          item
+          spacing={0}
+          justify="space-between"
+          xs={12}>
+          <Grid item><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></Grid>
+          <Grid item><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></Grid>
+          <Grid item>  <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></Grid>
+          </Grid>
       </Grid>
+      </div>
     )
   }
 }

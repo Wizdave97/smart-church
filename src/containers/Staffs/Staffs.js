@@ -9,7 +9,7 @@ import * as actionTypes  from '../../store/actions/actionTypes';
 import { staffSync, fetchStaffsAsync } from '../../store/actions/staffActions';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button,Card,CardHeader,Avatar, CardActions,CardContent, TableHead,LinearProgress} from '@material-ui/core'
 
 
 class Staffs extends Component {
@@ -80,16 +80,34 @@ class Staffs extends Component {
         this.props.staffs.map((data,index)=>{
           if(data.status.toLowerCase()==='active') {
             return(
-              <TableRow key={index}>
-                <TableCell>{index+1}</TableCell>
-                <TableCell><Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button></TableCell>
-                <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button></TableCell>
-                <TableCell>{data.firstname}</TableCell>
-                <TableCell>{data.lastname}</TableCell>
-                <TableCell>{data.address}</TableCell>
-                <TableCell>{data.email}</TableCell>
-                <TableCell>{data.sex}</TableCell>
-              </TableRow>
+              <Grid item xs={12} sm={4} lg={3} key={index}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        {index+1}
+                      </Avatar>
+                    }
+                    title={data.firstname}
+                    subheader={data.lastname}
+                    />
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Address:{data.address}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Email: {data.email}
+                    </Typography>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Sex: {data.sex}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button>
+                    <Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             )
           }
         })
@@ -100,64 +118,47 @@ class Staffs extends Component {
     }
 
     return(
+      <div style={{padding:4,width:'100%',margin:0}}>
       <Grid
+      container
       item
       xs={12}
-      md={12}>
-      {progress}
-      {notification}
-        <Grid
-        container
-        spacing={0}
-        justify="center">
-          <Grid
-          item
-          xs={12}>
-            <Paper square={true}>
-              <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
-                <div className={classes.entry}>
-                <Input
-                  inputType="select"
-                  required={true}
-                  options={this.state.states}
-                  reference={this.setRef}
-                  name="staffState"
-                  value={this.state.staffState}
-                  error={this.state.errorStaffState}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Select State"
-                /></div>
-              <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
-              </form>
-              <div className={classes.tableWrapper}>
-              <Table >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>S/N</TableCell>
-                    <TableCell>Actions</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>First Name</TableCell>
-                    <TableCell>Last Name</TableCell>
-                    <TableCell>Address</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Sex</TableCell>
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {view}
-                  <TableRow>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page}, total entries:{this.props.total}</Typography></TableCell>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              </div>
-            </Paper>
-          </Grid>
+      spacing={2}
+      justify="flex-start">
+        <Grid item xs={12}>
+          {progress}
+          {notification}
+          <Paper square={true}>
+            <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
+              <div className={classes.entry}>
+              <Input
+                inputType="select"
+                required={true}
+                options={this.state.states}
+                reference={this.setRef}
+                name="staffState"
+                value={this.state.staffState}
+                error={this.state.errorStaffState}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Select State"
+              /></div>
+            <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
+            </form>
+          </Paper>
         </Grid>
+          {view}
+          <Grid
+          container
+          item
+          spacing={0}
+          justify="space-between"
+          xs={12}>
+          <Grid item><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></Grid>
+          <Grid item><Typography variant="body1" align="center">Page {this.props.current_page}, total entries:{this.props.total}</Typography></Grid>
+          <Grid item><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></Grid>
+          </Grid>
       </Grid>
+      </div>
     )
   }
 }

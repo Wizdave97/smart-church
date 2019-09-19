@@ -9,7 +9,7 @@ import { reportSync, fetchReportAsync } from '../../store/actions/reportActions'
 import { Delete, Edit } from '@material-ui/icons';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button, Card,CardHeader,Avatar, CardActions,CardContent,LinearProgress} from '@material-ui/core'
 
 const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -66,19 +66,44 @@ class Reports extends Component {
       view=(
         this.props.reports.map((data,index)=>{
           return(
-            <TableRow key={index}>
-              <TableCell>{index+1}</TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button onClick={()=>this.props.toggleModal(data.id,'report')} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
-              <TableCell>{data.date}</TableCell>
-              <TableCell>{data.serviceDay}</TableCell>
-              <TableCell>{data.maleAttendance}</TableCell>
-              <TableCell>{data.femaleAttendance}</TableCell>
-              <TableCell>{data.childrenAttendance}</TableCell>
-              <TableCell>{data.totalAttendance}</TableCell>
-              <TableCell>{data.firstTimers}</TableCell>
-              <TableCell>{data.salvation}</TableCell>
-            </TableRow>
+            <Grid item xs={12} sm={4} lg={3} key={index}>
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {index+1}
+                    </Avatar>
+                  }
+                  title={data.serviceDay}
+                  subheader={new Date(data.date).toDateString()}
+                  />
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Male: {data.maleAttendance}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Female : {data.femaleAttendance}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Children: {data.childrenAttendance}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    First Timers: {data.firstTimers}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Salvation: {data.salvation}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Total: {data.totalAttendance}
+                  </Typography>
+
+                </CardContent>
+                <CardActions style={{flexWrap:'wrap',display:'flex'}}>
+                  <Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button>
+                  <Button onClick={()=>this.props.toggleModal(data.id,'report')} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                </CardActions>
+              </Card>
+            </Grid>
           )
         })
       )
@@ -88,90 +113,71 @@ class Reports extends Component {
     }
 
     return(
+      <div style={{padding:4,width:'100%',margin:0}}>
       <Grid
+      container
       item
       xs={12}
-      md={12}>
-      {progress}
-      {notification}
-        <Grid
-        container
-        spacing={0}
-        justify="center">
-          <Grid
-          item
-          xs={12}>
-            <Paper square={true}>
-              <div className={classes.filters}>
-                <Typography variant='h4'>You are currently analysing reports for {this.state.day} <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
-              </div>
-              <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
-                <div className={classes.entry}>
-                <Input
-                  inputType="select"
-                  required={false}
-                  options={months}
-                  name="month"
-                  value={this.state.month}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Select Month"
-                /></div>
-                <div className={classes.entry}>
-                <Input
-                  inputType="input"
-                  required={false}
-                  name="year"
-                  value={this.state.year}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Type in the year"
-                  placeholder="e.g 2019"
-                /></div>
-                <div className={classes.entry}>
-                <Input
-                 inputType="select"
-                 required={false}
-                 name="day"
-                 value={this.state.day}
-                 reference={this.setRef}
-                 options={days}
-                 error={this.state.errorDay}
-                 errorMessage="Please this filled is required"
-                 handleChange={(event)=>handleChange(event,this.hardSetState)}
-                 label="Select Day"
-                /></div>
-              <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
-              </form>
-              <div className={classes.tableWrapper}>
-              <Table >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>S/N</TableCell>
-                    <TableCell>Actions</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Day</TableCell>
-                    <TableCell>Male Attendance</TableCell>
-                    <TableCell>Female Attendance</TableCell>
-                    <TableCell>Children Attendance</TableCell>
-                    <TableCell>Sum Total</TableCell>
-                    <TableCell>First Timers</TableCell>
-                    <TableCell>Newly Saved</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {view}
-                  <TableRow>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></TableCell>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              </div>
-            </Paper>
-          </Grid>
+      spacing={2}
+      justify="flex-start">
+        <Grid item xs={12}>
+          {progress}
+          {notification}
+          <Paper square={true}>
+            <div className={classes.filters}>
+              <Typography variant='h4'>You are currently analysing reports for {this.state.day} <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
+            </div>
+            <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
+              <div className={classes.entry}>
+              <Input
+                inputType="select"
+                required={false}
+                options={months}
+                name="month"
+                value={this.state.month}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Select Month"
+              /></div>
+              <div className={classes.entry}>
+              <Input
+                inputType="input"
+                required={false}
+                name="year"
+                value={this.state.year}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Type in the year"
+                placeholder="e.g 2019"
+              /></div>
+              <div className={classes.entry}>
+              <Input
+               inputType="select"
+               required={false}
+               name="day"
+               value={this.state.day}
+               reference={this.setRef}
+               options={days}
+               error={this.state.errorDay}
+               errorMessage="Please this filled is required"
+               handleChange={(event)=>handleChange(event,this.hardSetState)}
+               label="Select Day"
+              /></div>
+            <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
+            </form>
+          </Paper>
         </Grid>
+          {view}
+          <Grid
+          container
+          item
+          spacing={0}
+          justify="space-between"
+          xs={12}>
+          <Grid item><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></Grid>
+          <Grid item><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></Grid>
+          <Grid item>  <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></Grid>
+          </Grid>
       </Grid>
+      </div>
     )
   }
 }

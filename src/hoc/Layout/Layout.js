@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid,Typography,Fab,Menu,MenuItem,Button,List,ListItem,Drawer,Divider} from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+import { GroupWork } from '@material-ui/icons';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
 import Sunrise from '../../assets/sunrise.png';
@@ -138,7 +138,7 @@ class Layout extends Component {
                 <main className={classes.main}  style={{padding:16}}>
                     <Grid
                     container
-                    spacing={4}
+                    spacing={2}
                     style={{padding:16,display:'block'}}
                     justify="flex-start"
                     >
@@ -150,7 +150,7 @@ class Layout extends Component {
                 </main>
               </div>
               {this.props.permissions.indexOf(7)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
-                  <Visibility />
+                  <GroupWork />
               </Fab>:null}
             {this.props.permissions.indexOf(7)>=0?
             <Drawer anchor="right" open={open} onClose={this.handleClose}>

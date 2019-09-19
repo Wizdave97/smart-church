@@ -10,7 +10,7 @@ import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActio
 import { handleChange,submitHandler} from '../../utils/Utility';
 import baseUrl from '../../store/base_url';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Table, TableCell, TableRow, TableBody, TableHead,LinearProgress} from '@material-ui/core'
+import { Paper, Grid, Typography,Button,Card,CardHeader,Avatar, CardActions,CardContent,LinearProgress} from '@material-ui/core'
 
 
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -95,16 +95,31 @@ class ViewFinances extends Component {
       view=(
         this.props.reports.map((data,index)=>{
           return(
-            <TableRow key={index}>
-              <TableCell>{index+1}</TableCell>
-              <TableCell><Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button></TableCell>
-              <TableCell><Button onClick={this.props.toggleModal} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button></TableCell>
-              <TableCell>{data.date}</TableCell>
-              <TableCell>{data.category}</TableCell>
-              <TableCell>{data.description?data.description.join(','):null}</TableCell>
-              <TableCell>{data.total}</TableCell>
-              <TableCell>{data.percentage}</TableCell>
-            </TableRow>
+            <Grid item xs={12} sm={4} lg={3} key={index}>
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {index+1}
+                    </Avatar>
+                  }
+                  title={data.category}
+                  subheader={new Date(data.date).toDateString()}
+                  />
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Total: {data.total}
+                  </Typography>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                   Percentage: {data.percentage}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button>
+                  <Button onClick={this.props.toggleModal} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                </CardActions>
+              </Card>
+            </Grid>
           )
         })
       )
@@ -114,101 +129,84 @@ class ViewFinances extends Component {
     }
 
     return(
+      <div style={{padding:4,width:'100%',margin:0}}>
       <Grid
+      container
       item
       xs={12}
-      md={12}>
-      {progress}
-      {notification}
-        <Grid
-        container
-        spacing={0}
-        justify="center">
-          <Grid
-          item
-          xs={12}>
-            <Paper square={true}>
-              <div className={classes.filters}>
-                <Typography variant='h4'>You are currently inspecting reports for <strong>{this.state.month}</strong> <strong>{this.state.year}</strong> </Typography>
-              </div>
-              <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
-                <div className={classes.entry}>
-                <Input
-                  inputType="select"
-                  required={false}
-                  options={months}
-                  name="month"
-                  value={this.state.month}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Select Month"
-                /></div>
-                <div className={classes.entry}>
-                <Input
-                  inputType="input"
-                  required={false}
-                  name="year"
-                  value={this.state.year}
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Type in the year"
-                  placeholder="e.g 2019"
-                /></div>
-                <div className={classes.entry}>
-                <Input
-                  inputType="select"
-                  required={true}
-                  options={['Income','Expenses']}
-                  name="type"
-                  reference={this.setRef}
-                  value={this.state.type}
-                  error={this.state.errorType}
-                  errorMessage="Please this filled is required"
-                  handleChange={(event)=>handleChange(event,this.hardSetState)}
-                  label="Select type"
-                /></div>
-
-                <div className={classes.entry}>
-                <Input
-                 inputType="select"
-                 required={false}
-                 name="category"
-                 value={this.state.category}
-                 reference={this.setRef}
-                 options={this.state.type=='Income'?this.state.incomeCategories:this.state.expenseCategories}
-                 error={this.state.errorCategory}
-                 errorMessage="Please this filled is required"
-                 handleChange={(event)=>handleChange(event,this.hardSetState)}
-                 label="Select Category"
-                /></div>
-              <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
-              </form>
-              <div className={classes.tableWrapper}>
-              <Table >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>S/N</TableCell>
-                    <TableCell>Actions</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Category</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Total</TableCell>
-                    <TableCell>Percentage</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {view}
-                  <TableRow>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></TableCell>
-                    <TableCell><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></TableCell>
-                    <TableCell><Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              </div>
-            </Paper>
-          </Grid>
+      spacing={2}
+      justify="flex-start">
+        <Grid item xs={12}>
+          {progress}
+          {notification}
+          <Paper square={true}>
+            <div className={classes.filters}>
+              <Typography variant='h4'>You are currently analysing reports for <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
+            </div>
+            <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
+              <div className={classes.entry}>
+              <Input
+                inputType="select"
+                required={false}
+                options={months}
+                name="month"
+                value={this.state.month}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Select Month"
+              /></div>
+              <div className={classes.entry}>
+              <Input
+                inputType="input"
+                required={false}
+                name="year"
+                value={this.state.year}
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Type in the year"
+                placeholder="e.g 2019"
+              /></div>
+              <div className={classes.entry}>
+              <Input
+                inputType="select"
+                required={true}
+                options={['Income','Expenses']}
+                name="type"
+                reference={this.setRef}
+                value={this.state.type}
+                error={this.state.errorType}
+                errorMessage="Please this filled is required"
+                handleChange={(event)=>handleChange(event,this.hardSetState)}
+                label="Select type"
+              /></div>
+              <div className={classes.entry}>
+              <Input
+               inputType="select"
+               required={false}
+               name="category"
+               value={this.state.category}
+               reference={this.setRef}
+               options={this.state.type=='Income'?this.state.incomeCategories:this.state.expenseCategories}
+               error={this.state.errorCategory}
+               errorMessage="Please this filled is required"
+               handleChange={(event)=>handleChange(event,this.hardSetState)}
+               label="Select Category"
+              /></div>
+            <div className={classes.entry}><Button className={classes.button} type="submit" size="medium" color="secondary" variant="outlined">Apply Filters</Button></div>
+            </form>
+          </Paper>
         </Grid>
+          {view}
+          <Grid
+          container
+          item
+          spacing={0}
+          justify="space-between"
+          xs={12}>
+          <Grid item><Button onClick={()=>this.onChangePage(this.props.prev)} size="small" variant="contained" color="secondary" disabled={this.props.prev==null?true:false}>Previous</Button></Grid>
+          <Grid item><Typography variant="body1" align="center">Page {this.props.current_page} of {this.props.total}</Typography></Grid>
+          <Grid item>  <Button onClick={()=>this.onChangePage(this.props.next)} size="small" variant="contained" color="secondary" disabled={this.props.next==null?true:false}>Next</Button></Grid>
+          </Grid>
       </Grid>
+      </div>
     )
   }
 }
