@@ -143,7 +143,7 @@ class TrendAnalysis extends Component {
       e.preventDefault();
       let valid= submitHandler(references, hardSetState)
       if (valid){
-        this.props.onFetchTrendReports(this.props.branchId,this.state.reportFrom,this.state.reportTo,this.state.year)
+        this.props.onFetchTrendReports(this.props.branchId,this.state.reportFrom,this.state.reportTo,this.state.reportYear)
       }
     }
     onSubmitFinance = (references,hardSetState,e)=>{
