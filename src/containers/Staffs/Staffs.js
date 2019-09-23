@@ -103,8 +103,12 @@ class Staffs extends Component {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button>
-                    <Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                    {this.props.permissions.indexOf(5)>=0?
+                      <React.Fragment>
+                      <Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button>
+                      <Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                      </React.Fragment>:null}
+
                   </CardActions>
                 </Card>
               </Grid>
@@ -164,6 +168,7 @@ class Staffs extends Component {
 }
 const mapStateToProps= state=>({
   branchId:state.auth.branchId,
+  permissions:state.auth.permissions,
   fetchStaffsStart:state.staff.fetchStaffsStart,
   fetchStaffsSuccess:state.staff.fetchStaffsSuccess,
   fetchStaffsFail:state.staff.fetchStaffsFail,

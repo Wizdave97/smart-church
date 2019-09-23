@@ -99,8 +99,11 @@ class Reports extends Component {
 
                 </CardContent>
                 <CardActions style={{flexWrap:'wrap',display:'flex'}}>
-                  <Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button>
-                  <Button onClick={()=>this.props.toggleModal(data.id,'report')} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                  {this.props.permissions.indexOf(7)>=0?
+                    <React.Fragment>
+                    <Button variant="contained" component={Link} to={`/newreport/${data.id}`} size="small" aria-label="edit"><Edit color="secondary"/></Button>
+                    <Button onClick={()=>this.props.toggleModal(data.id,'report')} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                    </React.Fragment>:null}
                 </CardActions>
               </Card>
             </Grid>
@@ -183,6 +186,7 @@ class Reports extends Component {
 }
 const mapStateToProps= state=>({
   branchId:state.auth.branchId,
+  permissions:state.auth.permissions,
   fetchReportStart:state.report.fetchReportStart,
   fetchReportSuccess:state.report.fetchReportSuccess,
   fetchReportFail:state.report.fetchReportFail,

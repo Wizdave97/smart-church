@@ -149,10 +149,10 @@ class Layout extends Component {
                     </Grid>
                 </main>
               </div>
-              {this.props.permissions.indexOf(7)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
+              {this.props.permissions.indexOf(9)>=0?<Fab onClick={this.handleClick} color="secondary" aria-label="View Branches" className={classes.fab}>
                   <GroupWork />
               </Fab>:null}
-            {this.props.permissions.indexOf(7)>=0?
+            {this.props.permissions.indexOf(9)>=0?
             <Drawer anchor="right" open={open} onClose={this.handleClose}>
               <SideList
                 next={this.props.next}

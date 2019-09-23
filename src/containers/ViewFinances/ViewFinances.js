@@ -115,8 +115,11 @@ class ViewFinances extends Component {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button>
-                  <Button onClick={this.props.toggleModal} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                  {this.props.permissions.indexOf(7)>=0?
+                    <React.Fragment>
+                    <Button variant="contained" component={Link} to={`/finance/${data.id}`}  size="small" aria-label="delete"><Edit color="secondary"/></Button>
+                    <Button onClick={this.props.toggleModal} variant="contained" size="small" aria-label="delete"><Delete color="error"/></Button>
+                    </React.Fragment>:null}
                 </CardActions>
               </Card>
             </Grid>
@@ -212,6 +215,7 @@ class ViewFinances extends Component {
 }
 const mapStateToProps= state=>({
   token:state.auth.token,
+  permissions:state.auth.permissions,
   branchId:state.auth.branchId,
   fetchFinanceStart:state.finance.fetchFinanceStart,
   fetchFinanceSuccess:state.finance.fetchFinanceSuccess,

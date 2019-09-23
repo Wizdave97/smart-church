@@ -113,27 +113,27 @@ class App  extends Component{
     let routes=<Switch><Route  path='/' component={Auth}/></Switch>
     if(this.props.isAuthenticated){
       let availableRoutes=[{path:'/',cmp:Dashboard,exact:true}]
-      if(this.props.permissions.indexOf(7)>0){
+      if(this.props.permissions.indexOf(9)>=0){
         availableRoutes.push({path:'/allbranches',exact:false,cmp:asyncBranches,confirm:true})
-      }
-      if(this.props.permissions.indexOf(8)>0){
-        availableRoutes.push({path:'/allstaff',exact:false,cmp:asyncStaffs,confirm:true})
-      }
-      if(this.props.permissions.indexOf(9)>0){
-        availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports,confirm:true})
         availableRoutes.push({path:'/analytics',exact:false,cmp:asyncAnalytics})
         availableRoutes.push({path:'/trends',exact:false,cmp:asyncTrendAnalysis})
         availableRoutes.push({path:'/settings',exact:false,cmp:asyncSettings})
+      }
+      if(this.props.permissions.indexOf(10)>=0){
+        availableRoutes.push({path:'/allstaff',exact:false,cmp:asyncStaffs,confirm:true})
+      }
+      if(this.props.permissions.indexOf(7)>=0){
+        availableRoutes.push({path:'/viewreports',exact:false,cmp:asyncReports,confirm:true})
         availableRoutes.push({path:'/viewfinances',exact:false,cmp:asyncViewFinances,confirm:true})
       }
-      if(this.props.permissions.indexOf(10)>0){
+      if(this.props.permissions.indexOf(6)>=0){
         availableRoutes.push({path:'/newreport/:id',exact:false,cmp:asyncNewReport})
         availableRoutes.push({path:'/finance/:id',exact:false,cmp:asyncFinanceReport})
       }
-      if(this.props.permissions.indexOf(6)>0){
+      if(this.props.permissions.indexOf(2)>=0){
         availableRoutes.push({path:'/addbranch/:id',exact:false,cmp:asyncAddBranch})
       }
-      if(this.props.permissions.indexOf(5)>0){
+      if(this.props.permissions.indexOf(4)>=0){
         availableRoutes.push({path:'/addstaff/:id',exact:false,cmp:asyncAddStaff})
       }
         routes=(

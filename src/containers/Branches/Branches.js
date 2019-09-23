@@ -113,9 +113,14 @@ class Branches extends Component {
                     </Typography>
                   </CardContent>
                   <CardActions style={{flexWrap:'wrap',display:'flex'}}>
-                    <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button>
-                    <Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button>
-                    <Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                    {this.props.permissions.indexOf(8)>=0?
+                      <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button>
+                      :null}
+                    {this.props.permissions.indexOf(3)>=0?
+                      <React.Fragment>
+                      <Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button>
+                      <Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                      </React.Fragment>:null}
                   </CardActions>
                 </Card>
               </Grid>
@@ -175,6 +180,7 @@ class Branches extends Component {
 }
 const mapStateToProps= state=>({
   branchId:state.auth.branchId,
+  permissions:state.auth.permissions,
   fetchBranchesStart:state.branch.fetchBranchesStart,
   fetchBranchesSuccess:state.branch.fetchBranchesSuccess,
   fetchBranchesFail:state.branch.fetchBranchesFail,
