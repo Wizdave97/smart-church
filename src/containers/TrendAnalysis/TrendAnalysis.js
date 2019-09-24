@@ -13,7 +13,7 @@ import styles from './styles';
 
 const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
-const categories=['children','female','male','total'];
+const categories=['children','female','male','firstTimers','salvation','total'];
 class TrendAnalysis extends Component {
     state={
       reports:null,
@@ -87,6 +87,24 @@ class TrendAnalysis extends Component {
               let temp={}
               temp.name=new Date(obj.date).toDateString()
               temp.attendance=obj.maleAttendance
+              data.push(temp)
+            }
+            break;
+        case 'firstTimers':
+
+            for (let obj of raw){
+              let temp={}
+              temp.name=new Date(obj.date).toDateString()
+              temp.attendance=obj.firstTimers
+              data.push(temp)
+            }
+            break;
+        case 'salvation':
+
+            for (let obj of raw){
+              let temp={}
+              temp.name=new Date(obj.date).toDateString()
+              temp.attendance=obj.salvation
               data.push(temp)
             }
             break;
