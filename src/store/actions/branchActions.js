@@ -55,7 +55,6 @@ export const updateBranchAsync= (branchData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        console.log(res)
         if(res.status!==200){
             return null
         }
@@ -87,7 +86,6 @@ export const deleteBranchAsync= (id)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        //console.log(res)
         if(res.status!==200){
             return null
         }
@@ -118,7 +116,6 @@ export const fetchBranchAsync=(url=null)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        console.log(res)
         if(res.status!==200){
             return null
         }

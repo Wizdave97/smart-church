@@ -45,7 +45,6 @@ export const authAsync= (isSignUp,authData)=>{
       }
       return res.json()}).then(res=>{
         if(res.error){
-          console.log(res.error)
           dispatch(authSync(actionTypes.AUTH_FAIL))
           return
         }
@@ -55,12 +54,10 @@ export const authAsync= (isSignUp,authData)=>{
 
       }).catch(err=>{
         dispatch(authSync(actionTypes.AUTH_FAIL))
-        console.log(err)
       })
     }
     else {
       let url=baseUrl+'/churches';
-      //let url='http://127.0.0.1:80/churches'
       fetch(url,{
         method:'POST',
         mode:'cors',
@@ -74,7 +71,6 @@ export const authAsync= (isSignUp,authData)=>{
       }
       return res.json()}).then(res=>{
         if(res.error){
-          console.log(res.error)
           dispatch(authSync(actionTypes.AUTH_FAIL))
           return
         }

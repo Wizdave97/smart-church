@@ -59,7 +59,6 @@ class Auth extends Component {
     if (valid){
       let form= document.querySelector('form')
       let authData=formSerialize(form,{hash:true})
-      console.log(authData)
       this.props.onSubmitAuth(this.state.isSignUp,authData)
     }
   }

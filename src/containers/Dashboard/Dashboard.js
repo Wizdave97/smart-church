@@ -60,9 +60,6 @@ class Dashboard extends Component{
       }
     }
     let labels=[...Object.keys(data)]
-    //let data=[...Object.values(income)]
-    console.log(labels)
-
     let intervalId=window.setInterval(()=>{
       if(dataIndex>=labels.length){
         dataIndex=0

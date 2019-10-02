@@ -37,7 +37,7 @@ class FinanceReport extends Component {
         if(obj.id==Number(this.props.match.params.id)){
           this.setState({
             date:obj.date,
-            description:obj.description.join(','),
+            description:obj.total,
             category:obj.category
           })
         }
