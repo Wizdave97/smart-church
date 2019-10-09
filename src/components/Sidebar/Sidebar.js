@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import './sidebar.css';
+
 import {Paper, Typography , Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
 
@@ -11,7 +11,7 @@ const SideBar = (props) =>{
   const { classes } = props
 
   return (
-    <aside id="style-9" className={classes.aside}>
+    <aside id="style-9" className={[classes.aside,props.showSideBar?' ':classes.none].join(' ')} >
 
         <Paper  square={true} elevation={0} className={classes.sideBar} onClick={()=>props.toggleSideBar()}>
           <div className={classes.section}>
@@ -47,20 +47,20 @@ const SideBar = (props) =>{
 
             <div className={classes.section}>
               <div className={classes.title}>
-                  <Typography className={classes.titleText} align="left" variant='h5'>Reports</Typography>
+                  <Typography className={classes.titleText} align="left" variant='h5'>Service Reports</Typography>
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
                 {props.permissions.indexOf(6)>=0?(
                   <React.Fragment>
-                    <NavLink to="/newreport/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Service Report'/></ListItem></NavLink>
+                    <NavLink to="/newreport/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='Create Report'/></ListItem></NavLink>
                     <Divider className={classes.divider}/>
                   </React.Fragment>
                 ):null}
 
                   {props.permissions.indexOf(7)>=0?(
                     <React.Fragment>
-                      <NavLink to="/viewreports" ><ListItem><TableChart className={classes.icons}/><ListItemText className={classes.links} primary='View Reports'/></ListItem></NavLink>
+                      <NavLink to="/viewreports" ><ListItem><TableChart className={classes.icons}/><ListItemText className={classes.links} primary='Reports'/></ListItem></NavLink>
                       <Divider className={classes.divider}/>
                     </React.Fragment>
                   ):null}
@@ -68,20 +68,20 @@ const SideBar = (props) =>{
             </div>
             <div className={classes.section}>
               <div className={classes.title}>
-                  <Typography className={classes.titleText} align="left" variant='h5'>Finance</Typography>
+                  <Typography className={classes.titleText} align="left" variant='h5'>Finance Reports</Typography>
               </div>
               <Divider className={classes.divider}/>
               <List className={classes.list}>
 
                     {props.permissions.indexOf(6)>=0?(
                       <React.Fragment>
-                        <NavLink to="/finance/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Finance Report'/></ListItem></NavLink>
+                        <NavLink to="/finance/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='Create Report'/></ListItem></NavLink>
                         <Divider className={classes.divider}/>
                       </React.Fragment>
                     ):null}
                     {props.permissions.indexOf(7)>=0?(
                       <React.Fragment>
-                        <NavLink to="/viewfinances" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='View Finance Reports'/></ListItem></NavLink>
+                        <NavLink to="/viewfinances" ><ListItem><InsertChart className={classes.icons}/><ListItemText className={classes.links} primary='Finances'/></ListItem></NavLink>
                         <Divider className={classes.divider}/>
                       </React.Fragment>
                     ):null}
@@ -96,13 +96,13 @@ const SideBar = (props) =>{
               <List className={classes.list}>
                 {props.permissions.indexOf(9)>=0?(
                   <React.Fragment>
-                    <NavLink to="/allbranches" ><ListItem><GroupWork className={classes.icons}/><ListItemText className={classes.links} primary='All Branches'/></ListItem></NavLink>
+                    <NavLink to="/allbranches" ><ListItem><GroupWork className={classes.icons}/><ListItemText className={classes.links} primary='Branches'/></ListItem></NavLink>
                     <Divider className={classes.divider}/>
                   </React.Fragment>
                 ):null}
                 {props.permissions.indexOf(2)>=0?(
                   <React.Fragment>
-                    <NavLink to="/addbranch/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='New Branch'/></ListItem></NavLink>
+                    <NavLink to="/addbranch/new" ><ListItem><AddBox className={classes.icons}/><ListItemText className={classes.links} primary='Create Branch'/></ListItem></NavLink>
                     <Divider className={classes.divider}/>
                   </React.Fragment>
                 ):null}
@@ -116,13 +116,13 @@ const SideBar = (props) =>{
               <List className={classes.list}>
                 {props.permissions.indexOf(10)>=0?(
                   <React.Fragment>
-                    <NavLink to="/allstaff" ><ListItem><People className={classes.icons}/><ListItemText className={classes.links} primary='All Staff'/></ListItem></NavLink>
+                    <NavLink to="/allstaff" ><ListItem><People className={classes.icons}/><ListItemText className={classes.links} primary='Staffs'/></ListItem></NavLink>
                     <Divider className={classes.divider}/>
                   </React.Fragment>
                 ):null}
                 {props.permissions.indexOf(4)>=0?(
                   <React.Fragment>
-                    <NavLink to="/addstaff/new" ><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='New Staff'/></ListItem></NavLink>
+                    <NavLink to="/addstaff/new" ><ListItem><PersonAdd className={classes.icons}/><ListItemText className={classes.links} primary='Create Staff'/></ListItem></NavLink>
                     <Divider className={classes.divider}/>
                   </React.Fragment>
                 ):null}

@@ -49,6 +49,9 @@ const asyncStaffs= asyncComponent(()=>{
 const asyncTrendAnalysis= asyncComponent(()=>{
   return import('./containers/TrendAnalysis/TrendAnalysis')
 })
+const asyncProfile= asyncComponent(()=>{
+  return import('./containers/Profile/Profile')
+})
 class App  extends Component{
   state={
     openModal:false,
@@ -112,7 +115,7 @@ class App  extends Component{
     const theme=createMuiTheme(this.props.theme)
     let routes=<Switch><Route  path='/' component={Auth}/></Switch>
     if(this.props.isAuthenticated){
-      let availableRoutes=[{path:'/',cmp:Dashboard,exact:true}]
+      let availableRoutes=[{path:'/',cmp:Dashboard,exact:true},{path:'/profile',cmp:asyncProfile,exact:true}]
       if(this.props.permissions.indexOf(9)>=0){
         availableRoutes.push({path:'/allbranches',exact:false,cmp:asyncBranches,confirm:true})
         availableRoutes.push({path:'/analytics',exact:false,cmp:asyncAnalytics})

@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from 'react';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar , Typography, InputBase, Switch, Menu,MenuItem} from '@material-ui/core';
+import { AppBar, Toolbar , Typography, InputBase, Switch, Menu,MenuItem,Button} from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle,Notifications}  from '@material-ui/icons';
 import  CSSTransitionGroup  from 'react-transition-group/CSSTransitionGroup';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
-import { NavLink } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 import SearchBar from '../Searchbar/Searchbar';
 import './navbar.css'
@@ -135,7 +135,8 @@ const Navbar = props =>{
                              open={Boolean(anchorEl)}
                              onClose={handleClose}
                             >
-                              <StyledMenuItem onClick={props.logOut}>Logout</StyledMenuItem>
+                              <StyledMenuItem><Button component={Link} fullWidth variant="text" color="default" to="/profile" >Profile</Button></StyledMenuItem>
+                              <StyledMenuItem onClick={props.logOut}><Button fullWidth variant="text" color="default" >Logout</Button></StyledMenuItem>
                             </StyledMenu>
                       </div>
                    </div>

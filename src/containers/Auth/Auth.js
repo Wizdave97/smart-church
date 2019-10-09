@@ -12,7 +12,7 @@ import './auth.css';
 import { authAsync,authSync }  from '../../store/actions/authActions';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
+const emailPattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
 
 class Auth extends Component {
   state={
@@ -317,7 +317,6 @@ class Auth extends Component {
 
               )
             }
-    console.log(references)
     return(
     <React.Fragment>
       {this.props.isAuthenticated?<Redirect to="/"/>:null}

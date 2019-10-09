@@ -44,6 +44,9 @@ const styles= theme =>({
       width:'25%'
     }
   },
+  none:{
+    display:'none'
+  },
   list:{
     width:'100%',
     paddingLeft:'10%',

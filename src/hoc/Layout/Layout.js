@@ -11,6 +11,7 @@ import Sunrise from '../../assets/sunrise.png';
 import Sunset from '../../assets/sunset.png';
 import Sunny from '../../assets/sunny.png';
 import './routes.css';
+import '../../components/Sidebar/sidebar.css';
 import { authLogout, resetBranchId } from '../../store/actions/authActions';
 import {  fetchBranchAsync } from '../../store/actions/branchActions';
 import {  fetchStaffsAsync } from '../../store/actions/staffActions';
@@ -132,7 +133,7 @@ class Layout extends Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                { this.state.showSideBar?<SideBar toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>:null }
+                {this.state.showSideBar?<SideBar showSideBar={this.state.showSideBar} toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>:null }
               </CSSTransitionGroup>}
               <div className={classes.root} >
                 <main className={classes.main}  style={{padding:16}}>

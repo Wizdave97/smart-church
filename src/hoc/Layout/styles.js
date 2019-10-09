@@ -27,7 +27,7 @@ const styles = theme =>({
     pageInfo:{
       display:'block',
       width:'100%',
-      height:'100px',
+      //height:'100px',
       paddingTop:'10px',
       boxSizing:'border-box',
     },
