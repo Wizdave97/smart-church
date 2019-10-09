@@ -43,11 +43,12 @@ class AddStaff extends Component {
     branchIds:null,
     types:null,
     typeIds:null,
+    updating:false
   }
 
   componentDidMount(){
     this.setState({fixValidityBug:''})
-    fetch(baseUrl+'/branches',{
+    fetch(baseUrl+'/branches?all=1',{
       headers:{
         'Content-Type':"application/json",
         'Authorization':"Bearer"+this.props.token
@@ -77,11 +78,22 @@ class AddStaff extends Component {
       for(let obj of this.props.staffs ){
         if(obj.id==Number(this.props.match.params.id)){
           this.setState({
+            updating:true,
             firstName:obj.firstname,
             lastName:obj.lastname,
             email:obj.email,
-            sex:obj.sex,
-            address:obj.address
+            sex:obj.sex.toLowerCase(),
+            address:obj.address,
+            updateChurch:obj.permissions.indexOf("1")>-1?true:false,
+            updateBranch:obj.permissions.indexOf("3")>-1?true:false,
+            updateStaff:obj.permissions.indexOf("5")>-1?true:false,
+            updateReport:obj.permissions.indexOf("7")>-1?true:false,
+            createStaff:obj.permissions.indexOf("4")>-1?true:false,
+            createBranch:obj.permissions.indexOf("2")>-1?true:false,
+            viewStaffs:obj.permissions.indexOf("10")>-1?true:false,
+            viewBranches:obj.permissions.indexOf("9")>-1?true:false,
+            viewReports:obj.permissions.indexOf("8")>-1?true:false,
+            addReport:obj.permissions.indexOf("6")>-1?true:false
           })
         }
       }
@@ -136,7 +148,7 @@ class AddStaff extends Component {
     let view=(  <Paper square={true} elevation={4} className={classes.paper}>
           <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
               <div className={classes.title} color="secondary">
-                  <Typography variant="h2" color="secondary"  gutterBottom>Register a New Staff</Typography>
+                  <Typography variant="h2" color="secondary"  gutterBottom>{this.state.updating?'Update Staff Record':'Register a New Staff'}</Typography>
               </div>
               <Divider className={classes.divider}/>
               <div className={classes.general}>
@@ -199,6 +211,7 @@ class AddStaff extends Component {
                             reference={this.setRef}
                             name="sex"
                             id="male"
+                            checked={this.state.sex=='male'?true:false}
                             type="radio"
                             errorMessage="Please this filled is required"
                             error={errorSex}
@@ -213,6 +226,7 @@ class AddStaff extends Component {
                               value="female"
                               name="sex"
                               id="female"
+                              checked={this.state.sex=='female'?true:false}
                               errorMessage="Please this filled is required"
                               type="radio"
                               error={errorSex}
@@ -419,7 +433,7 @@ class AddStaff extends Component {
     )
     let notification=null;
     if (this.props.postStaffSuccess){
-      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postStaffSuccess} message={"Upload was successful"}/>
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postStaffSuccess} message={this.state.updating?"Update Successful":"Upload was successful"}/>
     }
     if (this.props.postStaffFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.postStaffFail} message={"There was an error please try again"}/>

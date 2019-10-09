@@ -7,19 +7,29 @@
   return e
 }
 export const submitHandler=(references,setState) => {
-  let validity=references.every(element=>{
-    let check=element.checkValidity()
-    return check
-  })
-  if(validity) return validity
-  references.map(element=>{
-    let check=element.checkValidity()
-    if(!check){
-      setState({
-        ['error'+element.name[0].toUpperCase()+element.name.slice(1)]:true
-      })
-    }
-  })
+  try{
+    let validity=references.every(element=>{
+      if(element){
+        let check=element.checkValidity()
+        return check
+      }
+    })
+    if(validity) return validity
+    references.map(element=>{
+      if(element){
+        let check=element.checkValidity()
+        if(!check){
+          setState({
+            ['error'+element.name[0].toUpperCase()+element.name.slice(1)]:true
+          })
+        }
+      }
+    })
+  }
+  catch(e){
+    console.log(e)
+  }
+
 
 }
 export const handleChange = async (e,setState) =>{

@@ -83,6 +83,7 @@ const Input = props =>{
                  className={[classes.checkbox,props.error?classes.error:''].join(' ')}
                  type="radio"
                  id={props.id}
+                 checked={props.checked}
                  onChange={props.handleChange}/>)
                  break;
           case 'textarea':
@@ -117,6 +118,7 @@ const Input = props =>{
 Input.propTypes={
   min:PropTypes.string,
   max:PropTypes.string,
+  checked:PropTypes.bool,
   pattern:PropTypes.string,
   required:PropTypes.bool.isRequired,
   name:PropTypes.string.isRequired,

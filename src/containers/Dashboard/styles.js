@@ -2,6 +2,10 @@
 import Red from '../../assets/red.jpg';
 import Purple from '../../assets/purple.jpg';
 import Blue from '../../assets/blue.jpg';
+import One from '../../assets/card_one.jpg';
+import Two from '../../assets/card_two.jpg';
+import Three from '../../assets/card_three.jpg';
+import Four from '../../assets/card_four.jpg';
 const styles= theme =>({
     chart:{
       width:'100%',
@@ -62,6 +66,7 @@ const styles= theme =>({
       flexWrap:'wrap',
       padding:'10px 20px',
       boxSizing:'border-box',
+      alignItems:'flex-end',
       '& p':{
         textAlign:'right'
       },
@@ -80,6 +85,26 @@ const styles= theme =>({
     card3:{
       backgroundImage:`url(${Red})`
     },
+    quick_link_1:{
+      backgroundImage:`url(${One})`,
+      backgroundSize:'contain'
+    },
+    quick_link_2:{
+      backgroundImage:`url(${Two})`,
+      backgroundSize:'contain'
+    },
+    quick_link_3:{
+      backgroundImage:`url(${Three})`,
+      backgroundSize:'contain'
+    },
+    quick_link_4:{
+      backgroundImage:`url(${Four})`,
+      backgroundSize:'contain',
+
+    },
+    link_text:{
+      alignSelf:'flex-end'
+    },
     cards:{
       width:'100%',
       display:'flex',
@@ -87,6 +112,11 @@ const styles= theme =>({
       padding:'30px',
       boxSizing:'border-box',
       justifyContent:'space-between'
+    },
+    button:{
+      fontSize:'0.6rem',
+      height:'2rem',
+      marginLeft:'auto'
     }
 })
 

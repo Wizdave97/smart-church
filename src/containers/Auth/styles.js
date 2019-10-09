@@ -14,7 +14,18 @@ const styles = theme =>({
     paddingBottom:'60px',
     margin:0,
     backgroundSize:'cover',
+    position:'relative',
     backgroundImage:`url('${Auth}')`
+  },
+  overlay:{
+    left:0,
+    top:0,
+    backgroundColor:'rgba(0,0,0,0.8)',
+    position:'absolute',
+    opacity:0.7,
+    width:'100%',
+    height:'100%',
+    display:'flex'
   },
   contain:{
     width:'100%',

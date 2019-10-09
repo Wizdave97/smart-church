@@ -144,7 +144,7 @@ class Branches extends Component {
         <Grid item xs={12}>
           {progress}
           {notification}
-          <Paper square={true}>
+          <Paper>
             <form className={classes.filters} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)} >
               <div className={classes.entry}>
               <Input

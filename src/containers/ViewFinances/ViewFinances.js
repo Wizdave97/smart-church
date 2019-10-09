@@ -142,7 +142,7 @@ class ViewFinances extends Component {
         <Grid item xs={12}>
           {progress}
           {notification}
-          <Paper square={true}>
+          <Paper>
             <div className={classes.filters}>
               <Typography variant='h4'>You are currently analysing reports for <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
             </div>

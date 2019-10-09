@@ -147,7 +147,7 @@ class FinanceAnalytics extends Component {
           <Grid
           item
           xs={12}>
-            <Paper square={true}>
+            <Paper>
               <div className={classes.filters}>
                 <Typography variant='h2' align="center" color="secondary" gutterBottom>Church Finance Analytics</Typography>
               </div>

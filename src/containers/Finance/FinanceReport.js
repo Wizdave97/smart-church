@@ -80,7 +80,13 @@ class FinanceReport extends Component {
     }).catch(err=>setTimeout(()=>this.fetchExpenseCategories(token),1000))
   }
   componentDidUpdate(prevProps,prevState){
-
+     if(prevState.incomeCategories.length!=this.state.incomeCategories.length || prevState.expenseCategories.length!=this.state.expenseCategories.length ){
+         if(Number(this.props.match.params.id)>=0 && this.props.reports){
+           this.setState({
+             reportType:this.state.incomeCategories.indexOf(this.state.category)>-1?'Income':'Expenditure'
+           })
+         }
+     }
   }
 
   onSubmit = (references,hardSetState,e)=>{
@@ -130,6 +136,7 @@ class FinanceReport extends Component {
                           reference={this.setRef}
                           type="radio"
                           id="income-report"
+                          checked={this.state.incomeCategories.includes(this.state.category)?true:false}
                           label="Income Report"
                           placeholder="Income Report"
                           name="reportType"
@@ -147,6 +154,7 @@ class FinanceReport extends Component {
                           type="radio"
                           id="expenditure"
                           label="Expenditure Report"
+                          checked={this.state.expenseCategories.includes(this.state.category)?true:false}
                           placeholder="Expenditure Report"
                           name="reportType"
                           errorMessage="Please this field is required"

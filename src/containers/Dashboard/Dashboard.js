@@ -200,11 +200,60 @@ class Dashboard extends Component{
     return (
 
           <Grid container spacing={4}>
+            <Grid
+             item
+             xs={12}>
+                <Paper  elevation={4} className={classes.cards} style={{padding:32}}>
+                    <Typography className={classes.chartTitle}  variant="h3" gutterBottom>Quick Links</Typography>
+                    <Grid container item xs={12} spacing={2}>
+                    <Grid item
+                          xs={12}
+                          sm={4}>
+                          <Paper  elevation={4} className={[classes.card,classes.quick_link_1].join(' ')}>
+                            <Typography className={[classes.text,classes.link_text].join(' ')} variant="h4" align="right">New Service Report</Typography>
+                            <Button component={Link} to="/newreport/new" size="small" className={classes.button} variant="contained">Start new report</Button>
+                          </Paper>
+                    </Grid>
+                    <Grid item
+                          xs={12}
+                          sm={4}>
+                          <Paper elevation={6} className={[classes.card,classes.quick_link_2].join(' ')}>
+                            <Typography className={[classes.text,classes.link_text].join(' ')} variant="h4" align="right">New Finance Report</Typography>
+                            <Button component={Link} to="/finance/new" size="small" className={classes.button} variant="contained">Start new report</Button>
+                          </Paper>
+                    </Grid>
+                    <Grid item
+                          xs={12}
+                          sm={4}>
+                          <Paper elevation={6} className={[classes.card,classes.quick_link_3].join(' ')}>
+                            <Typography className={[classes.text,classes.link_text].join(' ')} variant="h4" align="right">Analytics</Typography>
+                            <Button component={Link} to="/analytics" size="small" className={classes.button} variant="contained">Start analysing</Button>
+                          </Paper>
+                    </Grid>
+                    <Grid item
+                          xs={12}
+                          sm={4}>
+                          <Paper elevation={6} className={[classes.card,classes.quick_link_4].join(' ')}>
+                            <Typography className={[classes.text,classes.link_text].join(' ')} variant="h4" align="right">Trend Analysis</Typography>
+                            <Button component={Link} to="/trends" size="small" className={classes.button} variant="contained">View trends</Button>
+                          </Paper>
+                    </Grid>
+                    <Grid item
+                          xs={12}
+                          sm={4}>
+                          <Paper elevation={6} className={[classes.card,classes.quick_link_2].join(' ')}>
+                            <Typography className={[classes.text,classes.link_text].join(' ')} variant="h4" align="right">Settings</Typography>
+                            <Button component={Link} to="/settings" size="small" className={classes.button} variant="contained">Settings</Button>
+                          </Paper>
+                    </Grid>
+                  </Grid>
+                </Paper>
+             </Grid>
 
           <Grid
            item
            xs={12}>
-              <Paper square={true} elevation={4} className={classes.cards}>
+              <Paper  elevation={4} className={classes.cards}>
                   <Typography className={classes.chartTitle}  variant="h3" gutterBottom>Recents</Typography>
                   <Grid item
                         xs={12}
@@ -237,7 +286,7 @@ class Dashboard extends Component{
           xs={12}
           md={12}
           xl={6}>
-            <Paper square={true} elevation={3} className={classes.chart}>
+            <Paper  elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Attendance</Typography>
                     <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
@@ -252,7 +301,7 @@ class Dashboard extends Component{
           xs={12}
           md={12}
           xl={6}>
-            <Paper square={true} elevation={3} className={classes.chart}>
+            <Paper  elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Income</Typography>
                     <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
@@ -267,7 +316,7 @@ class Dashboard extends Component{
           xs={12}
           md={12}
           xl={6}>
-            <Paper square={true} elevation={3} className={classes.chart}>
+            <Paper  elevation={3} className={classes.chart}>
                 <div className={classes.chartTitle}>
                     <Typography variant='h3' style={{flex:1}} >Expenditure</Typography>
                     <Fab variant="extended" size="small" color="secondary" component={Link} to="/analytics"><Typography variant="body1">Explore</Typography></Fab>
