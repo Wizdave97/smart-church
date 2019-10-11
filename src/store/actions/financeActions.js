@@ -31,8 +31,8 @@ export const financeAsync= (type,financeData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -70,8 +70,8 @@ export const updateFinanceAsync= (type,financeData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -131,7 +131,9 @@ export const fetchFinanceAsync =(branchId,url,type='Income',category='offering',
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200) return
+        if(!res.ok){
+            throw new Error()
+        }
         return res.json()
       }).then(res=>{
         dispatch(financeSync(actionTypes.FETCH_FINANCE_REPORTS_SUCCESS, res))

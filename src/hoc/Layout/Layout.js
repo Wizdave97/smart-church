@@ -69,17 +69,10 @@ class Layout extends Component {
     let hours=new Date().getHours()
     this.setState({hours:hours})
   }
-  showSideBar=(x)=>{
-    if(x.matches){
-      this.setState({
-        showSideBar:true
-      })
-    }
-    else{
+  closeSideBar=(x)=>{
       this.setState({
         showSideBar:false
       })
-    }
   }
   toggleSideBar = () =>{
     this.setState(state=>({
@@ -126,10 +119,10 @@ class Layout extends Component {
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                <SideBar showSideBar={this.state.showSideBar} toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>
+                <SideBar showSideBar={this.state.showSideBar} closeSideBar={this.closeSideBar} toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>
               </CSSTransitionGroup>}
               <div className={[classes.root].join(' ')} >
-                <main className={classes.main}  style={{padding:16}}>
+                <main className={classes.main}  style={{padding:8}}>
                     <Grid
                     container
                     spacing={2}

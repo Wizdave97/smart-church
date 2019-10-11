@@ -25,8 +25,8 @@ export const branchAsync= (branchData)=>{
         }
       }).then(res=>{
         console.log(res)
-        if(res.status!==200){
-            return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -55,8 +55,8 @@ export const updateBranchAsync= (branchData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-            return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -72,7 +72,7 @@ export const updateBranchAsync= (branchData)=>{
 
 }
 
-export const deleteBranchAsync= (id)=>{
+export const deleteBranchAsync= (data)=>{
   return (dispatch,getState)=>{
     dispatch(branchSync(actionTypes.DELETE_BRANCH_START))
 
@@ -80,14 +80,14 @@ export const deleteBranchAsync= (id)=>{
       fetch(url,{
         method:'PATCH',
         mode:'cors',
-        body:JSON.stringify({id:id,status:'DELETED'}),
+        body:JSON.stringify({...data,status:'DELETED'}),
         headers:{
            'Content-Type':'application/json',
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-            return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -116,8 +116,8 @@ export const fetchBranchAsync=(url=null)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-            return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{

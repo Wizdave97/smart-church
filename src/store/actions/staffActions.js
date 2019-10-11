@@ -22,8 +22,8 @@ export const staffAsync= (staffData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -39,7 +39,7 @@ export const staffAsync= (staffData)=>{
 
 }
 
-export const deleteStaffAsync= (id)=>{
+export const deleteStaffAsync= (data)=>{
   return (dispatch,getState)=>{
     dispatch(staffSync(actionTypes.DELETE_STAFF_START))
 
@@ -47,14 +47,14 @@ export const deleteStaffAsync= (id)=>{
       fetch(url,{
         method:'PATCH',
         mode:'cors',
-        body:JSON.stringify({id:id,status:'DELETED'}),
+        body:JSON.stringify({...data,status:'DELETED'}),
         headers:{
            'Content-Type':'application/json',
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -83,8 +83,8 @@ export const updateStaffAsync= (staffData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -114,9 +114,8 @@ export const fetchStaffsAsync=(url=null)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        console.log(res)
-        if(res.status!==200){
-            return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{

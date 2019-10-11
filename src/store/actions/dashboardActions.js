@@ -24,7 +24,9 @@ export const fetchAttendanceAsync=(branchId,url=null)=>{
         Authorization:'Bearer'+getState().auth.token
       }
     }).then(res=>{
-      if(res.status!==200) return
+      if(!res.ok){
+          throw new Error()
+      }
       return res.json()
       }
       ).then(res=>{
@@ -61,7 +63,9 @@ export const fetchFinanceAsync =(branchId,url,type)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200) return
+        if(!res.ok){
+            throw new Error()
+        }
         return res.json()
       }).then(res=>{
         if(type==='income'){

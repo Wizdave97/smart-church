@@ -2,12 +2,12 @@
 const styles = theme =>({
     root:{
       minHeight:'calc(100% - 90px)',
-      width:`calc(100% - ${theme.spacing(7) + 1}px)`,
+      width:'100%',
       display:'flex',
       flexWrap:'wrap',
       paddingTop:'90px',
       position:'absolute',
-      left:theme.spacing(7) + 1,
+      left:0,
       transition: theme.transitions.create(['left'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,

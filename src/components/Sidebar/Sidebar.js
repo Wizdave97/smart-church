@@ -2,19 +2,14 @@ import React from 'react';
 import styles from './styles';
 import { NavLink,Link,withRouter} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
 import {Paper, Typography , Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
 
@@ -24,6 +19,7 @@ const SideBar = (props) =>{
   const theme = useTheme();
   const handleBranchReset=()=>{
     props.resetBranchId()
+    props.closeSideBar()
     props.history.push('/')
   }
   return (
@@ -50,19 +46,19 @@ const SideBar = (props) =>{
             <React.Fragment>
               <List className={classes.list}>
                   <ArrowTooltip title="Dashboard">
-                  <ListItem button component={Link} to="/">
+                  <ListItem button component={Link} to="/" onClick={props.closeSideBar}>
                     <ListItemIcon><Dashboard className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Dashboard'/>
                   </ListItem>
                   </ArrowTooltip>
                   <ArrowTooltip title="Analytics">
-                  <ListItem button button component={Link} to="/analytics">
+                  <ListItem  button component={Link} to="/analytics"  onClick={props.closeSideBar}>
                     <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Analytics'/>
                   </ListItem>
                   </ArrowTooltip>
                   <ArrowTooltip title="Trend Analysis">
-                  <ListItem button component={Link} to="/trends">
+                  <ListItem button component={Link} to="/trends" onClick={props.closeSideBar}>
                     <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Trend Analysis'/>
                   </ListItem>
@@ -74,7 +70,7 @@ const SideBar = (props) =>{
               {props.permissions.indexOf(6)>=0?(
                 <React.Fragment>
                   <ArrowTooltip title="Create Attendance Report">
-                  <ListItem to="/newreport/new"  button component={Link}>
+                  <ListItem to="/newreport/new"  button component={Link} onClick={props.closeSideBar}>
                     <ListItemIcon><AddBox className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Create Attendance Report'/>
                   </ListItem>
@@ -84,7 +80,7 @@ const SideBar = (props) =>{
                 {props.permissions.indexOf(7)>=0?(
                   <React.Fragment>
                     <ArrowTooltip title="View Attendance Reports">
-                    <ListItem to="/viewreports"  button component={Link}>
+                    <ListItem to="/viewreports"  button component={Link} onClick={props.closeSideBar}>
                       <ListItemIcon><TableChart className={classes.icons}/></ListItemIcon>
                       <ListItemText className={classes.links} primary='Attendance Reports'/>
                     </ListItem>
@@ -96,7 +92,7 @@ const SideBar = (props) =>{
                   {props.permissions.indexOf(6)>=0?(
                     <React.Fragment>
                       <ArrowTooltip title="Create Financial Report">
-                      <ListItem to="/finance/new" button component={Link}>
+                      <ListItem to="/finance/new" button component={Link} onClick={props.closeSideBar}>
                         <ListItemIcon><AddBox className={classes.icons}/></ListItemIcon>
                         <ListItemText className={classes.links} primary='Create Financial Report'/>
                       </ListItem>
@@ -106,7 +102,7 @@ const SideBar = (props) =>{
                   {props.permissions.indexOf(7)>=0?(
                     <React.Fragment>
                       <ArrowTooltip title="View Financial Reports">
-                      <ListItem to="/viewfinances" button component={Link} >
+                      <ListItem to="/viewfinances" button component={Link} onClick={props.closeSideBar} >
                         <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
                         <ListItemText className={classes.links} primary='Financial Reports'/>
                       </ListItem>
@@ -118,7 +114,7 @@ const SideBar = (props) =>{
               {props.permissions.indexOf(9)>=0?(
                 <React.Fragment>
                   <ArrowTooltip title="View Branches">
-                  <ListItem to="/allbranches" button component={Link} >
+                  <ListItem to="/allbranches" button component={Link} onClick={props.closeSideBar} >
                     <ListItemIcon><GroupWork className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Branches'/>
                   </ListItem>
@@ -128,7 +124,7 @@ const SideBar = (props) =>{
               {props.permissions.indexOf(2)>=0?(
                 <React.Fragment>
                   <ArrowTooltip title="Create Branch">
-                  <ListItem to="/addbranch/new" button component={Link}>
+                  <ListItem to="/addbranch/new" button component={Link} onClick={props.closeSideBar}>
                     <ListItemIcon><AddBox className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Create Branch'/>
                   </ListItem>
@@ -141,7 +137,7 @@ const SideBar = (props) =>{
                 {props.permissions.indexOf(10)>=0?(
                   <React.Fragment>
                     <ArrowTooltip title="Staffs">
-                    <ListItem to="/allstaff" button component={Link}>
+                    <ListItem to="/allstaff" button component={Link} onClick={props.closeSideBar}>
                       <ListItemIcon><People className={classes.icons}/></ListItemIcon>
                       <ListItemText className={classes.links} primary='Staffs'/>
                     </ListItem>
@@ -151,7 +147,7 @@ const SideBar = (props) =>{
                 {props.permissions.indexOf(4)>=0?(
                   <React.Fragment>
                     <ArrowTooltip title="Create Staff">
-                    <ListItem to="/addstaff/new" button component={Link}>
+                    <ListItem to="/addstaff/new" button component={Link} onClick={props.closeSideBar}>
                       <ListItemIcon><PersonAdd className={classes.icons}/></ListItemIcon>
                       <ListItemText className={classes.links} primary='Create Staff'/>
                     </ListItem>
@@ -165,7 +161,7 @@ const SideBar = (props) =>{
                     props.permissions.indexOf(9)>=0?
                     <React.Fragment>
                       <ArrowTooltip title="Settings">
-                      <ListItem to="/settings" button component={Link}>
+                      <ListItem to="/settings" button component={Link} onClick={props.closeSideBar}>
                         <ListItemIcon><Settings className={classes.icons}/></ListItemIcon>
                         <ListItemText className={classes.links} primary='Settings'/>
                       </ListItem>

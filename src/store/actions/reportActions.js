@@ -22,8 +22,8 @@ export const reportAsync= (reportData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -52,8 +52,8 @@ export const updateReportAsync= (reportData)=>{
            'Authorization':'Bearer'+  getState().auth.token
         }
       }).then(res=>{
-        if(res.status!==200){
-          return null
+        if(!res.ok){
+            throw new Error()
         }
         return res.json()
       }).then(res=>{
@@ -99,7 +99,9 @@ export const fetchReportAsync=(branchId,url=null,day=null,month=null,year=null)=
         Authorization:'Bearer'+getState().auth.token
       }
     }).then(res=>{
-      if(res.status!==200) return
+      if(!res.ok){
+          throw new Error()
+      }
       return res.json()
       }
       ).then(res=>{

@@ -119,7 +119,7 @@ class Branches extends Component {
                     {this.props.permissions.indexOf(3)>=0?
                       <React.Fragment>
                       <Button variant="contained" component={Link} to={`/addbranch/${data.id}`}  size="small" aria-label="edit branch"><Edit color="secondary"/></Button>
-                      <Button onClick={()=>this.props.toggleModal(data.id,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                      <Button onClick={()=>this.props.toggleModal(data,'branch')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
                       </React.Fragment>:null}
                   </CardActions>
                 </Card>

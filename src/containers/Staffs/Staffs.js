@@ -106,7 +106,7 @@ class Staffs extends Component {
                     {this.props.permissions.indexOf(5)>=0?
                       <React.Fragment>
                       <Button variant="contained" component={Link} to={`/addstaff/${data.id}`}  size="small" aria-label="Edit Staff"><Edit color="primary"/></Button>
-                      <Button onClick={()=>this.props.toggleModal(data.id,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
+                      <Button onClick={()=>this.props.toggleModal(data,'staff')} variant="contained" size="small" aria-label="delete branch"><Delete color="error"/></Button>
                       </React.Fragment>:null}
 
                   </CardActions>

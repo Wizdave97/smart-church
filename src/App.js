@@ -58,19 +58,19 @@ class App  extends Component{
     dataId:null,
     identifier:null,
   }
-  toggleModal=(id,identifier)=>{
+  toggleModal=(data,identifier)=>{
     this.setState(state=>({
       openModal:!state.openModal,
-      dataId:id,
+      data:data,
       identifier:identifier
     }))
   }
   deleteRecord=()=>{
     if(this.state.identifier==='branch'){
-      this.props.onDeleteBranch(this.state.dataId)
+      this.props.onDeleteBranch(this.state.data)
     }
     if(this.state.identifier==='staff'){
-      this.props.onDeleteStaff(this.state.dataId)
+      this.props.onDeleteStaff(this.state.data)
     }
     if(this.state.identifier==='finance'){
 
