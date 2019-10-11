@@ -12,8 +12,25 @@ const hover={
     color:'#ff7c5f'
   }
 }
+const drawerWidth = 240;
 const styles= theme =>(
   {
+    appBar: {
+      left:0,
+      width:`100%`,
+      backgroundColor:theme.palette.type=='dark'?'#303030':theme.palette.primary.main,
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: 36,
+    },
+    hide: {
+      display: 'none',
+    },
   navbar:{
     display:'flex',
     flexWrap:'nowrap',
@@ -25,9 +42,6 @@ const styles= theme =>(
   },
   toolbar:{
     background:'transparent'
-  },
-  appbar:{
-    backgroundColor:theme.palette.type==='dark'?'#303030':theme.palette.primary.main
   },
   popup:{
     '& a':{
@@ -49,9 +63,6 @@ const styles= theme =>(
     marginRight:theme.spacing(2),
     boxSizing:'border-box',
     cursor:'pointer',
-    [theme.breakpoints.up('md')]:{
-      display:'none'
-    },
     ...hover
   },
   churchName:{

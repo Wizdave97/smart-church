@@ -55,9 +55,6 @@ class Layout extends Component {
   componentDidMount(){
     this.checkTime()
     this.props.onFetchBranches()
-    const x=window.matchMedia("(min-width:960px)")
-    this.showSideBar(x)
-    x.addListener(this.showSideBar)
 
   }
   componentDidUpdate(prevProps,prevState){
@@ -85,10 +82,6 @@ class Layout extends Component {
     }
   }
   toggleSideBar = () =>{
-    const x=window.matchMedia("(min-width:960px)")
-    if (x.matches){
-      return
-    }
     this.setState(state=>({
       showSideBar:!state.showSideBar
     }))
@@ -126,16 +119,16 @@ class Layout extends Component {
       <React.Fragment>
           <CssBaseline/>
               <div className={classes.gradient}></div>
-              <Navbar logOut={this.props.onLogOut} userName={this.props.userName} toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
+              <Navbar showSideBar={this.state.showSideBar} logOut={this.props.onLogOut} userName={this.props.userName} toggleSideBar={this.toggleSideBar} toggleTheme={this.props.toggleTheme}/>
               {<CSSTransitionGroup
                 transitionName="sidebar"
                 transitionEnter={true}
                 transitionLeave={true}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                {this.state.showSideBar?<SideBar showSideBar={this.state.showSideBar} toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>:null }
+                <SideBar showSideBar={this.state.showSideBar} toggleSideBar={this.toggleSideBar} permissions={this.props.permissions} resetBranchId={this.props.onResetBranchId}  key={"sidebar"}/>
               </CSSTransitionGroup>}
-              <div className={classes.root} >
+              <div className={[classes.root].join(' ')} >
                 <main className={classes.main}  style={{padding:16}}>
                     <Grid
                     container

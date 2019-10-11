@@ -69,7 +69,7 @@ const Navbar = props =>{
     x.addListener(removeMobileSearch)
   },[])
   return (
-    <AppBar className={classes.appbar}  position="fixed" color="primary">
+    <AppBar className={[classes.appBar].join(' ')}  position="fixed" color="primary">
       <CSSTransitionGroup
           transitionName='searchbar'
           transitionAppear={true}
@@ -90,7 +90,7 @@ const Navbar = props =>{
         <Toolbar className={classes.toolbar} variant="dense">
             <div className={classes.navbar}>
                 <div className={classes.one}>
-                    <div onClick={()=>props.toggleSideBar()} className={classes.menuIcon} tabIndex="0"><MenuIcon/></div>
+                    <div onClick={()=>props.toggleSideBar()} className={[classes.menuIcon,classes.menuButton,props.showSideBar&&classes.hide].join(' ')} tabIndex="0"><MenuIcon/></div>
                     <div className={classes.churchName} tabIndex="0"><Typography className={classes.navText} variant="h1"> Smart Church</Typography></div>
                       <div style={{visibility:'hidden'}} onClick={()=>setState(state=>({searchBar:!state.searchBar }))} className={classes.searchButton} tabIndex="0">
                         <SearchIcon className={classes.iconSearch} />

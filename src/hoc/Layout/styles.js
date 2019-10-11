@@ -2,19 +2,21 @@
 const styles = theme =>({
     root:{
       minHeight:'calc(100% - 90px)',
-      width:'100%',
+      width:`calc(100% - ${theme.spacing(7) + 1}px)`,
       display:'flex',
       flexWrap:'wrap',
       paddingTop:'90px',
       position:'absolute',
-      left:0,
-      [theme.breakpoints.up('md')]:{
-        width:'75%',
-        left:'25%'
+      left:theme.spacing(7) + 1,
+      transition: theme.transitions.create(['left'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      [theme.breakpoints.up('sm')]:{
+        width:`calc(100% - ${theme.spacing(9) + 1}px)`,
+        left:theme.spacing(9) + 1,
       },
-
     },
-
     rootElement:{
       padding:'0'
     },

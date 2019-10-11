@@ -324,7 +324,7 @@ class Auth extends Component {
 
       {notification}
     <div className={classes.topGradient}></div>
-    <AppBar position="fixed" color="primary">
+    {/*<AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
             <div className={classes.logoContainer}>
@@ -332,7 +332,7 @@ class Auth extends Component {
             </div>
           </div>
         </Toolbar>
-    </AppBar>
+    </AppBar>*/}
     <div className={classes.overlay}></div>
     <Grid
     container

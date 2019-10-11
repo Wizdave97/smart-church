@@ -66,6 +66,7 @@ const styles = theme =>({
   },
   paper:{
     width:'100%',
+    overflow:'hidden',
     padding:0,
     borderRadius:'5px',
     position:'relative'
