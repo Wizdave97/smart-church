@@ -123,8 +123,9 @@ class Dashboard extends Component{
     }
   }
   componentWillUnmount(){
-    window.clearInterval(this.state.intervalId)
-    window.clearInterval(this.state.expenditureId)
+    console.log(this.state.intervalId,this.state.expenditureId)
+    clearInterval(this.state.intervalId)
+    clearInterval(this.state.expenditureId)
   }
   render(){
     const { classes } = this.props

@@ -12,7 +12,7 @@ const hover={
     color:'#ff7c5f'
   }
 }
-const drawerWidth = 240;
+const drawerWidth = 260;
 const styles= theme =>(
   {
     appBar: {

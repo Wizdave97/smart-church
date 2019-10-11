@@ -2,7 +2,7 @@ import { fade } from '@material-ui/core/styles';
 const hover={
     color:'#e57373'
 }
-const drawerWidth = 240;
+const drawerWidth = 260;
 const styles= theme =>({
   list:{
     width:'100%',

@@ -112,7 +112,7 @@ class Branches extends Component {
                       Area: {data.area?data.area.name:null}
                     </Typography>
                   </CardContent>
-                  <CardActions style={{flexWrap:'wrap',display:'flex'}}>
+                  <CardActions style={{overflowX:'auto'}}>
                     {this.props.permissions.indexOf(8)>=0?
                       <Button component={Link} to={`/analytics`} onClick={()=>this.props.onChangeBranch(data.id,data.name)} variant="contained" size="small" aria-label="inspect branch"><Visibility color="primary"/></Button>
                       :null}

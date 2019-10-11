@@ -87,20 +87,22 @@ const styles= theme =>({
     },
     quick_link_1:{
       backgroundImage:`url(${One})`,
-      backgroundSize:'contain'
+      backgroundSize:'cover'
+
     },
     quick_link_2:{
       backgroundImage:`url(${Two})`,
-      backgroundSize:'contain'
+      backgroundSize:'cover'
+
     },
     quick_link_3:{
       backgroundImage:`url(${Three})`,
-      backgroundSize:'contain'
+      backgroundSize:'cover'
+
     },
     quick_link_4:{
       backgroundImage:`url(${Four})`,
-      backgroundSize:'contain',
-
+      backgroundSize:'cover'
     },
     link_text:{
       alignSelf:'flex-end'
