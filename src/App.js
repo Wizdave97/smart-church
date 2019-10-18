@@ -116,8 +116,8 @@ class App  extends Component{
     const theme=createMuiTheme(this.props.theme)
     let routes=(
       <Switch>
-        <Route  path='/' component={LandingPage}/>
-        <Route  path='/auth' exact component={Auth}/>
+        <Route   exact={true} path='/' component={LandingPage}/>
+        <Route   path='/auth'  component={Auth}/>
       </Switch>
   )
     if(this.props.isAuthenticated){

@@ -12,27 +12,33 @@ const initialState={
           } ,
           'h1':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'22px'
+            fontSize:'22px',
+            fontWeight:'bolder'
           },
           'h2':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'20px'
+            fontSize:'20px',
+            fontWeight:'bolder'
           },
           'h3':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'18px'
+            fontSize:'18px',
+            fontWeight:'bolder'
           },
           'h4':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'16px'
+            fontSize:'16px',
+            fontWeight:'bolder'
           },
           'h5':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'14px'
+            fontSize:'14px',
+            fontWeight:'bolder'
           },
           'h6':{
             fontFamily:'"Roboto", sans-serif',
-            fontSize:'12px'
+            fontSize:'12px',
+            fontWeight:'bolder'
           }
       }
   },
