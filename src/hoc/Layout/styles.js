@@ -1,11 +1,11 @@
 
 const styles = theme =>({
     root:{
-      minHeight:'calc(100% - 90px)',
+      minHeight:'calc(100% - 64px)',
       width:'100%',
       display:'flex',
       flexWrap:'wrap',
-      paddingTop:'90px',
+      marginTop:'56px',
       position:'absolute',
       left:0,
       transition: theme.transitions.create(['left'], {
@@ -15,6 +15,7 @@ const styles = theme =>({
       [theme.breakpoints.up('sm')]:{
         width:`calc(100% - ${theme.spacing(9) + 1}px)`,
         left:theme.spacing(9) + 1,
+        marginTop:'66px'
       },
     },
     rootElement:{

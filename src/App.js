@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Auth from './containers/Auth/Auth';
+import LandingPage from './containers/LandingPage/LandingPage';
 import { autoSignIn } from './store/actions/authActions';
 import { deleteStaffAsync } from './store/actions/staffActions';
 import { deleteBranchAsync } from './store/actions/branchActions';
@@ -113,7 +114,12 @@ class App  extends Component{
       </Dialog>
     )
     const theme=createMuiTheme(this.props.theme)
-    let routes=<Switch><Route  path='/' component={Auth}/></Switch>
+    let routes=(
+      <Switch>
+        <Route  path='/' component={LandingPage}/>
+        <Route  path='/auth' exact component={Auth}/>
+      </Switch>
+  )
     if(this.props.isAuthenticated){
       let availableRoutes=[{path:'/',cmp:Dashboard,exact:true},{path:'/profile',cmp:asyncProfile,exact:true}]
       if(this.props.permissions.indexOf(9)>=0){
