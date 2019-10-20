@@ -28,9 +28,9 @@ const styles = theme =>({
         flexWrap:'wrap'
     },
     pageInfo:{
-      display:'block',
+      display:'flex',
+      alignItems:'center',
       width:'100%',
-      //height:'100px',
       paddingTop:'10px',
       boxSizing:'border-box',
     },
@@ -88,6 +88,17 @@ const styles = theme =>({
    },
    list: {
    width: 250,
+ },
+ greetingText:{
+   fontSize:'0.8rem',
+   fontWeight:'bolder',
+   alignSelf:'center',
+   [theme.breakpoints.up('sm')]:{
+     fontSize:'0.8rem'
+   },
+   [theme.breakpoints.up('md')]:{
+     fontSize:'1.1rem'
+   }
  }
 })
 

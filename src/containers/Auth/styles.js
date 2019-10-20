@@ -15,7 +15,6 @@ const styles = theme =>({
     margin:0,
     backgroundSize:'cover',
     position:'relative',
-    backgroundImage:`url('${Auth}')`
   },
   overlay:{
     left:0,
@@ -69,7 +68,11 @@ const styles = theme =>({
     overflow:'hidden',
     padding:0,
     borderRadius:'5px',
-    position:'relative'
+    position:'relative',
+    boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+    borderRadius:'25px',
+    boxSizing:'border-box',
+    border:'8px solid rgba(0,0,0,0.1)',
   },
   topGradient:{
     position:'fixed',
@@ -104,10 +107,10 @@ const styles = theme =>({
     justifyContent:'center'
   },
   logo:{
-    width:'140px',
+    width:'40px',
     height:'40px',
     backgroundSize:'cover',
-    backgroundImage:`url(${SmartChurch})`,
+    backgroundImage:`url(${SC})`,
     alignSelf:'center',
     '& img':{
       width:'100%'

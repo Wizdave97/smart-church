@@ -12,7 +12,9 @@ const styles= theme =>({
       padding:'10px',
       display:'flex',
       flexWrap:'wrap',
-      boxSizing:'border-box'
+      boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+      borderRadius:'15px',
+      border:'6px solid rgba(0,0,0,0.1)',
     },
     chartTitle:{
       width:'100%',
@@ -74,7 +76,8 @@ const styles= theme =>({
       [theme.breakpoints.down('sm')]:{
         marginTop:theme.spacing(2),
         marginBottom:theme.spacing(2)
-      }
+      },
+
     },
     card1:{
       backgroundImage:`url(${Purple})`
@@ -113,7 +116,10 @@ const styles= theme =>({
       flexWrap:'wrap',
       padding:'30px',
       boxSizing:'border-box',
-      justifyContent:'space-between'
+      justifyContent:'space-between',
+      boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+      borderRadius:'15px',
+      border:'6px solid rgba(0,0,0,0.1)',
     },
     button:{
       fontSize:'0.6rem',

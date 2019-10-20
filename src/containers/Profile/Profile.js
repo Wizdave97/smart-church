@@ -12,6 +12,8 @@ import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar
 class Profile extends Component {
   state={
     newPassword:'',
+    oldPassword:'',
+    errorOldPassword:false,
     errorNewPassword:false,
     passwordResetStart:false,
     passwordResetFail:false,
@@ -30,21 +32,22 @@ class Profile extends Component {
   }
   hardSetState=this.setState.bind(this)
   changePassword=(e)=>{
-    if(!this.state.newPassword  && this.state.newPassword.length<8){
+    if((!this.state.newPassword  && this.state.newPassword.length<8) && (!this.state.oldPassword  && this.state.oldPassword.length<8)){
       this.setState({
-        errorNewPassword:true
+        errorNewPassword:true,
+        errorOldPassword:true,
       })
       return
     }
     else {
-      this.setState({errorNewPassword:false,passwordResetStart:true,passwordResetFail:false,passwordResetSuccess:false})
+      this.setState({errorNewPassword:false,errorOldPassword:false,passwordResetStart:true,passwordResetFail:false,passwordResetSuccess:false})
       fetch('http://api.smartchurch.com.ng/api/staffs/chpassword',{
         method:'PATCH',
         headers:{
            'Content-Type':'application/json',
            'Authorization':'Bearer'+  this.props.token
         },
-        body:JSON.stringify({password:this.state.newPassword,id:this.props.user.id})
+        body:JSON.stringify({old_pass:this.state.oldPassword,new_pass:this.state.newPassword,id:this.props.user.id})
       }).then(res=>{
         if(!res.ok) {
           throw new Error()
@@ -102,8 +105,23 @@ class Profile extends Component {
               <Grid item xs={3}><Typography variant="h5">Address</Typography></Grid>
               <Grid item><Divider className={classes.verticalDivider}/></Grid>
               <Grid item xs={7}><Typography variant="body1">{user.address}</Typography></Grid>
-
-              <Grid item xs={12}><Typography variant="h4" color="primary" align="left">Change Password</Typography></Grid>
+                <Grid item xs={12}><Typography variant="h4" color="primary" align="left">Change Password</Typography></Grid>
+                <Grid item xs={12}><Typography variant="h4" color="primary" align="left">Old Password</Typography></Grid>
+                <Grid item xs={12} sm={8}>
+                  <Input
+                    type="text"
+                    name="oldPassword"
+                    value={this.state.oldPassword}
+                    inputType="input"
+                    handleChange={(event)=>handleChange(event,this.hardSetState)}
+                    placeholder="Old password"
+                    label="Type in the old password"
+                    errorMessage="Please fill in this field with at least 8 characters"
+                    id="old-password"
+                    required={true}
+                    error={this.state.errorOldPassword}/>
+                </Grid>
+              <Grid item xs={12}><Typography variant="h4" color="primary" align="left">New Password</Typography></Grid>
               <Grid item xs={12} sm={8}>
                 <Input
                   type="text"
@@ -114,7 +132,7 @@ class Profile extends Component {
                   placeholder="New password"
                   label="Type in the new password"
                   errorMessage="Please fill in this field with at least 8 characters"
-                  id="password"
+                  id="new-password"
                   required={true}
                   error={this.state.errorNewPassword}/>
                 <Button onClick={this.changePassword} disabled={this.state.passwordResetStart} variant="contained" size="medium" color="primary" style={{marginLeft:10}}>Submit{this.state.passwordResetStart?<CircularProgress color="primary"/>:null}</Button>

@@ -46,10 +46,10 @@ const initialState={
   palette:{
       type:'light',
       primary:{
-          main:'#0d47a1',
+          main:'#3b5998',
       },
       secondary:{
-          main:'#3f51b5'
+          main:'#602f6b'
       },
       error:{
         main:red[500],
@@ -65,8 +65,8 @@ const initialState={
 
 const reducer = (state=initialState,action) =>{
   switch(action.type){
-    case 'DARK_MODE': return updateObject(state,{palette:{...state.palette,type:'dark',background:{...state.palette.background,paper:"#424242",default:"#303030"}}})
-    case 'LIGHT_MODE': return updateObject(state,{palette:{...state.palette,type:'light',background:{...state.palette.background,paper:'#fff',default:'#f1f1f1'}}})
+    case 'DARK_MODE': return updateObject(state,{palette:{...state.palette,type:'dark',secondary:{...state.palette.secondary,main:'#bf94e4'},background:{...state.palette.background,paper:"#424242",default:"#303030"}}})
+    case 'LIGHT_MODE': return updateObject(state,{palette:{...state.palette,type:'light',secondary:{...state.palette.secondary,main:'#602f6b'},background:{...state.palette.background,paper:'#fff',default:'#f1f1f1'}}})
     default: return state
   }
 }

@@ -12,8 +12,10 @@ const styles = theme =>({
       ...boxSizing
     },
     paper:{
-      borderRadius:'4px',
-      border:`1px solid ${fade(theme.palette.common.black,0.325)}`
+      boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+      borderRadius:'25px',
+      boxSizing:'border-box',
+      border:'8px solid rgba(0,0,0,0.1)',
     },
     title:{
       width:'100%',

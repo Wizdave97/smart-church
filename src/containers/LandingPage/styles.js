@@ -3,6 +3,12 @@ import SC from '../../assets/SC.png';
 
 
 const styles = theme =>({
+  root:{
+    width:'100%',
+    minHeight:'100%',
+    display:'flex',
+    flexWrap:'wrap'
+  },
   toolbar:{
     background:'transparent',
     alignItems:'center'
@@ -33,6 +39,7 @@ const styles = theme =>({
     display:'flex',
     flexWrap:'wrap',
     marginTop:'58px',
+    justifyContent:'center',
     [theme.breakpoints.up('sm')]:{
       marginTop:'66px'
     }
@@ -49,6 +56,12 @@ const styles = theme =>({
     border:'8px solid rgba(0,0,0,0.1)',
     '& img':{
       width:'100%'
+    }
+  },
+  imagePadding:{
+    padding:0,
+    [theme.breakpoints.up('md')]:{
+      padding:'40px'
     }
   },
   getStarted:{
@@ -77,6 +90,26 @@ const styles = theme =>({
     alignSelf:'center',
     width:'100%',
     height:2
+  },
+  footer:{
+    width:'100%',
+    minHeight:300,
+    padding:0,
+    backgroundColor:theme.palette.primary.main
+  },
+  footerText:{
+    fontSize:'0.6rem',
+    color:'#fff',
+    fontWeight:'bolder',
+    fontStyle:'italics',
+    width:'100%',
+    textAlign:'center',
+    [theme.breakpoints.up('sm')]:{
+      fontSize:'0.8rem'
+    },
+    [theme.breakpoints.up('md')]:{
+      fontSize:'1.1rem'
+    }
   }
 })
 export default styles

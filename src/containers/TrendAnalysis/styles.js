@@ -30,6 +30,11 @@ const styles = theme =>(
     boxSizing:'border-box',
     overflowX:'auto',
   },
+  paper:{
+    boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+    borderRadius:'15px',
+    border:'6px solid rgba(0,0,0,0.1)',
+  }
 }
 )
 export default styles

@@ -294,7 +294,7 @@ class TrendAnalysis extends Component {
       return(
        <Fragment>
          <Grid item xs={12}>
-          <Paper>
+          <Paper className={classes.paper}>
           <div className={classes.filters}>
             <Typography variant='h2' align="center" color="secondary" gutterBottom>Report Trend Analytics</Typography>
           </div>
@@ -370,7 +370,7 @@ class TrendAnalysis extends Component {
           </Paper>
          </Grid>
           <Grid item xs={12}>
-          <Paper>
+          <Paper className={classes.paper}>
           <div className={classes.filters}>
             <Typography variant='h2' align="center" color="secondary" gutterBottom>Finance Trend Analytics</Typography>
           </div>

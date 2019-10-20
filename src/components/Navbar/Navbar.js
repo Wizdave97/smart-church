@@ -135,7 +135,7 @@ const Navbar = props =>{
                              open={Boolean(anchorEl)}
                              onClose={handleClose}
                             >
-                              <StyledMenuItem><Button component={Link} fullWidth variant="text" color="default" to="/profile" >Profile</Button></StyledMenuItem>
+                              <StyledMenuItem><Button onClick={handleClose} component={Link} fullWidth variant="text" color="default" to="/profile" >Profile</Button></StyledMenuItem>
                               <StyledMenuItem onClick={props.logOut}><Button fullWidth variant="text" color="default" >Logout</Button></StyledMenuItem>
                             </StyledMenu>
                       </div>

@@ -35,6 +35,11 @@ const styles = theme =>({
     justifyContent:'space-between',
     padding:'10px',
     boxSizing:'border-box'
+  },
+  paper:{
+    boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
+    borderRadius:'15px',
+    border:'6px solid rgba(0,0,0,0.1)',
   }
 })
 

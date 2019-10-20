@@ -194,7 +194,7 @@ class AttendanceAnalytics extends Component {
           <Grid
           item
           xs={12}>
-            <Paper>
+            <Paper className={classes.paper}>
               <div className={classes.filters}>
                 <Typography variant='h2' align="center" gutterBottom color="secondary">Church Attendance Analytics</Typography>
               </div>

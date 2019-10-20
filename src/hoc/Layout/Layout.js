@@ -130,7 +130,7 @@ class Layout extends Component {
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography  variant="h2">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography  variant="h2">Viewing Branch: <strong>{this.props.branchName}</strong></Typography>:null}</div>
+                      <div className={classes.title}><Typography className={classes.greetingText}  variant="body1">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography className={classes.greetingText}  variant="h2" >Viewing Branch: <strong>{this.props.branchName}</strong></Typography>:null}</div>
                     </div>
                         {this.props.children}
                     </Grid>
