@@ -48,7 +48,7 @@ const styles = theme =>({
     width:'100%',
     padding:0,
     position:'relative',
-    display:'flex',
+    display:'inline-block',
     overflow:'hidden',
     boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
     borderRadius:'25px',
