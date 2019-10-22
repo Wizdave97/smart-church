@@ -49,13 +49,15 @@ const styles = theme =>({
     padding:0,
     position:'relative',
     display:'inline-block',
+    backgroundColor:'transparent',
     overflow:'hidden',
     boxShadow:'4px 4px 15px rgba(0,0,0,0.1),-4px -4px 15px rgba(0,0,0,0.1)',
     borderRadius:'25px',
     boxSizing:'border-box',
     border:'8px solid rgba(0,0,0,0.1)',
     '& img':{
-      width:'100%'
+      width:'100%',
+      height:'100%'
     }
   },
   imagePadding:{

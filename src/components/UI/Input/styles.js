@@ -15,18 +15,11 @@ const styles = theme =>({
     maxWidth:'48px',
     borderRadius:' 4px',
     margin:' 8px 0',
+    alignSelf:'center',
     display:' inline-block',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
     padding:' 12px 20px',
-    '&:hover':{
-      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
-    },
-    '&:focus':{
-      outline:'none',
-      boxShadow:'2px 2px 8px rgba(0,0,255,0.3), -2px -2px 8px rgba(0,0,255,0.4) !important',
-      color:'white'
-    }
   },
   formInput:{
     width:'100%',
@@ -38,16 +31,17 @@ const styles = theme =>({
     padding:' 12px 20px',
     margin:' 8px 0',
     display:' inline-block',
-    border: '1px solid #ccc',
-    borderRadius:' 4px',
+    border: '4px solid rgba(0,0,0,0.1)',
+    borderRadius:' 8px',
     boxSizing: 'border-box',
+    boxShadow:'2px 2px 8px rgba(0,0,0,0.1), -2px -2px 8px rgba(0,0,0,0.1)',
     '&:hover':{
       backgroundColor:'#f1f1f1',
-      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.2), -2px -2px 8px rgba(0,0,0,0.2)',
     },
     '&:focus':{
       outline:'none',
-      boxShadow:'2px 2px 10px rgba(0,0,255,0.3), -2px -2px 10px rgba(0,0,255,0.4)',
+      boxShadow:`2px 2px 8px rgba(0,0,0,0.2), -2px -2px 8px rgba(0,0,0,0.2)`,
       color:'black'
     }
   },
@@ -61,24 +55,26 @@ const styles = theme =>({
     padding:' 12px 20px',
     margin:' 8px 0',
     display:' inline-block',
-    border: '1px solid #ccc',
-    borderRadius:' 4px',
+    border: '4px solid rgba(0,0,0,0.1)',
+    borderRadius:' 8px',
     boxSizing: 'border-box',
+    boxShadow:'2px 2px 8px rgba(0,0,0,0.1), -2px -2px 8px rgba(0,0,0,0.1)',
     resize:'none',
     '&:hover':{
       backgroundColor:'#f1f1f1',
-      boxShadow:'2px 2px 8px rgba(0,0,0,0.3), -2px -2px 8px rgba(0,0,0,0.4)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.2), -2px -2px 8px rgba(0,0,0,0.2)',
     },
     '&:focus':{
       outline:'none',
-      boxShadow:'2px 2px 8px rgba(150,157,204,0.7), -2px -2px 8px rgbargba(150,157,204,0.7)',
+      boxShadow:'2px 2px 8px rgba(0,0,0,0.2), -2px -2px 8px rgba(0,0,0,0.2)',
       color:'black'
     }
   },
   label:{
-    width:'95%',
+    width:'90%',
     marginBottom:theme.spacing(0.5),
     fontSize:'12px',
+    alignSelf:'center',
     top:0,
     left:0
   },

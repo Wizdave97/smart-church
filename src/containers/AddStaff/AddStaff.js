@@ -273,7 +273,7 @@ class AddStaff extends Component {
                       </div>
                       <div className={classes.entry}>
                       <Input
-                            id="staff-type"
+                            id="branch"
                             inputType={'select'}
                             label="Branch"
                             reference={this.setRef}
@@ -291,10 +291,10 @@ class AddStaff extends Component {
               </div>
               <div className={classes.general}>
                   <div className={classes.title}><Typography variant="h3" color="secondary" gutterBottom>Staff Permissions</Typography></div>
-                  <div className={classes.entries}>
+                  <Grid item container spacing={0}>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
-
                             inputType="checkbox"
                             reference={this.setRef}
                             placeholder="Update church"
@@ -306,6 +306,8 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Update Church?"/>
                       </div>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
 
@@ -319,6 +321,10 @@ class AddStaff extends Component {
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
                           label="Create Branch?"/>
                       </div>
+                    </Grid>
+                  </Grid>
+                  <Grid item container spacing={0}>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
                             inputType="checkbox"
@@ -331,6 +337,9 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Update Branch?"/>
                       </div>
+
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
                             inputType="checkbox"
@@ -343,6 +352,10 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Create staff?"/>
                       </div>
+                    </Grid>
+                  </Grid>
+                  <Grid item container spacing={0}>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
 
@@ -357,6 +370,8 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Update Staff?"/>
                       </div>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
                             inputType="checkbox"
@@ -369,6 +384,10 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Add Report?"/>
                       </div>
+                    </Grid>
+                  </Grid>
+                  <Grid item container spacing={0}>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
                             inputType="checkbox"
@@ -382,6 +401,9 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="Update Report?"/>
                       </div>
+
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
 
@@ -396,6 +418,10 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="View All reports?"/>
                       </div>
+                    </Grid>
+                  </Grid>
+                  <Grid item container spacing={0}>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
 
@@ -410,6 +436,9 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="View All Branches?"/>
                       </div>
+
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                       <div className={classes.entry}>
                           <Input
 
@@ -424,7 +453,8 @@ class AddStaff extends Component {
                             handleChange={(event)=>handleChange(event,this.hardSetState)}
                             label="View All Staffs?"/>
                       </div>
-                  </div>
+                    </Grid>
+                  </Grid>
               </div>
               <div className={classes.button}><Button type="submit" color="secondary" variant="contained" fullWidth={true}>Submit</Button></div>
           </form>
@@ -454,7 +484,9 @@ class AddStaff extends Component {
             <Grid
             item
             xs={12}
-            sm={8}>
+            sm={8}
+            md={6}
+            lg={5}>
               {view}
             </Grid>
           </Grid>

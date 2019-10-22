@@ -129,7 +129,9 @@ class AddBranch extends Component {
     <Grid
     item
     xs={12}
-    sm={8}>
+    sm={8}
+    md={6}
+    lg={5}>
         <Paper square={true} elevation={4} className={classes.paper}>
             <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
                 <div className={classes.title} color="secondary">

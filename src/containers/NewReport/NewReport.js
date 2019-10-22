@@ -305,7 +305,9 @@ class NewReport extends Component {
             <Grid
             item
             xs={12}
-            sm={8}>
+            sm={8}
+            md={6}
+            lg={5}>
                 {view}
             </Grid>
           </Grid>
