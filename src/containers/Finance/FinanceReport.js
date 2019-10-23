@@ -136,7 +136,7 @@ class FinanceReport extends Component {
                           reference={this.setRef}
                           type="radio"
                           id="income-report"
-                          checked={this.state.incomeCategories.includes(this.state.category)?true:false}
+                          checked={this.state.reportType=='Income'?true:false}
                           label="Income Report"
                           placeholder="Income Report"
                           name="reportType"
@@ -154,7 +154,7 @@ class FinanceReport extends Component {
                           type="radio"
                           id="expenditure"
                           label="Expenditure Report"
-                          checked={this.state.expenseCategories.includes(this.state.category)?true:false}
+                          checked={this.state.reportType=='Expenditure'?true:false}
                           placeholder="Expenditure Report"
                           name="reportType"
                           errorMessage="Please this field is required"
