@@ -105,11 +105,17 @@ export const autoSignIn = () =>{
   return (dispatch,getState) =>{
     if(localStorage.smartchurch){
       const authData=JSON.parse(localStorage.smartchurch);
-      const tokenValidity=new Date().getTime() < Number(authData.expiresIn);
-      if (tokenValidity) {
-        dispatch(authSync(actionTypes.AUTH_SUCCESS,authData))
+      if(typeof authData.token =='string' && authData.token.length>0){
+        let expiresIn=typeof authData.expiresIn =='number' && authData.expiresIn>0?authData.expiresIn:false
+        if(expiresIn){
+          const tokenValidity=new Date().getTime() < expiresIn;
+          if (tokenValidity) {
+            dispatch(authSync(actionTypes.AUTH_SUCCESS,authData))
+          }
+          else return null
+        }
       }
-      else dispatch(authSync(actionTypes.AUTH_FAIL,null))
+
     }
   }
 }

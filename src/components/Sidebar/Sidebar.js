@@ -1,16 +1,15 @@
 import React from 'react';
 import styles from './styles';
-import { NavLink,Link,withRouter} from 'react-router-dom';
+import { Link,withRouter} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
-import {Paper, Typography , Divider, List, ListItem, ListItemText } from '@material-ui/core';
+import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
 
 

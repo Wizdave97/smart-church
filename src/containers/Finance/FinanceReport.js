@@ -26,7 +26,9 @@ class FinanceReport extends Component {
     errorDate:false,
     errorDescription:false,
     errorAmount:false,
-    fixValidityBug:''
+    fixValidityBug:'',
+    incomeCategoryFetchId:null,
+    expenseCategoryFetchId:null
   }
   componentDidMount(){
     this.setState({fixValidityBug:''})
@@ -63,7 +65,11 @@ class FinanceReport extends Component {
         categories.push(obj.category)
       }
       this.setState({incomeCategories:categories})
-    }).catch(err=>setTimeout(()=>this.fetchIncomeCategories(token),1000))
+    }).catch(err=>{
+      let id=setTimeout(()=>this.fetchIncomeCategories(token),3500)
+      this.setState({incomeCategoryFetchId:id})
+    }
+    )
   }
   fetchExpenseCategories=(token)=>{
     fetch(baseUrl+'/expenses',{
@@ -77,7 +83,10 @@ class FinanceReport extends Component {
         categories.push(obj.category)
       }
       this.setState({expenseCategories:categories})
-    }).catch(err=>setTimeout(()=>this.fetchExpenseCategories(token),1000))
+    }).catch(err=>{
+      let id=setTimeout(()=>this.fetchExpenseCategories(token),3500)
+      this.setState({expenseCategoryFetchId:id})
+    })
   }
   componentDidUpdate(prevProps,prevState){
      if(prevState.incomeCategories.length!=this.state.incomeCategories.length || prevState.expenseCategories.length!=this.state.expenseCategories.length ){
@@ -88,7 +97,10 @@ class FinanceReport extends Component {
          }
      }
   }
-
+  componentWillUnmount(){
+    clearTimeout(this.state.expenseCategoryFetchId)
+    clearTimeout(this.state.incomeCategoryFetchId)
+  }
   onSubmit = (references,hardSetState,e)=>{
     e.preventDefault();
     let valid= submitHandler(references, hardSetState)
@@ -114,7 +126,7 @@ class FinanceReport extends Component {
     const { classes }=this.props
     let notification=null;
     if (this.props.postFinanceSuccess){
-      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postFinanceSuccess} message={"Upload was successful"}/>
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postFinanceSuccess} message={Number(this.props.match.params.id)>=0?'Update Success':"Upload was successful"}/>
     }
     if (this.props.postFinanceFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.postFinanceFail} message={"There was an error please try again"}/>
@@ -122,7 +134,7 @@ class FinanceReport extends Component {
     let view=(<Paper square={true} elevation={4} className={classes.paper}>
         <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
             <div className={classes.title} color="secondary">
-                <Typography variant="h2" color="secondary"  gutterBottom>Create a New Finance Report</Typography>
+                <Typography variant="h2" color="secondary"  gutterBottom>{Number(this.props.match.params.id)>=0?'Update Finance Report':'Create a New Finance Report'}</Typography>
             </div>
             <Divider className={classes.divider}/>
             <div className={classes.general}>
@@ -218,7 +230,8 @@ class FinanceReport extends Component {
                           error={errorDescription}
                           value={this.state.description}
                           name="description"
-                          type="text"
+                          type="number"
+                          min="0"
                           errorMessage="Please this field is required"
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
                           label="Amount"

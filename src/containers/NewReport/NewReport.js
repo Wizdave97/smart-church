@@ -86,11 +86,11 @@ class NewReport extends Component {
   render(){
     const { errorServiceDay,errorDate,errorMaleAttendance,
             errorFemaleAttendance,errorChildrenAttendance,errorFirstTimers,errorSalvation,}=this.state
-    const references=[this.date,this.serviceDay,this.maleAttendance,this.childrenAttendance,this.firstTimers,this.salvation]
+    const references=[this.date,this.serviceDay,this.maleAttendance,this.femaleAttendance,this.childrenAttendance,this.firstTimers,this.salvation]
     const { classes }=this.props
     let notification=null;
     if (this.props.postReportSuccess){
-      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postReportSuccess} message={"Upload was successful"}/>
+      notification=<Snackbar color="primary" handleClose={this.props.onUnmount} open={this.props.postReportSuccess} message={Number(this.props.match.params.id)>=0?'Update Success':"Upload was successful"}/>
     }
     if (this.props.postReportFail) {
       notification=<Snackbar color="error" handleClose={this.props.onUnmount} open={this.props.postReportFail} message={"There was an error please try again"}/>
@@ -99,7 +99,7 @@ class NewReport extends Component {
       <Paper square={true} elevation={4} className={classes.paper}>
           <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>
               <div className={classes.title} color="secondary">
-                  <Typography variant="h2" color="secondary"  gutterBottom>New Report</Typography>
+                  <Typography variant="h2" color="secondary"  gutterBottom>{Number(this.props.match.params.id)>=0?'Update Service Report':'Service Report'}</Typography>
               </div>
               <Divider className={classes.divider}/>
               <div className={classes.general}>
@@ -119,22 +119,6 @@ class NewReport extends Component {
                           handleChange={(event)=>handleChange(event,this.hardSetState)}
                           label="Service Day"/>
                       </div>
-                      {/*<div className={classes.entry}>
-                          <Input
-                            inputType="input"
-                            required={true}
-                            reference={this.setRef}
-                            id="service-number"
-                            error={errorServiceNumber}
-                            type="text"
-                            label="Service Number"
-                            errorMessage="Please this filled is required"
-                            min="0"
-                            value={this.state.serviceNumber}
-                            name="serviceNumber"
-                            handleChange={(event)=>handleChange(event,this.hardSetState)}
-                            />
-                      </div>*/}
                       <div className={classes.entry}>
                           <Input
                             inputType="input"

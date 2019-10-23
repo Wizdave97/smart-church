@@ -39,6 +39,8 @@ class TrendAnalysis extends Component {
       type:'',
       errorFinanceCategory:false,
       errorType:false,
+      incomeCategoryFetchId:null,
+      expenseCategoryFetchId:null
     }
     hardSetState=this.setState.bind(this)
     setRef= element =>{
@@ -141,7 +143,10 @@ class TrendAnalysis extends Component {
           categories.push(obj.category)
         }
         this.setState({incomeCategories:categories})
-      }).catch(err=>setTimeout(()=>this.fetchIncomeCategories(token),1000))
+      }).catch(err=>{
+        let id=setTimeout(()=>this.fetchIncomeCategories(token),3000)
+        this.setState({incomeCategoryFetchId:id})
+      })
     }
     fetchExpenseCategories=(token)=>{
       fetch(baseUrl+'/expenses',{
@@ -155,7 +160,10 @@ class TrendAnalysis extends Component {
           categories.push(obj.category)
         }
         this.setState({expenseCategories:categories})
-      }).catch(err=>setTimeout(()=>this.fetchExpenseCategories(token),1000))
+      }).catch(err=>{
+        let id=setTimeout(()=>this.fetchExpenseCategories(token),3000)
+        this.setState({expenseCategoryFetchId:id})
+      })
     }
     onSubmit = (references,hardSetState,e)=>{
       e.preventDefault();
@@ -170,6 +178,10 @@ class TrendAnalysis extends Component {
       if (valid){
         this.props.onFetchTrendFinance(this.props.branchId,this.state.type,this.state.financeCategory,this.state.financeFrom,this.state.financeTo,this.state.financeYear)
       }
+    }
+    componentWillUnmount(){
+      clearTimeout(this.state.expenseCategoryFetchId)
+      clearTimeout(this.state.incomeCategoryFetchId)
     }
     componentDidUpdate(prevProps,prevState){
       if(this.props.fetchTrendReportsSuccess && this.props.reports!==null){

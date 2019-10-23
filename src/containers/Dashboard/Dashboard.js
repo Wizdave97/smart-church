@@ -18,11 +18,10 @@ class Dashboard extends Component{
     incomeMax:null,
     incomeLabels:null,
     incomeData:null,
-    intervalId:null,
+    intervalId:[],
     expenditureTitle:null,
     expenditureLabels:null,
     expenditureData:null,
-    expenditureId:null,
     totalAttendance:0,
     totalIncome:0,
     totalExpenditure:0
@@ -39,7 +38,7 @@ class Dashboard extends Component{
       [label]:labels[dataIndex]
     })
   }
-  cycleIncomeCategories= (incomeUngrouped,dataIndex,id,dataset,maxVal,label) =>{
+  cycleIncomeCategories=async (incomeUngrouped,dataIndex,id,dataset,maxVal,label) =>{
     let amounts=[]
     let data=[]
     for (let obj of incomeUngrouped){
@@ -60,14 +59,19 @@ class Dashboard extends Component{
       }
     }
     let labels=[...Object.keys(data)]
-    let intervalId=window.setInterval(()=>{
+    let intervalId=await setInterval(()=>{
       if(dataIndex>=labels.length){
         dataIndex=0
       }
       this.cycle(dataIndex,labels,dataset,data,label)
       dataIndex++
     },10000)
-  this.setState({[id]:intervalId,[maxVal]:Math.max(...amounts)})
+
+    this.setState(prevState=>{
+      let prevIntervalId=[...prevState.intervalId]
+      prevIntervalId.push(intervalId)
+      return {[id]:prevIntervalId,[maxVal]:Math.max(...amounts)}
+    })
   }
   componentDidUpdate(prevProps,prevState){
     let dataIndex=0,expIndex=0;
@@ -81,7 +85,7 @@ class Dashboard extends Component{
     if(this.props.fetchExpenditureSuccess && this.props.expenditure){
       if(this.props.expenditure.length!==0){
         if(prevState.expenditureId==null){
-          this.cycleIncomeCategories(this.props.expenditure,expIndex,'expenditureId','expenditureData','expMax','expLabel')
+          this.cycleIncomeCategories(this.props.expenditure,expIndex,'intervalId','expenditureData','expMax','expLabel')
         }
       }
     }
@@ -124,8 +128,9 @@ class Dashboard extends Component{
   }
   componentWillUnmount(){
     console.log(this.state.intervalId,this.state.expenditureId)
-    clearInterval(this.state.intervalId)
-    clearInterval(this.state.expenditureId)
+    for(let id of this.state.intervalId){
+      clearInterval(id)
+    }
   }
   render(){
     const { classes } = this.props

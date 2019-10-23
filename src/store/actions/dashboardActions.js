@@ -49,9 +49,9 @@ export const fetchFinanceAsync =(branchId,url,type)=>{
       dispatch(fetchSync(actionTypes.FETCH_EXPENDITURE_START))
     }
         switch(type){
-          case 'income': url=baseUrl+'/incomes'+`?branchid=${branchId}&month=${month}-${year}`
+          case 'income': url=`${baseUrl}/incomes?branchid=${branchId}&month=${month}-${year}`
           break;
-          case 'expenditure': url=baseUrl+'/expenditures'+`?branchid=${branchId}&month=${month}-${year}`
+          case 'expenditure': url=`${baseUrl}/expenditures?branchid=${branchId}&month=${month}-${year}`
           break;
           default: break;
         }

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {Paper, Grid, }  from '@material-ui/core';
+import { Grid }  from '@material-ui/core';
 import { connect } from 'react-redux';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import { reportSync, fetchReportAsync } from '../../store/actions/reportActions';

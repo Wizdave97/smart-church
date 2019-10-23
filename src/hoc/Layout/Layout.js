@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Grid,Typography,Fab,Menu,MenuItem,Button,List,ListItem,Drawer,Divider} from '@material-ui/core';
+import { Grid,Typography,Fab,Button,List,ListItem,Drawer,Divider} from '@material-ui/core';
 import { GroupWork } from '@material-ui/icons';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './styles';
@@ -130,7 +130,7 @@ class Layout extends Component {
                     justify="flex-start"
                     >
                     <div className={classes.pageInfo}>
-                      <div className={classes.title}><Typography className={classes.greetingText}  variant="body1">{greeting}</Typography><div><img src={src} /></div>{this.props.branchName?<Typography className={classes.greetingText}  variant="h2" >Viewing Branch: <strong>{this.props.branchName}</strong></Typography>:null}</div>
+                      <div className={classes.title}><Typography className={classes.greetingText}  variant="body1">{greeting}</Typography><div><img src={src} alt=" " /></div>{this.props.branchName?<Typography className={classes.greetingText}  variant="h2" >Viewing Branch: <strong>{this.props.branchName}</strong></Typography>:null}</div>
                     </div>
                         {this.props.children}
                     </Grid>

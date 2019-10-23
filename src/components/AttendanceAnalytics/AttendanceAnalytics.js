@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import styles from  './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '../../components/UI/Input/Input';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,Label,ResponsiveContainer,BarChart,Legend, Bar } from 'recharts';
-import * as actionTypes  from '../../store/actions/actionTypes';
-import { financeSync, fetchFinanceAsync } from '../../store/actions/financeActions';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,ResponsiveContainer,BarChart,Legend, Bar } from 'recharts';
 import { handleChange,submitHandler} from '../../utils/Utility';
-import baseUrl from '../../store/base_url';
 import { Paper, Grid, Typography, Button, LinearProgress} from '@material-ui/core'
 import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 
