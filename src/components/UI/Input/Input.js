@@ -60,31 +60,37 @@ const Input = props =>{
             </select>)
             break;
         case 'checkbox':
-            inputType=(<input
+            inputType=(
+              <div className={classes.container}>
+              <input
                 ref={props.reference?props.reference:null}
                 required={props.required}
                 name={props.name}
                 aria-describedby="helperText"
                 placeholder={props.placeholder}
-                className={[classes.checkbox,props.error?classes.error:''].join(' ')}
                 type="checkbox"
                 id={props.id}
                 checked={props.value}
-                onChange={props.handleChange}/>)
+                onChange={props.handleChange}/>
+              <span className="checkmark"></span>
+            </div>)
                 break;
          case 'radio':
-             inputType=(<input
+             inputType=(
+               <div className={classes.container}>
+               <input
                  ref={props.reference?props.reference:null}
                  required={props.required}
                  name={props.name}
                  aria-describedby="helperText"
                  value={props.value}
                  placeholder={props.placeholder}
-                 className={[classes.checkbox,props.error?classes.error:''].join(' ')}
                  type="radio"
                  id={props.id}
                  checked={props.checked}
-                 onChange={props.handleChange}/>)
+                 onChange={props.handleChange}/>
+               <span className="radiodot"></span>
+             </div>)
                  break;
           case 'textarea':
                 inputType=(

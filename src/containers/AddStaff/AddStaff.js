@@ -143,7 +143,7 @@ class AddStaff extends Component {
   }
   render(){
     const { errorStaffType,errorEmail,errorAddress,errorFirstName,errorLastName,errorSex,errorBranch}=this.state
-    const references=[this.firstName,this.lastName,this.sex,this.address,this.email,this.staffType]
+    const references=[this.firstName,this.lastName,this.sex,this.address,this.email,this.staffType,this.branch]
     const { classes }=this.props
     let view=(  <Paper square={true} elevation={4} className={classes.paper}>
           <form className={classes.form} noValidate={true} onSubmit={(event)=>this.onSubmit(references,this.hardSetState,event)}>

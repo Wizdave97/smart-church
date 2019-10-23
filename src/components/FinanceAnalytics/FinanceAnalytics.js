@@ -139,7 +139,7 @@ class FinanceAnalytics extends Component {
       item
       xs={12}
       md={12}>
-        {progress}
+
         <Grid
         container
         spacing={0}
@@ -148,6 +148,7 @@ class FinanceAnalytics extends Component {
           item
           xs={12}>
             <Paper className={classes.paper}>
+              {progress}
               <div className={classes.filters}>
                 <Typography variant='h2' align="center" color="secondary" gutterBottom>Church Finance Analytics</Typography>
               </div>
