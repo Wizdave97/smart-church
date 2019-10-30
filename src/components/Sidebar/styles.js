@@ -27,7 +27,7 @@ const styles= theme =>({
     '& span':{
       textAlign:'center',
       fontSize:'11px',
-      //color:theme.palette.primary.main,
+      color:theme.palette.type=='light'?theme.palette.primary.main:'rgba(0,0,0,0.9)',
       '@media screen and (min-width:706px)':{
         fontSize:'13px'
       },
