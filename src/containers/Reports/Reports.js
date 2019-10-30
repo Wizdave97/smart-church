@@ -9,7 +9,8 @@ import { reportSync, fetchReportAsync } from '../../store/actions/reportActions'
 import { Delete, Edit } from '@material-ui/icons';
 import { handleChange,submitHandler} from '../../utils/Utility';
 import Snackbar from '../../components/NotificationSnackbar/NotificationSnackbar';
-import { Paper, Grid, Typography, Button, Card,CardHeader,Avatar, CardActions,CardContent,LinearProgress} from '@material-ui/core'
+import { Paper, Grid, Typography, Button, Card,CardHeader,Avatar, CardActions,CardContent,LinearProgress} from '@material-ui/core';
+import SnackbarContent from '../../components/UI/SnackBarContentWrapper/SnackBarContentWrapper';
 
 const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 const months=['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October','November', 'December']
@@ -111,8 +112,13 @@ class Reports extends Component {
         })
       )
     }
+    if(this.props.reports){
+      if(this.props.reports.length==0){
+        view=<Grid item xs={12}><SnackbarContent message={`You have no records in  ${this.state.month+" "+this.state.year}`} variant="info"/></Grid>
+      }
+    }
     if(this.props.fetchReportFail){
-      view=null
+      view=view=<Grid item xs={12}><SnackbarContent message={`An error ocured Please try again`} variant="error"/></Grid>
     }
 
     return(
@@ -123,10 +129,11 @@ class Reports extends Component {
       xs={12}
       spacing={2}
       justify="flex-start">
-        <Grid item xs={12}>
-          {progress}
+        <Grid item xs={12} >
+
           {notification}
-          <Paper>
+          <Paper style={{overflowX:'hidden'}}>
+            {progress}
             <div className={classes.filters}>
               <Typography variant='h4'>You are currently analysing reports for {this.state.day} <strong>{this.state.month}</strong> <strong>{this.state.year}</strong></Typography>
             </div>

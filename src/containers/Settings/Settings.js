@@ -1,15 +1,19 @@
 import React, { Component, Fragment} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Paper,Typography,Button,CircularProgress } from '@material-ui/core';
+import { Grid, Paper,Typography,Button,CircularProgress,Slide,Dialog,DialogContent, DialogContentText,DialogTitle,DialogActions} from '@material-ui/core';
 import styles from './styles';
 import { connect } from 'react-redux';
 import baseUrl from '../../store/base_url';
 import * as actionTypes  from '../../store/actions/actionTypes';
 import SettingsList from '../../components/SettingsList/SettingsList';
 import { settingsAsync, settingsSync }  from '../../store/actions/settingsActions';
-
-
 import EditableList from '../../components/EditableList/EditableList';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
 
 class Settings extends Component {
   state={
@@ -24,7 +28,10 @@ class Settings extends Component {
     fetchedExpenditureTypes:null,
     fetchStaffTypesSuccess:false,
     fetchExpenditureTypesSuccess:false,
-    fetchIncomeTypesSuccess:false
+    fetchIncomeTypesSuccess:false,
+    openModal:false,
+    identifier:null,
+    id:null
   }
   componentDidMount(){
     this.fetchSettings()
@@ -55,6 +62,15 @@ class Settings extends Component {
       this.setState({fetchedExpenditureTypes:res.data,fetchExpenditureTypesSuccess:true})
     }).catch(err=> console.log(err))
   }
+  toggleModal=async (id=null,identifier=null,confirm=null)=>{
+    await this.setState(state=>({
+      openModal:!state.openModal,
+      identifier:identifier,
+      id:id
+    }))
+    if(identifier && confirm) return this.deleteItem(this.state.identifier,this.state.id)
+    else return new Promise((resolve,reject)=>reject(false))
+  }
   deleteItem= (identifier,id) =>{
     switch(identifier) {
       case 'income':
@@ -68,7 +84,10 @@ class Settings extends Component {
               body:JSON.stringify({id:id})
             }).then(res=>res.json()).then(res=>{
               resolve(true)
-            }).catch(err=>reject(false))
+
+            }).catch(err=>{
+              reject(false)
+            })
           })
       case 'expenditure':
           return new Promise((resolve,reject)=>{
@@ -96,7 +115,7 @@ class Settings extends Component {
               resolve(true)
             }).catch(err=>reject(false))
           })
-      default:
+      default: return new Promise(resolve=>resolve(false))
          break;
     }
   }
@@ -184,6 +203,31 @@ class Settings extends Component {
     const { classes } = this.props
     const { incomeStreams,expenditureStreams,staffTypes }=this.state
     let viewExpenditureProgress,viewIncomeProgress,viewTypesProgress
+    let modal=(
+      <Dialog
+        open={this.state.openModal}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={this.toggleModal}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">{"Confirmation?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Are you sure you want to delete?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.toggleModal} color="primary">
+            No
+          </Button>
+          <Button onClick={()=>this.toggleModal(this.state.id,this.state.identifier,true)} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
     if(this.props.postSettingsIncomeStart) viewIncomeProgress=<CircularProgress color="primary"/>
     if(this.props.postSettingsTypesStart) viewTypesProgress=<CircularProgress color="primary"/>
     if(this.props.postSettingsExpenditureStart) viewExpenditureProgress=<CircularProgress color="primary"/>
@@ -233,7 +277,7 @@ class Settings extends Component {
         success={this.props.postSettingsTypesSuccess}
         fail={this.props.postSettingsTypesFail}
         handleClose={this.props.onUnmount}/>
-      <div className={classes.submit}><Button disabled={this.props.postSettingsTypesStart} onClick={()=>this.props.onSubmitHandler('types',staffTypes)} color="secondary" variant="contained" size="large">Submit{viewTypesProgress}</Button></div>
+      <div className={classes.submit}><Button disabled={this.props.postSettingsTypesStart} onClick={()=>this.props.onSubmitHandler('type',staffTypes)} color="secondary" variant="contained" size="large">Submit{viewTypesProgress}</Button></div>
       </Fragment>
   )
 
@@ -265,19 +309,20 @@ class Settings extends Component {
               <Paper square={true} className={classes.paper}>
                 <div className={classes.category}>
                     <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Income Types</Typography></div>
-                    {this.state.fetchIncomeTypesSuccess?<SettingsList deleteItem={this.deleteItem} success={this.state.fetchIncomeTypesSuccess} data={this.state.fetchedIncomeTypes} identifier="income"/>:<CircularProgress color="secondary"/>}
+                    {this.state.fetchIncomeTypesSuccess?<SettingsList deleteItem={this.toggleModal} success={this.state.fetchIncomeTypesSuccess} data={this.state.fetchedIncomeTypes} identifier="income"/>:<CircularProgress color="secondary"/>}
                 </div>
                 <div className={classes.category}>
                     <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Expenditure Types</Typography></div>
-                    {this.state.fetchExpenditureTypesSuccess?<SettingsList deleteItem={this.deleteItem}  success={this.state.fetchExpenditureTypesSuccess} data={this.state.fetchedExpenditureTypes} identifier="expenditure"/>:<CircularProgress color="secondary"/>}
+                    {this.state.fetchExpenditureTypesSuccess?<SettingsList deleteItem={this.toggleModal}  success={this.state.fetchExpenditureTypesSuccess} data={this.state.fetchedExpenditureTypes} identifier="expenditure"/>:<CircularProgress color="secondary"/>}
                 </div>
                 <div className={classes.category}>
                     <div className={classes.title}><Typography variant="h4" color="secondary" align='left' gutterBottom>Staff Types</Typography></div>
-                    {this.state.fetchStaffTypesSuccess?<SettingsList deleteItem={this.deleteItem} success={this.state.fetchStaffTypesSuccess} data={this.state.fetchedStaffTypes} identifier="stafftype"/>:<CircularProgress color="secondary"/>}
+                    {this.state.fetchStaffTypesSuccess?<SettingsList deleteItem={this.toggleModal} success={this.state.fetchStaffTypesSuccess} data={this.state.fetchedStaffTypes} identifier="stafftype"/>:<CircularProgress color="secondary"/>}
                 </div>
               </Paper>
               </Grid>
           </Grid>
+          {modal}
       </div>
     )
   }

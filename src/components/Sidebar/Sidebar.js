@@ -10,7 +10,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ArrowTooltip from '../UI/ArrowTooltip/ArrowTooltip';
 import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
-import { Dashboard,Settings, InsertChart,TableChart,PersonAdd,People,GroupWork,AddBox} from '@material-ui/icons';
+import { Dashboard,Settings, MultilineChart,ViewList,PersonAdd,People,GroupWork,AddBox,SettingsBackupRestore,TrendingUp} from '@material-ui/icons';
 
 
 const SideBar = (props) =>{
@@ -52,13 +52,13 @@ const SideBar = (props) =>{
                   </ArrowTooltip>
                   <ArrowTooltip title="Analytics">
                   <ListItem  button component={Link} to="/analytics"  onClick={props.closeSideBar}>
-                    <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
+                    <ListItemIcon><MultilineChart className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Analytics'/>
                   </ListItem>
                   </ArrowTooltip>
                   <ArrowTooltip title="Trend Analysis">
                   <ListItem button component={Link} to="/trends" onClick={props.closeSideBar}>
-                    <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
+                    <ListItemIcon><TrendingUp className={classes.icons}/></ListItemIcon>
                     <ListItemText className={classes.links} primary='Trend Analysis'/>
                   </ListItem>
                   </ArrowTooltip>
@@ -80,7 +80,7 @@ const SideBar = (props) =>{
                   <React.Fragment>
                     <ArrowTooltip title="View Attendance Reports">
                     <ListItem to="/viewreports"  button component={Link} onClick={props.closeSideBar}>
-                      <ListItemIcon><TableChart className={classes.icons}/></ListItemIcon>
+                      <ListItemIcon><ViewList className={classes.icons}/></ListItemIcon>
                       <ListItemText className={classes.links} primary='Attendance Reports'/>
                     </ListItem>
                     </ArrowTooltip>
@@ -102,7 +102,7 @@ const SideBar = (props) =>{
                     <React.Fragment>
                       <ArrowTooltip title="View Financial Reports">
                       <ListItem to="/viewfinances" button component={Link} onClick={props.closeSideBar} >
-                        <ListItemIcon><InsertChart className={classes.icons}/></ListItemIcon>
+                        <ListItemIcon><ViewList className={classes.icons}/></ListItemIcon>
                         <ListItemText className={classes.links} primary='Financial Reports'/>
                       </ListItem>
                       </ArrowTooltip>
@@ -167,7 +167,7 @@ const SideBar = (props) =>{
                       </ArrowTooltip>
                       <ArrowTooltip title="Reset to default Branch">
                       <ListItem button  onClick={handleBranchReset}>
-                        <ListItemIcon><Settings className={classes.icons}/></ListItemIcon>
+                        <ListItemIcon><SettingsBackupRestore className={classes.icons}/></ListItemIcon>
                         <ListItemText className={classes.links} primary='Reset to default Branch'/>
                       </ListItem>
                       </ArrowTooltip>

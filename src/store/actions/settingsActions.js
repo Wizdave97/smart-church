@@ -15,7 +15,7 @@ export const settingsAsync= (type,data)=>{
         case 'income':
           dispatch(settingsSync(actionTypes.POST_SETTINGS_INCOME_START))
           url=baseUrl+'/inmedium'
-          let incomeStreams={category:data[0]}
+          let incomeStreams={category:data}
           if(data.length>0){
             fetch(url,{
               method:'POST',
@@ -42,7 +42,7 @@ export const settingsAsync= (type,data)=>{
         case 'expenditure':
           dispatch(settingsSync(actionTypes.POST_SETTINGS_EXPENDITURE_START))
            url=baseUrl+'/expenses';
-          let expenditureStreams={category:data[0]};
+          let expenditureStreams={category:data};
           if (data.length>0){
 
             fetch(url,{
@@ -70,7 +70,7 @@ export const settingsAsync= (type,data)=>{
         case 'type':
           dispatch(settingsSync(actionTypes.POST_SETTINGS_TYPES_START))
           url=baseUrl+'/types'
-          let staffTypes={name:data[0]}
+          let staffTypes={name:data}
           if(data.length>0){
 
             fetch(url,{

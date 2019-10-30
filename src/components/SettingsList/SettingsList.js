@@ -8,7 +8,7 @@ const SettingsList = props => {
   const { classes }=props
   const [state,setState]=useState({data:props.data})
   const removeItem=(id)=>{
-    return props.deleteItem(props.identifier,id)
+     return props.deleteItem(id,props.identifier)
   }
   let listItems=<CircularProgress color="secondary"/>
   if(props.success && state.data){

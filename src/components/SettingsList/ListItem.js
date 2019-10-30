@@ -8,8 +8,8 @@ import { CircularProgress,TableRow,TableCell,Typography } from '@material-ui/cor
 const ListItem=props=>{
    const { classes }=props
    const [deleting,setState]=useState(false)
-   const removeItem=()=>{
-     setState(true)
+   const removeItem=async ()=>{
+     await setState(true)
      props.removeItem(props.id).then(res=>{
        setState(res)
        for(let index in props.data){

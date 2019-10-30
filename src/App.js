@@ -60,7 +60,7 @@ class App  extends Component{
     identifier:null,
   }
   toggleModal=(data,identifier)=>{
-    this.setState(state=>({
+  this.setState(state=>({
       openModal:!state.openModal,
       data:data,
       identifier:identifier
@@ -183,6 +183,6 @@ const mapStateToProps= state =>({
 const mapDispatchToProps= dispatch=>({
   onAutoSignIn:()=> dispatch(autoSignIn()),
   onDeleteBranch:(id)=> dispatch(deleteBranchAsync(id)),
-  onDeleteStaff:(id)=> dispatch(deleteStaffAsync(id))
+  onDeleteStaff:(id)=> dispatch(deleteStaffAsync(id)),
 })
 export default connect(mapStateToProps,mapDispatchToProps)(App);
