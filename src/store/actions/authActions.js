@@ -29,9 +29,8 @@ const storeAuthInfo= (data) =>{
 export const authAsync= (isSignUp,authData)=>{
   return dispatch=>{
     dispatch(authSync(actionTypes.AUTH_START))
-    if(!isSignUp){
-      let url=baseUrl+'/login'
-      //let url='http://127.0.0.1:80/login'
+    let url=baseUrl+'/login'
+    if(isSignUp) url=baseUrl+'/churches';
       fetch(url,{
         method:'POST',
         mode:'cors',
@@ -41,10 +40,10 @@ export const authAsync= (isSignUp,authData)=>{
         }
       }).then(res=>{
         if(res.status!==200){
-          return null
+          throw TypeError
       }
       return res.json()}).then(res=>{
-        if(res.error){
+        if(typeof res.error =='string' && res.error.length>0){
           dispatch(authSync(actionTypes.AUTH_FAIL))
           return
         }
@@ -55,35 +54,6 @@ export const authAsync= (isSignUp,authData)=>{
       }).catch(err=>{
         dispatch(authSync(actionTypes.AUTH_FAIL))
       })
-    }
-    else {
-      let url=baseUrl+'/churches';
-      fetch(url,{
-        method:'POST',
-        mode:'cors',
-        body:JSON.stringify(authData),
-        headers:{
-          "Content-Type":"application/json"
-        }
-      }).then(res=>{
-        if(res.status!==200){
-          return null
-      }
-      return res.json()}).then(res=>{
-        if(res.error){
-          dispatch(authSync(actionTypes.AUTH_FAIL))
-          return
-        }
-        dispatch(authSync(actionTypes.AUTH_SUCCESS,res.token))
-        storeAuthInfo(res)
-        authCheckTimeout(3600)
-
-      }).catch(err=>{
-        dispatch(authSync(actionTypes.AUTH_FAIL))
-      })
-    }
-
-
   }
 
 }
