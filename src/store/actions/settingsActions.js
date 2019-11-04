@@ -10,6 +10,7 @@ export const settingsSync = (type,payload=null)=>{
 
 export const settingsAsync= (type,data)=>{
   return (dispatch,getState)=>{
+      if (data.length==0) return
       let url;
       switch(type){
         case 'income':

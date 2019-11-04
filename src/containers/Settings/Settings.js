@@ -36,7 +36,8 @@ class Settings extends Component {
   componentDidMount(){
     this.fetchSettings()
   }
-  fetchSettings=()=>{
+  fetchSettings=async ()=>{
+    await this.setState({fetchStaffTypesSuccess:false,fetchIncomeTypesSuccess:false,fetchExpenditureTypesSuccess:false})
     fetch(baseUrl+'/types',{
       headers:{
         'Content-Type':"application/json",
@@ -198,6 +199,11 @@ class Settings extends Component {
   }
   componentWillUnmount(){
     this.props.onUnmount()
+  }
+  componentDidUpdate(prevProps,prevState){
+    if(prevProps.postSettingsIncomeSuccess != this.props.postSettingsIncomeSuccess) this.fetchSettings()
+    if(prevProps.postSettingsExpenditureSuccess != this.props.postSettingsExpenditureSuccess) this.fetchSettings()
+    if(prevProps.postSettingsTypesSuccess != this.props.postSettingsTypesSuccess) this.fetchSettings()
   }
   render(){
     const { classes } = this.props
