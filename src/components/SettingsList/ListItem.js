@@ -12,13 +12,6 @@ const ListItem=props=>{
      await setState(true)
      props.removeItem(props.id).then(res=>{
        setState(res)
-       for(let index in props.data){
-         if(props.data[index].id==props.id){
-           let data=[...props.data]
-           data.splice(index,1)
-           props.setState({data:data})
-         }
-       }
      }).catch(err=>{
        setState(err)
      })

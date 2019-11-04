@@ -75,14 +75,14 @@ class Settings extends Component {
     switch(identifier) {
       case 'income':
           return new Promise((resolve,reject)=>{
-            fetch(baseUrl+'/inmedium',{
+            fetch(baseUrl+'/inmedium/'+id,{
               method:'DELETE',
               headers:{
                 'Content-Type':'application/json',
                 'Authorization':'Bearer'+this.props.token
               },
-              body:JSON.stringify({id:id})
             }).then(res=>res.json()).then(res=>{
+              this.fetchSettings()
               resolve(true)
 
             }).catch(err=>{
@@ -91,27 +91,27 @@ class Settings extends Component {
           })
       case 'expenditure':
           return new Promise((resolve,reject)=>{
-            fetch(baseUrl+'/expenses',{
+            fetch(baseUrl+'/expenses/'+id,{
               method:'DELETE',
               headers:{
                 'Content-Type':'application/json',
                 'Authorization':'Bearer'+this.props.token
               },
-              body:JSON.stringify({id:id})
             }).then(res=>res.json()).then(res=>{
+              this.fetchSettings()
               resolve(true)
             }).catch(err=>reject(false))
           })
       case 'stafftype':
           return new Promise((resolve,reject)=>{
-            fetch(baseUrl+'/types',{
+            fetch(baseUrl+'/types/'+id,{
               method:'DELETE',
               headers:{
                 'Content-Type':"application/json",
                 'Authorization':"Bearer"+this.props.token
               },
-              body:JSON.stringify({id:id})
             }).then(res=>res.json()).then(res=>{
+              this.fetchSettings()
               resolve(true)
             }).catch(err=>reject(false))
           })
