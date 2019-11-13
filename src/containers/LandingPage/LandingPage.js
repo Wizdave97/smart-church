@@ -36,11 +36,12 @@ const LandingPage  =props=>{
                   </Grid>
                   <Grid item xs={12} md={6} className={classes.item}>
                     <Typography variant="h2" style={{width:'100%',fontSize:'2rem',padding:5,boxSizing:'border-box'}} align="left">
-                      Successfully manage your church on all your devices from anywhere in the world with a fluid response.
-                      SmartChurch takes your church global.
+                      We understand how decisions shape your institution and we  believe that with the access to the right tools, decision making becomes a less daunting task
+                      rather something you look forward to.
                     </Typography>
                     <Typography variant="body1" style={{width:'100%',fontSize:'1.3rem',color:'rgba(0,0,0,0.75)',padding:5,boxSizing:'border-box'}} align="left" color="primary">
-                      Visualize your church growth, finance records with our Analytic charts.
+                      Smart church presents an opportunity to have all those tools all in one place, accessible wherever you are on all devices.
+                      Visualize your church growth, finance records with our <strong>Analytic charts</strong>.
                       Make comparisons and easily see where you need to improve. See trends in attendance and finances over time and make well informed decisions
                     </Typography>
                   </Grid>
@@ -65,7 +66,7 @@ const LandingPage  =props=>{
                   <Grid item xs={12} md={6} className={classes.item}>
                     <Paper className={[classes.paper,classes.imagePadding].join(' ')}>
                       <div className={classes.overlay}></div>
-                      <img src={Landing_2} alt="SmartChurch"/>
+                      <img src={Landing_2} alt="access control"/>
                     </Paper>
                   </Grid>
                 </Grid>
@@ -77,7 +78,7 @@ const LandingPage  =props=>{
                   <Grid item xs={12} md={6} className={classes.item}>
                     <Paper className={classes.paper}>
                       <div className={classes.overlay}></div>
-                      <img src={Landing_4} alt="SmartChurch"/>
+                      <img src={Landing_4} alt="Data visualization charts"/>
 
                     </Paper>
                   </Grid>
@@ -106,7 +107,7 @@ const LandingPage  =props=>{
                   <Grid item xs={12} md={6} className={classes.item}>
                     <Paper className={classes.paper}>
                       <div className={classes.overlay}></div>
-                      <img src={Landing_3} alt="SmartChurch"/>
+                      <img src={Landing_3} alt="digital reports"/>
 
                     </Paper>
                   </Grid>
@@ -119,7 +120,7 @@ const LandingPage  =props=>{
                   <Grid item xs={12} md={6} className={classes.item}>
                     <Paper className={classes.paper}>
                       <div className={classes.overlay}></div>
-                      <img src={Landing_5} alt="SmartChurch"/>
+                      <img src={Landing_5} alt="Growth Monitoring"/>
 
                     </Paper>
                   </Grid>

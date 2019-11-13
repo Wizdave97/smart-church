@@ -1,5 +1,5 @@
 import SmartChurch from '../../assets/smartchurch.png';
-import SC from '../../assets/SC.png';
+import SC from '../../assets/smartchurch.png';
 
 
 const styles = theme =>({
@@ -26,7 +26,7 @@ const styles = theme =>({
     justifyContent:'center'
   },
   logo:{
-    width:'40px',
+    width:'120px',
     height:'40px',
     backgroundSize:'cover',
     backgroundImage:`url(${SC})`,

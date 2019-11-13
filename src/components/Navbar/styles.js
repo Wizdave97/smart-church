@@ -121,7 +121,7 @@ const styles= theme =>(
       width:'100%'
     },
     [theme.breakpoints.up('sm')]:{
-      width:'140px',
+      width:'120px',
       height:'40px',
       backgroundImage:`url(${SmartChurch})`
     }
